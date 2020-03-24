@@ -1,0 +1,47 @@
+title: "Got It"
+
+# Main Screen
+main_screen:
+  library: "My Cosmetics"
+  wishlist: "Wish List"
+  got_it: "Got It?"
+  add : "Add new one"
+
+alerts:
+  error: "Error"
+  could_not_read: "I could not read the barcode"
+
+  got_it: "Got It!"
+  already_in_library: "This is already in your collection"
+
+  already_in_wishlist: "This is already in your wish list"
+
+  not_yet: "Do not have it yet"
+  not_in_library: "This is not in your collection yet"
+
+  put_on_wishlist: "Put on Wish List"
+  okay: "Okay"
+
+category:
+  eyes: "Eyes"
+  face: "Face"
+  nails: "Nails"
+  body: "Body"
+  lips: "Lips"
+  trash: "Trash"
+  favorites: "Favorites"
+
+#sub_category:
+
+product_viewer:
+  like: "Like"
+  how_to: "How To"
+  share: "Share"
+  buy: "Buy"
+  info: "Info"
+
+product_editor:
+  title: "Title"
+  notes: "Notes"
+  scan_barcode: "Scan barcode"
+  scan_barcode_again: "Scan barcode again"

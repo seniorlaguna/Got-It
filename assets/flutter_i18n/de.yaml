@@ -1,0 +1,47 @@
+title: "Got It"
+
+# Main Screen
+main_screen:
+  library: "Meine Kosmetik"
+  wishlist: "Wunschliste"
+  got_it: "Hab ich das?"
+  add : "Neues hinzufüges"
+
+alerts:
+  error: "Fehler"
+  could_not_read: "Den Barcode konnte ich nicht lesen"
+
+  got_it: "Got It!"
+  already_in_library: "Das hast du schon in deiner Sammlung"
+
+  already_in_wishlist: "Das steht auf deiner Wunschliste"
+
+  not_yet: "Hab ich noch nicht"
+  not_in_library: "Das fehlt noch in deiner Sammlung"
+
+  put_on_wishlist: "Auf die Wunschliste"
+  okay: "Okay"
+
+category:
+  eyes: "Augen"
+  face: "Gesicht"
+  nails: "Nägel"
+  body: "Körper"
+  lips: "Lippen"
+  trash: "Papierkorb"
+  favorites: "Favoriten"
+
+#sub_category:
+
+product_viewer:
+  like: "Like"
+  how_to: "How To"
+  share: "Teilen"
+  buy: "Kaufen"
+  info: "Info"
+
+product_editor:
+  title: "Bezeichnung"
+  notes: "Notizen"
+  scan_barcode: "Barcode scannen"
+  scan_barcode_again: "Barcode erneut scannen"5
