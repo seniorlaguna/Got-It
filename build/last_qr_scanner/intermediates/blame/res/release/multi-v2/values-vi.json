@@ -1,0 +1,34 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/last_qr_scanner/intermediates/res/merged/release/values-vi/values-vi.xml",
+            "map": [
+                {
+                    "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/770dcbb25819cb63c4db60613f9ec252/core-1.1.0/res/values-vi/values-vi.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/last_qr_scanner/intermediates/incremental/mergeReleaseResources/merged.dir/values-vi/values-vi.xml",
+            "map": [
+                {
+                    "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/770dcbb25819cb63c4db60613f9ec252/core-1.1.0/res/values-vi/values-vi.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}

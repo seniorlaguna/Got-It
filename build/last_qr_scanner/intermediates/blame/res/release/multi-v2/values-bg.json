@@ -1,0 +1,68 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/last_qr_scanner/intermediates/incremental/mergeReleaseResources/merged.dir/values-bg/values-bg.xml",
+            "map": [
+                {
+                    "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/770dcbb25819cb63c4db60613f9ec252/core-1.1.0/res/values-bg/values-bg.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                },
+                {
+                    "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/res/values-bg/values-bg.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,112,159,311",
+                        "endColumns": "56,46,151,110",
+                        "endOffsets": "107,154,306,417"
+                    },
+                    "to": {
+                        "startLines": "3,4,5,6",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "156,213,260,412",
+                        "endColumns": "56,46,151,110",
+                        "endOffsets": "208,255,407,518"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/last_qr_scanner/intermediates/res/merged/release/values-bg/values-bg.xml",
+            "map": [
+                {
+                    "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/770dcbb25819cb63c4db60613f9ec252/core-1.1.0/res/values-bg/values-bg.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                },
+                {
+                    "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/res/values-bg/values-bg.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,112,159,311",
+                        "endColumns": "56,46,151,110",
+                        "endOffsets": "107,154,306,417"
+                    },
+                    "to": {
+                        "startLines": "3,4,5,6",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "156,213,260,412",
+                        "endColumns": "56,46,151,110",
+                        "endOffsets": "208,255,407,518"
+                    }
+                }
+            ]
+        }
+    ]
+}

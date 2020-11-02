@@ -1,0 +1,68 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/last_qr_scanner/intermediates/res/merged/release/values-th/values-th.xml",
+            "map": [
+                {
+                    "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/res/values-th/values-th.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,114,163,281",
+                        "endColumns": "58,48,117,107",
+                        "endOffsets": "109,158,276,384"
+                    },
+                    "to": {
+                        "startLines": "3,4,5,6",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "156,215,264,382",
+                        "endColumns": "58,48,117,107",
+                        "endOffsets": "210,259,377,485"
+                    }
+                },
+                {
+                    "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/770dcbb25819cb63c4db60613f9ec252/core-1.1.0/res/values-th/values-th.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/last_qr_scanner/intermediates/incremental/mergeReleaseResources/merged.dir/values-th/values-th.xml",
+            "map": [
+                {
+                    "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/res/values-th/values-th.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,114,163,281",
+                        "endColumns": "58,48,117,107",
+                        "endOffsets": "109,158,276,384"
+                    },
+                    "to": {
+                        "startLines": "3,4,5,6",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "156,215,264,382",
+                        "endColumns": "58,48,117,107",
+                        "endOffsets": "210,259,377,485"
+                    }
+                },
+                {
+                    "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/770dcbb25819cb63c4db60613f9ec252/core-1.1.0/res/values-th/values-th.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/barcode_scan/intermediates/res/merged/release/layout-sw600dp-v13/design_layout_snackbar.xml",
+        "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/8c3dd20e39122ae4b5ffac2e36f1e5ca/material-1.1.0/res/layout-sw600dp-v13/design_layout_snackbar.xml"
+    },
+    {
+        "merged": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/barcode_scan/intermediates/res/merged/release/layout-sw600dp-v13/mtrl_layout_snackbar.xml",
+        "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/8c3dd20e39122ae4b5ffac2e36f1e5ca/material-1.1.0/res/layout-sw600dp-v13/mtrl_layout_snackbar.xml"
+    }
+]

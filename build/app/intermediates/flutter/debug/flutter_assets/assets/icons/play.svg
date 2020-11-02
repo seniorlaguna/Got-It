@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="67.73333mm"
+   height="67.73333mm"
+   viewBox="0 0 67.73333 67.73333"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="play.svg">
+  <defs
+     id="defs2">
+    <inkscape:path-effect
+       is_visible="true"
+       id="path-effect841"
+       effect="spiro" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect837"
+       is_visible="true" />
+    <inkscape:path-effect
+       is_visible="true"
+       id="path-effect823"
+       effect="spiro" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect819"
+       is_visible="true" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="70.95268"
+     inkscape:cy="236.78843"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:snap-global="false"
+     inkscape:window-width="1299"
+     inkscape:window-height="713"
+     inkscape:window-x="67"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(1.2516975e-6,-229.26667)">
+    <circle
+       cy="263.13333"
+       cx="33.866665"
+       id="circle885"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:2.59514689;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       r="32.569092" />
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:3.64849734;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path887"
+       sodipodi:sides="3"
+       sodipodi:cx="-443.29388"
+       sodipodi:cy="213.84549"
+       sodipodi:r1="24.202286"
+       sodipodi:r2="12.101143"
+       sodipodi:arg1="0"
+       sodipodi:arg2="1.0471976"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m -419.0916,213.84549 -36.30343,20.95979 V 192.8857 Z"
+       inkscape:transform-center-x="-4.3838527"
+       inkscape:transform-center-y="-3.5020639e-06"
+       transform="matrix(0.72453548,0,0,0.72583389,354.13185,108.45377)" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot1011"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:'Alex Brush';-inkscape-font-specification:'Alex Brush';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.26458333,0,0,0.26458333,522.89593,45.011538)"><flowRegion
+         id="flowRegion1013"
+         style="fill:#000000"><rect
+           id="rect1015"
+           width="40.406101"
+           height="47.477169"
+           x="-1074.8024"
+           y="1359.9055"
+           style="fill:#000000" /></flowRegion><flowPara
+         id="flowPara1017" /></flowRoot>  </g>
+</svg>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="67.73333mm"
+   height="67.733337mm"
+   viewBox="0 0 67.73333 67.733337"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="heart_full.svg">
+  <defs
+     id="defs2">
+    <inkscape:path-effect
+       is_visible="true"
+       id="path-effect841"
+       effect="spiro" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect837"
+       is_visible="true" />
+    <inkscape:path-effect
+       is_visible="true"
+       id="path-effect823"
+       effect="spiro" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect819"
+       is_visible="true" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2"
+     inkscape:cx="139.24629"
+     inkscape:cy="203.87721"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:snap-global="false"
+     inkscape:window-width="1299"
+     inkscape:window-height="713"
+     inkscape:window-x="67"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-229.26666)">
+    <path
+       style="fill:#ff5555;stroke:#000000;stroke-width:2.59514189;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 19.633146,230.5646 c -5.527185,-0.0365 -11.0048574,2.79268 -14.3245191,7.39835 -2.6290112,3.64748 -3.8888937,8.24563 -4.0021515,12.80598 -0.1132677,4.56034 0.8677613,9.09403 2.3753946,13.3768 5.0439438,14.32839 16.298465,26.13445 30.004591,31.50428 0.17875,0.0601 0.163577,0.0779 0.360402,0 13.706137,-5.36983 24.960657,-17.17589 30.004601,-31.50428 1.507634,-4.28277 2.488654,-8.81646 2.375395,-13.3768 -0.113267,-4.56035 -1.37314,-9.1585 -4.002152,-12.80598 -3.319661,-4.60567 -8.797323,-7.43482 -14.324518,-7.39835 -5.527195,0.0365 -10.970126,2.93765 -14.233585,7.58672 -3.263451,-4.64907 -8.706263,-7.55027 -14.233458,-7.58672 z"
+       id="path817"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ssssccsssscs" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot1011"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:'Alex Brush';-inkscape-font-specification:'Alex Brush';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.26458333,0,0,0.26458333,520.60171,139.66521)"><flowRegion
+         id="flowRegion1013"
+         style="fill:#000000"><rect
+           id="rect1015"
+           width="40.406101"
+           height="47.477169"
+           x="-1074.8024"
+           y="1359.9055"
+           style="fill:#000000" /></flowRegion><flowPara
+         id="flowPara1017" /></flowRoot>  </g>
+</svg>

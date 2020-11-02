@@ -3,50 +3,72 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:got_it/AnalyticsWidget.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:got_it/data/Repository.dart';
 import 'package:got_it/model/Product.dart';
-import 'package:got_it/ui/screen/CategoriesScreen.dart';
-import 'package:got_it/ui/screen/ProductEditor.dart';
-import 'package:got_it/ui/screen/WishListViewer.dart';
+import 'package:got_it/ui/screen/ProductScreen.dart';
+import 'package:got_it/ui/screen/TagsScreen.dart';
 import 'package:got_it/ui/widget/MyIconButton.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
-import 'ProductEditor.dart';
+void showGifDialog(BuildContext context, String gifPath, String title, String text) {
+  showDialog(
+      context: context,
+      builder: (_) => AssetGiffyDialog(
+        image: Image.asset(gifPath),
+        title: Text(
+          FlutterI18n.translate(context, title),
+          style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
+        ),
+        description: Text(FlutterI18n.translate(context, text)),
+        entryAnimation: EntryAnimation.TOP,
+        onlyOkButton: true,
+        buttonOkColor: Colors.lightGreen,
+        onOkButtonPressed: () => Navigator.pop(context)
+      )
+  );
+}
 
 class MainPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
-    return Scaffold(
-        body: Builder(builder: (context) => _getBody(context))
-    );
+    return Scaffold(body: Builder(builder: (context) => _getBody(context)));
   }
 
   Widget _getAppBar(BuildContext context) {
-    return Stack(
-      children: <Widget> [
-        Image.asset("assets/homepage.jpg", fit: BoxFit.fitHeight, height: MediaQuery.of(context).size.height / 2,),
-
-        AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        )
-      ]
-    );
+    return Stack(children: <Widget>[
+      Image.asset(
+        "assets/homepage.jpg",
+        fit: BoxFit.fitHeight,
+        height: MediaQuery.of(context).size.height / 2,
+      ),
+      AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          PopupMenuButton(
+              icon: Icon(Icons.more_vert, color: Colors.white),
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem(child: Text("Credits"), value: 1)
+                ];
+              },
+            onSelected: (i) => showAboutDialog(
+                context: context,
+                applicationName: "Got It",
+                applicationVersion: "Version 1.0",
+                applicationLegalese: "Producer: Regina Fiedler"
+            ),
+          ),
+        ],
+      )
+    ]);
   }
 
   Widget _getBody(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        Flexible(
-            fit: FlexFit.tight,
-            flex: 1,
-            child: _getAppBar(context)
-        ),
-
+        Flexible(fit: FlexFit.tight, flex: 1, child: _getAppBar(context)),
         Flexible(
             fit: FlexFit.tight,
             flex: 1,
@@ -59,104 +81,73 @@ class MainPage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        MyIconButton(() => onClickLibrary(context), Icons.view_module, FlutterI18n.translate(context, "main_screen.library")),
-                        MyIconButton(() => onClickWishList(context), Icons.stars, FlutterI18n.translate(context, "main_screen.wishlist"))
+                        MyIconButton(
+                            () => onClickLibrary(context),
+                            Icons.view_module,
+                            FlutterI18n.translate(
+                                context, "main_screen.my_cosmetics")),
                       ],
-                    )
-                ),
-
+                    )),
                 Flexible(
                     child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        MyIconButton(() => onClickSearch(context), Icons.search, FlutterI18n.translate(context, "main_screen.got_it")),
-                        MyIconButton(() => onClickAdd(context), Icons.add, FlutterI18n.translate(context, "main_screen.add"))
-                      ],
-                    )
-                )
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    MyIconButton(() => onClickSearch(context), Icons.search,
+                        FlutterI18n.translate(context, "main_screen.got_it")),
+                    MyIconButton(() => onClickAdd(context), Icons.add,
+                        FlutterI18n.translate(context, "main_screen.add_new"))
+                  ],
+                ))
               ],
-            )
-        )
+            ))
       ],
     );
   }
 
   void onClickLibrary(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(
-        builder: (BuildContext context) => CategoriesScreen()
-    ));
+    TagsScreen.start(context);
   }
 
   void onClickSearch(BuildContext context) async {
-    Analytics.getInstance().firebaseAnalytics.logEvent(name: "scan_barcode_mainscreen");
 
     String barcode;
+    String dialogGif;
+    String dialogTitle;
+    String dialogText;
+
     try {
-      barcode = await BarcodeScanner.scan();
+      barcode = (await BarcodeScanner.scan()).rawContent;
+      Repository repository = RepositoryProvider.of<Repository>(context);
+
+      print("[MainScreen]  Barcode: <<$barcode>>");
+      // on back pressed
+      if (barcode.isEmpty) return;
+
+      Product product = await repository.getProductByBarcode(barcode);
+
+      // found
+      if (product != null) {
+        dialogGif = "assets/dialog/found.gif";
+        dialogTitle = FlutterI18n.translate(context, "dialog.title.got_it");
+        dialogText = FlutterI18n.translate(context, "dialog.text.got_it");
+      } else {
+        dialogGif = "assets/dialog/not_found.gif";
+        dialogTitle = FlutterI18n.translate(context, "dialog.title.not_found");
+        dialogText = FlutterI18n.translate(context, "dialog.text.not_found");
+      }
     } catch (_) {
-      return;
+      dialogGif = "assets/dialog/error.gif";
+      dialogTitle = FlutterI18n.translate(context, "dialog.title.error");
+      dialogText = FlutterI18n.translate(context, "dialog.text.error");
     }
 
-    Repository repository =  RepositoryProvider.of<Repository>(context);
+    showGifDialog(context, dialogGif, dialogTitle, dialogText);
 
-    if (barcode == null || barcode.isEmpty) {
-      Alert(
-        context: context,
-        title: FlutterI18n.translate(context, "alerts.error"),
-        desc: FlutterI18n.translate(context, "alerts.could_not_read"),
-        type: AlertType.warning,
-      ).show();
-    }
-
-    else if (await repository.inLibrary(barcode)) {
-      Alert(
-        context: context,
-        title: FlutterI18n.translate(context, "alerts.got_it"),
-        desc: FlutterI18n.translate(context, "alerts.already_in_library"),
-        type: AlertType.success,
-      ).show();
-    }
-
-    else if (await repository.inWishList(barcode)) {
-      Alert(
-        context: context,
-        title: FlutterI18n.translate(context, "alerts.already_in_wishlist"),
-        type: AlertType.info,
-      ).show();
-    }
-
-    else {
-      Alert(
-          context: context,
-          title: FlutterI18n.translate(context, "alerts.not_yet"),
-          desc: FlutterI18n.translate(context, "alerts.not_in_library"),
-          type: AlertType.error,
-          buttons: <DialogButton>[
-            DialogButton(
-                child: Center(child: Text(FlutterI18n.translate(context, "alerts.put_on_wishlist"), textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),)),
-                onPressed: () async {
-                  await ProductEditor.start(context, Product.empty().copyWith(barcode: barcode, wish: true));
-                  Navigator.of(context).pop();
-                }
-            ),
-
-            DialogButton(
-                child: Center(child: Text(FlutterI18n.translate(context, "alerts.okay"), style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),)),
-                onPressed: () => Navigator.of(context).pop()
-            )
-          ]
-      ).show();
-    }
   }
 
-  void onClickWishList(BuildContext context) {
-    WishListViewer.start(context);
+  void onClickAdd(BuildContext context) async {
+    ProductScreen.start(context, Product.empty(), true, true);
   }
-
-  void onClickAdd(BuildContext context) {
-    ProductEditor.start(context, Product.empty());
-  }
-
 
 }

@@ -1,59 +1,41 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:got_it/model/Product.dart';
-import 'package:got_it/ui/screen/ProductViewer.dart';
 
 class ProductCard extends StatelessWidget {
+  final Product _product;
+  final Function _onTap;
 
-  final Product product;
-  final Function onTap;
+  static final Image _defaultImage = Image.asset("assets/transparent_image.png");
 
-  const ProductCard(this.product, {Key key, this.onTap}) : super(key: key);
+  const ProductCard(this._product, this._onTap, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-    double width = MediaQuery.of(context).size.width;
-    double height = 80;
-
-    return GestureDetector(
-      onTap: onTap,
-      child: SizedBox(
-        width: width,
-        height: height,
-        child: Card(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(product.title, style: TextStyle(fontSize: 20, color: Colors.black45),),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  product.wish ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.star, size: 28, color: Colors.yellowAccent),
-                  ) : Container(),
-
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(product.favorite ? Icons.favorite : Icons.favorite_border, size: 28, color: Color.fromRGBO(255, 0, 0, 0.3)),
-                  )
-                ],
+    return ListTile(
+      leading: Hero(
+          tag: _product.id,
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(90),
+              child: FadeInImage(
+                  placeholder: _defaultImage.image,
+                  image: (_product.imagePath != null && File(_product.imagePath).existsSync()) ?
+                  Image.file(File(_product.imagePath)).image :
+                  Image.asset("assets/default_product_image.png").image,
+                width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
               )
-            ],
-          ),
-        ),
+          )
       ),
+      title: Text(_product.title),
+      subtitle: Text("#" +
+          _product.productTags
+              .map((tag) => FlutterI18n.translate(context, tag))
+              .join(" #")),
+      onTap: _onTap,
     );
   }
-
 }

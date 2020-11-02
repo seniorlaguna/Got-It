@@ -1,0 +1,156 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="de.seniorlaguna.gotit"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="28" />
+10    <!--
+11         Flutter needs it to communicate with the running application
+12         to allow setting breakpoints, to provide hot reload, etc.
+13    -->
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:9:5-67
+14-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:9:22-64
+15    <uses-permission android:name="android.permission.CAMERA" />
+15-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:10:5-65
+15-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:10:22-62
+16    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- Don't require camera, as this requires a rear camera. This allows it to work on the Nexus 7 -->
+16-->[:camera] /home/seniorlaguna/AndroidStudioProjects/got-it/build/camera/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-71
+16-->[:camera] /home/seniorlaguna/AndroidStudioProjects/got-it/build/camera/intermediates/library_manifest/debug/AndroidManifest.xml:8:22-68
+17    <uses-feature
+17-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:24:5-26:36
+18        android:name="android.hardware.camera"
+18-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:25:9-47
+19        android:required="false" />
+19-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:26:9-33
+20    <uses-feature
+20-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:27:5-29:36
+21        android:name="android.hardware.camera.front"
+21-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:28:9-53
+22        android:required="false" /> <!-- TODO replace above two with next line after Android 4.2 -->
+22-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:29:9-33
+23    <!-- <uses-feature android:name="android.hardware.camera.any"/> -->
+24    <uses-feature
+24-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:32:5-34:36
+25        android:name="android.hardware.camera.autofocus"
+25-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:33:9-57
+26        android:required="false" />
+26-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:34:9-33
+27    <uses-feature
+27-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:35:5-37:36
+28        android:name="android.hardware.camera.flash"
+28-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:36:9-53
+29        android:required="false" />
+29-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:37:9-33
+30    <uses-feature
+30-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:38:5-40:36
+31        android:name="android.hardware.screen.landscape"
+31-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:39:9-57
+32        android:required="false" />
+32-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:40:9-33
+33    <uses-feature
+33-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:41:5-43:36
+34        android:name="android.hardware.wifi"
+34-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:42:9-45
+35        android:required="false" />
+35-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:43:9-33
+36
+37    <application
+37-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:12:5-34:19
+38        android:name="io.flutter.app.FlutterApplication"
+38-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:13:9-57
+39        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+39-->[androidx.core:core:1.3.1] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/a7f066e6ecc6aa7907aa78041df0759b/core-1.3.1/AndroidManifest.xml:24:18-86
+40        android:debuggable="true"
+41        android:icon="@drawable/goat"
+41-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:15:9-38
+42        android:label="Got It" >
+42-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:14:9-31
+43        <activity
+43-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:16:9-28:20
+44            android:name="seniorlaguna.de.got_it.MainActivity"
+44-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:18:13-41
+45            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+45-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:21:13-163
+46            android:hardwareAccelerated="true"
+46-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:22:13-47
+47            android:launchMode="singleTop"
+47-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:19:13-43
+48            android:screenOrientation="portrait"
+48-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:17:13-49
+49            android:theme="@style/LaunchTheme"
+49-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:20:13-47
+50            android:windowSoftInputMode="adjustResize" >
+50-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:23:13-55
+51            <intent-filter>
+51-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:24:13-27:29
+52                <action android:name="android.intent.action.MAIN" />
+52-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:25:17-68
+52-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:25:25-66
+53
+54                <category android:name="android.intent.category.LAUNCHER" />
+54-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:26:17-76
+54-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:26:27-74
+55            </intent-filter>
+56        </activity>
+57        <!--
+58             Don't delete the meta-data below.
+59             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+60        -->
+61        <meta-data
+61-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:31:9-33:33
+62            android:name="flutterEmbedding"
+62-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:32:13-44
+63            android:value="2" />
+63-->/home/seniorlaguna/AndroidStudioProjects/got-it/android/app/src/main/AndroidManifest.xml:33:13-30
+64
+65        <activity android:name="de.mintware.barcode_scan.BarcodeScannerActivity" />
+65-->[:barcode_scan] /home/seniorlaguna/AndroidStudioProjects/got-it/build/barcode_scan/intermediates/library_manifest/debug/AndroidManifest.xml:10:9-84
+65-->[:barcode_scan] /home/seniorlaguna/AndroidStudioProjects/got-it/build/barcode_scan/intermediates/library_manifest/debug/AndroidManifest.xml:10:19-81
+66        <activity
+66-->[:url_launcher] /home/seniorlaguna/AndroidStudioProjects/got-it/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-11:74
+67            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+67-->[:url_launcher] /home/seniorlaguna/AndroidStudioProjects/got-it/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-74
+68            android:exported="false"
+68-->[:url_launcher] /home/seniorlaguna/AndroidStudioProjects/got-it/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:10:13-37
+69            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+69-->[:url_launcher] /home/seniorlaguna/AndroidStudioProjects/got-it/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-71
+70
+71        <provider
+71-->[:share] /home/seniorlaguna/AndroidStudioProjects/got-it/build/share/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-16:20
+72            android:name="io.flutter.plugins.share.ShareFileProvider"
+72-->[:share] /home/seniorlaguna/AndroidStudioProjects/got-it/build/share/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-70
+73            android:authorities="de.seniorlaguna.gotit.flutter.share_provider"
+73-->[:share] /home/seniorlaguna/AndroidStudioProjects/got-it/build/share/intermediates/library_manifest/debug/AndroidManifest.xml:10:13-74
+74            android:exported="false"
+74-->[:share] /home/seniorlaguna/AndroidStudioProjects/got-it/build/share/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-37
+75            android:grantUriPermissions="true" >
+75-->[:share] /home/seniorlaguna/AndroidStudioProjects/got-it/build/share/intermediates/library_manifest/debug/AndroidManifest.xml:12:13-47
+76            <meta-data
+76-->[:share] /home/seniorlaguna/AndroidStudioProjects/got-it/build/share/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-15:68
+77                android:name="android.support.FILE_PROVIDER_PATHS"
+77-->[:share] /home/seniorlaguna/AndroidStudioProjects/got-it/build/share/intermediates/library_manifest/debug/AndroidManifest.xml:14:17-67
+78                android:resource="@xml/flutter_share_file_paths" />
+78-->[:share] /home/seniorlaguna/AndroidStudioProjects/got-it/build/share/intermediates/library_manifest/debug/AndroidManifest.xml:15:17-65
+79        </provider>
+80
+81        <activity
+81-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:46:9-52:63
+82            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+82-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:47:13-74
+83            android:clearTaskOnLaunch="true"
+83-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:48:13-45
+84            android:screenOrientation="sensorLandscape"
+84-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:49:13-56
+85            android:stateNotNeeded="true"
+85-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:50:13-42
+86            android:theme="@style/zxing_CaptureTheme"
+86-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:51:13-54
+87            android:windowSoftInputMode="stateAlwaysHidden" />
+87-->[com.journeyapps:zxing-android-embedded:3.5.0] /home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/dce6db0f26f61998d5ee588d80c879fb/jetified-zxing-android-embedded-3.5.0/AndroidManifest.xml:52:13-60
+88    </application>
+89
+90</manifest>

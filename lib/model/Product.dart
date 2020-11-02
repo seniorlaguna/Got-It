@@ -1,6 +1,44 @@
 import 'package:equatable/equatable.dart';
-import 'package:got_it/data/Categories.dart';
-import 'package:got_it/model/Category.dart';
+
+final Set<String> mainTags = {
+  "main_tag.eyes",
+  "main_tag.lips",
+  "main_tag.skincare",
+  "main_tag.body_haircare",
+  "main_tag.nails",
+  "main_tag.face",
+  "main_tag.tools"
+};
+
+final Set<String> colorTags = {
+  "tag.green",
+  "tag.red",
+  "tag.yellow",
+  "tag.orange",
+  "tag.blue",
+  "tag.black",
+  "tag.white"
+};
+
+final Set<String> brandTags = {
+  "brand a",
+  "brand b",
+  "brand c",
+  "brand d"
+};
+
+final Set<String> toolTags = {
+  "tool a",
+  "tool b",
+  "tool c",
+  "tool d"
+};
+
+final Set<String> allTags = Set<String>.of(mainTags.followedBy(colorTags).followedBy(brandTags).followedBy(toolTags));
+
+final String favoriteTag = "favorite";
+final String wishTag = "wish";
+final String deleteTag = "delete";
 
 class Product extends Equatable {
 
@@ -11,33 +49,21 @@ class Product extends Equatable {
   static const COLUMN_TITLE = "title";
   static const COLUMN_BARCODE = "barcode";
   static const COLUMN_IMAGE_PATH = "imagePath";
-  static const COLUMN_CATEGORY = "category";
-  static const COLUMN_SUB_CATEGORY = "subCategory";
-  static const COLUMN_NOTES = "notes";
-  static const COLUMN_FAVORITES = "favorite";
-  static const COLUMN_WISH = "wish";
-  static const COLUMN_TO_DELETE = "toDelete";
+  static const COLUMN_TAGS = "tags";
 
   // column types
   final int id;
   final String title;
   final String barcode;
   final String imagePath;
-  final Category category;
-  final SubCategory subCategory;
-  final String notes;
-  final bool favorite;
-  final bool wish;
-  final int toDelete;
+  final Set<String> tags;
 
   const Product(
-      this.id, this.title, this.barcode, this.imagePath,
-      this.category, this.subCategory, this.notes,
-      this.favorite, this.wish, {this.toDelete}
+      this.id, this.title, this.barcode, this.imagePath, this.tags
       );
 
   static Product empty() {
-    return Product(0, "", "", "", null, null, "", false, false, toDelete: null);
+    return Product(null, null, null, null,  Set<String>());
   }
 
   static Product fromMap(Map<String, dynamic> map) {
@@ -46,30 +72,28 @@ class Product extends Equatable {
         map[COLUMN_TITLE],
         map[COLUMN_BARCODE],
         map[COLUMN_IMAGE_PATH],
-        categoryById(map[COLUMN_CATEGORY]),
-        subCategoryById(map[COLUMN_CATEGORY], map[COLUMN_SUB_CATEGORY]),
-        map[COLUMN_NOTES],
-        map[COLUMN_FAVORITES] == 1,
-        map[COLUMN_WISH] == 1,
-        toDelete: map[COLUMN_TO_DELETE]
+        (map[COLUMN_TAGS] as String).isEmpty ? Set<String>() : Set<String>.of((map[COLUMN_TAGS] as String).split(";"))
     );
   }
 
-  Product copyWith({int id, String title, String barcode, String imagePath, Category category, SubCategory subCategory, String notes, bool favorite, bool wish, int toDelete}) {
+  Product copyWith({int id, String title, String barcode, String imagePath, Set<String> tags, bool favorite, bool wish, int toDelete}) {
     return Product(
         id ?? this.id,
         title ?? this.title,
         barcode ?? this.barcode,
         imagePath ?? this.imagePath,
-        category ?? this.category,
-        subCategory ?? this.subCategory,
-        notes ?? this.notes,
-        favorite ?? this.favorite,
-        wish ?? this.wish,
-        toDelete : toDelete ?? this.toDelete
+        tags ?? this.tags
     );
   }
 
+  bool get like => tags.contains(favoriteTag);
+
+  bool get wish => tags.contains(wishTag);
+
+  bool get delete => tags.contains(deleteTag);
+
+  Set<String> get productTags => tags.difference(Set<String>.from([favoriteTag, wishTag, deleteTag]));
+
   @override
-  List<Object> get props => [id, title, barcode, imagePath, category, subCategory, notes, favorite, wish, toDelete];
+  List<Object> get props => [id, title, barcode, imagePath, tags];
 }

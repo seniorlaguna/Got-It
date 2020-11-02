@@ -1,0 +1,46 @@
+[
+    {
+        "merged": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/barcode_scan/intermediates/res/merged/release/interpolator/btn_checkbox_checked_mtrl_animation_interpolator_0.xml",
+        "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/bb61086b68fac3d8949879d47acfdddc/appcompat-1.1.0/res/interpolator/btn_checkbox_checked_mtrl_animation_interpolator_0.xml"
+    },
+    {
+        "merged": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/barcode_scan/intermediates/res/merged/release/interpolator/mtrl_linear.xml",
+        "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/8c3dd20e39122ae4b5ffac2e36f1e5ca/material-1.1.0/res/interpolator/mtrl_linear.xml"
+    },
+    {
+        "merged": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/barcode_scan/intermediates/res/merged/release/interpolator/btn_radio_to_off_mtrl_animation_interpolator_0.xml",
+        "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/bb61086b68fac3d8949879d47acfdddc/appcompat-1.1.0/res/interpolator/btn_radio_to_off_mtrl_animation_interpolator_0.xml"
+    },
+    {
+        "merged": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/barcode_scan/intermediates/res/merged/release/interpolator/mtrl_linear_out_slow_in.xml",
+        "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/8c3dd20e39122ae4b5ffac2e36f1e5ca/material-1.1.0/res/interpolator/mtrl_linear_out_slow_in.xml"
+    },
+    {
+        "merged": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/barcode_scan/intermediates/res/merged/release/interpolator/mtrl_fast_out_linear_in.xml",
+        "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/8c3dd20e39122ae4b5ffac2e36f1e5ca/material-1.1.0/res/interpolator/mtrl_fast_out_linear_in.xml"
+    },
+    {
+        "merged": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/barcode_scan/intermediates/res/merged/release/interpolator/btn_checkbox_unchecked_mtrl_animation_interpolator_1.xml",
+        "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/bb61086b68fac3d8949879d47acfdddc/appcompat-1.1.0/res/interpolator/btn_checkbox_unchecked_mtrl_animation_interpolator_1.xml"
+    },
+    {
+        "merged": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/barcode_scan/intermediates/res/merged/release/interpolator/btn_checkbox_checked_mtrl_animation_interpolator_1.xml",
+        "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/bb61086b68fac3d8949879d47acfdddc/appcompat-1.1.0/res/interpolator/btn_checkbox_checked_mtrl_animation_interpolator_1.xml"
+    },
+    {
+        "merged": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/barcode_scan/intermediates/res/merged/release/interpolator/fast_out_slow_in.xml",
+        "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/bb61086b68fac3d8949879d47acfdddc/appcompat-1.1.0/res/interpolator/fast_out_slow_in.xml"
+    },
+    {
+        "merged": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/barcode_scan/intermediates/res/merged/release/interpolator/btn_checkbox_unchecked_mtrl_animation_interpolator_0.xml",
+        "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/bb61086b68fac3d8949879d47acfdddc/appcompat-1.1.0/res/interpolator/btn_checkbox_unchecked_mtrl_animation_interpolator_0.xml"
+    },
+    {
+        "merged": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/barcode_scan/intermediates/res/merged/release/interpolator/mtrl_fast_out_slow_in.xml",
+        "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/8c3dd20e39122ae4b5ffac2e36f1e5ca/material-1.1.0/res/interpolator/mtrl_fast_out_slow_in.xml"
+    },
+    {
+        "merged": "/home/seniorlaguna/AndroidStudioProjects/got-it/build/barcode_scan/intermediates/res/merged/release/interpolator/btn_radio_to_on_mtrl_animation_interpolator_0.xml",
+        "source": "/home/seniorlaguna/.gradle/caches/transforms-2/files-2.1/bb61086b68fac3d8949879d47acfdddc/appcompat-1.1.0/res/interpolator/btn_radio_to_on_mtrl_animation_interpolator_0.xml"
+    }
+]

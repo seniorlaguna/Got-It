@@ -1,47 +1,70 @@
+# title on welcome screen
 title: "Got It"
 
-# Main Screen
+# main screen button text
 main_screen:
-  library: "My Cosmetics"
-  wishlist: "Wish List"
+  my_cosmetics: "My Cosmetics"
   got_it: "Got It?"
-  add : "Add new one"
+  add_new: "Add new one"
 
-alerts:
-  error: "Error"
-  could_not_read: "I could not read the barcode"
+# main tag names
+main_tag:
+  eyes: "eyes"
+  lips: "lips"
+  skincare: "skincare"
+  body_haircare: "body&haircare"
+  nails: "nails"
+  face: "face"
+  tools: "tools"
 
-  got_it: "Got It!"
-  already_in_library: "This is already in your collection"
+# special tag names
+delete: "Trash"
+favorite: "Favorites"
 
-  already_in_wishlist: "This is already in your wish list"
+# dialogs
+dialog:
+  title:
+    got_it: "Got It!"
+    not_found: "We are so sorry!"
+    error: "Ooops!"
+    scan_first: "Scan your Product"
 
-  not_yet: "Do not have it yet"
-  not_in_library: "This is not in your collection yet"
+  text:
+    got_it: "It's already in your collection"
+    not_found: "We could not find that product in your collection"
+    error: "That should not happen XD"
+    scan_first: "We need the product' s barcode to do that"
 
-  put_on_wishlist: "Put on Wish List"
-  okay: "Okay"
+# product page
+product:
+  title:
+    new: "New Product"
+    hint: "Product Name"
 
-category:
-  eyes: "Eyes"
-  face: "Face"
-  nails: "Nails"
-  body: "Body"
-  lips: "Lips"
-  trash: "Trash"
-  favorites: "Favorites"
+  validator:
+    no_name: "The product needs a name"
+    no_tag: "Select at least 1 tag"
+    no_main_tag: "Select at least one main tag"
 
-#sub_category:
+  share:
+    text: "Look what I got."
 
-product_viewer:
-  like: "Like"
-  how_to: "How To"
-  share: "Share"
-  buy: "Buy"
-  info: "Info"
+    # only interesting for email
+    subject: "Got It"
 
-product_editor:
-  title: "Title"
-  notes: "Notes"
-  scan_barcode: "Scan barcode"
-  scan_barcode_again: "Scan barcode again"
+  take_picture: "Take a picture"
+  scan_barcode: "Scan the product's barcode"
+
+product_list:
+  empty: "It's still empty in here"
+  nothing_found: "We couldn't find anything"
+  error: "Oh that went wrong"
+  search_title: "Search Results"
+
+search:
+  title: "Search"
+  hint: "Enter something"
+  error: "Please enter something or select some tags"
+  search: "Search"
+  by_title: "Search by title"
+  by_tags: "Search by tags"
