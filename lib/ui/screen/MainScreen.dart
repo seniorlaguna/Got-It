@@ -1,106 +1,110 @@
-import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:got_it/data/Repository.dart';
 import 'package:got_it/model/Product.dart';
 import 'package:got_it/ui/screen/ProductScreen.dart';
+import 'package:got_it/ui/screen/SearchScreen.dart';
 import 'package:got_it/ui/screen/TagsScreen.dart';
-import 'package:got_it/ui/widget/MyIconButton.dart';
+import 'package:got_it/ui/screen/WelcomeScreen.dart';
+import 'package:got_it/ui/widget/BarcodeScannerDialog.dart';
+import 'package:got_it/ui/widget/MainMenuButton.dart';
 
-void showGifDialog(BuildContext context, String gifPath, String title, String text) {
+import 'InfoScreen.dart';
+
+void showGifDialog(
+    BuildContext context, String gifPath, String title, String text) {
   showDialog(
       context: context,
       builder: (_) => AssetGiffyDialog(
-        image: Image.asset(gifPath),
-        title: Text(
-          FlutterI18n.translate(context, title),
-          style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
-        ),
-        description: Text(FlutterI18n.translate(context, text)),
-        entryAnimation: EntryAnimation.TOP,
-        onlyOkButton: true,
-        buttonOkColor: Colors.lightGreen,
-        onOkButtonPressed: () => Navigator.pop(context)
-      )
-  );
+          image: Image.asset(gifPath, fit: BoxFit.cover),
+          title: Text(
+            FlutterI18n.translate(context, title),
+            style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w600),
+          ),
+          description: Text(
+            FlutterI18n.translate(context, text),
+            textAlign: TextAlign.center,
+          ),
+          entryAnimation: EntryAnimation.TOP,
+          onlyOkButton: true,
+          buttonOkColor: Colors.lightGreen,
+          onOkButtonPressed: () => Navigator.pop(context)));
 }
 
-class MainPage extends StatelessWidget {
+class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Builder(builder: (context) => _getBody(context)));
-  }
-
-  Widget _getAppBar(BuildContext context) {
-    return Stack(children: <Widget>[
-      Image.asset(
-        "assets/homepage.jpg",
-        fit: BoxFit.fitHeight,
-        height: MediaQuery.of(context).size.height / 2,
-      ),
-      AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          PopupMenuButton(
-              icon: Icon(Icons.more_vert, color: Colors.white),
+    return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          actions: [
+            PopupMenuButton(
+              icon: Icon(Icons.more_vert, color: Colors.black),
               itemBuilder: (context) {
-                return [
-                  PopupMenuItem(child: Text("Credits"), value: 1)
-                ];
+                return ["Credits", "AGBs", "Datenschutz", "Impressum"]
+                    .map((e) => PopupMenuItem(child: Text(e), value: e))
+                    .toList();
               },
-            onSelected: (i) => showAboutDialog(
-                context: context,
-                applicationName: "Got It",
-                applicationVersion: "Version 1.0",
-                applicationLegalese: "Producer: Regina Fiedler"
+              onSelected: (i) {
+                switch (i) {
+                  case "Credits":
+                    showAboutDialog(
+                        context: context,
+                        applicationName: "Got It",
+                        applicationVersion: "Version 1.0",
+                        applicationLegalese: "Mady by Regina Fiedler");
+                    break;
+                  default:
+                    InfoScreen.start(context, i, "Text");
+                }
+              },
             ),
-          ),
-        ],
-      )
-    ]);
+          ],
+        ),
+        body: Builder(builder: (context) => _getBody(context)));
   }
 
   Widget _getBody(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        Flexible(fit: FlexFit.tight, flex: 1, child: _getAppBar(context)),
-        Flexible(
-            fit: FlexFit.tight,
-            flex: 1,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Flexible(
-                    fit: FlexFit.tight,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        MyIconButton(
-                            () => onClickLibrary(context),
-                            Icons.view_module,
-                            FlutterI18n.translate(
-                                context, "main_screen.my_cosmetics")),
-                      ],
-                    )),
-                Flexible(
-                    child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    MyIconButton(() => onClickSearch(context), Icons.search,
-                        FlutterI18n.translate(context, "main_screen.got_it")),
-                    MyIconButton(() => onClickAdd(context), Icons.add,
-                        FlutterI18n.translate(context, "main_screen.add_new"))
-                  ],
-                ))
-              ],
-            ))
+        Center(
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Hero(
+              tag: "logo",
+              child: Image.asset("assets/empty.png",
+                  height: MediaQuery.of(context).size.height / 8),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 28, 0, 0),
+              child: Hero(
+                tag: "title",
+                child: titleText,
+              ),
+            )
+          ]),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            MainMenuButton(
+                "assets/button_search.png", () => onClickSearch(context), 32),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 78.0),
+              child: MainMenuButton("assets/button_collection.png",
+                  () => onClickLibrary(context), 46),
+            ),
+            MainMenuButton(
+                "assets/button_add.png", () => onClickAdd(context), 32)
+          ],
+        ),
       ],
     );
   }
@@ -109,18 +113,18 @@ class MainPage extends StatelessWidget {
     TagsScreen.start(context);
   }
 
-  void onClickSearch(BuildContext context) async {
+  void onClickSearch(BuildContext context) {
+    SearchScreen.start(context);
+  }
 
-    String barcode;
+  void onBarcodeDetected(BuildContext context, String barcode) async {
     String dialogGif;
     String dialogTitle;
     String dialogText;
 
     try {
-      barcode = (await BarcodeScanner.scan()).rawContent;
       Repository repository = RepositoryProvider.of<Repository>(context);
 
-      print("[MainScreen]  Barcode: <<$barcode>>");
       // on back pressed
       if (barcode.isEmpty) return;
 
@@ -143,11 +147,9 @@ class MainPage extends StatelessWidget {
     }
 
     showGifDialog(context, dialogGif, dialogTitle, dialogText);
-
   }
 
   void onClickAdd(BuildContext context) async {
     ProductScreen.start(context, Product.empty(), true, true);
   }
-
 }

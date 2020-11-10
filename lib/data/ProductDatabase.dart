@@ -3,7 +3,6 @@ import 'package:sqflite/sqflite.dart';
 import '../model/Product.dart';
 
 class ProductDatabase {
-
   static const String DB_NAME = "got_it.db";
   static const String SQL_CREATE_TABLE_PRODUCT =
       "CREATE TABLE `${Product.TABLE_NAME}` "
@@ -17,22 +16,7 @@ class ProductDatabase {
   Future<Database> database;
 
   ProductDatabase() {
-    database = openDatabase(
-        DB_NAME,
-        onCreate: onCreateDatabase,
-        onOpen: deleteOldProducts,
-        version: 1
-    );
-  }
-
-  void deleteOldProducts(Database database) {
-    if (DateTime.now().weekday != 1) return;
-
-    database.delete(
-        Product.TABLE_NAME,
-        where: "${Product.COLUMN_TAGS} LIKE '%' || ? || '%'",
-        whereArgs: [deleteTag]
-    );
+    database = openDatabase(DB_NAME, onCreate: onCreateDatabase, version: 1);
   }
 
   void onCreateDatabase(Database database, int version) {
@@ -40,40 +24,38 @@ class ProductDatabase {
   }
 
   Future<int> insert(Product product) async {
-    return (await database).insert(
-        Product.TABLE_NAME,
-        {
-          Product.COLUMN_TITLE : product.title,
-          Product.COLUMN_BARCODE : product.barcode,
-          Product.COLUMN_IMAGE_PATH : product.imagePath,
-          Product.COLUMN_TAGS : product.tags.join(";")
-        }
-    );
+    return (await database).insert(Product.TABLE_NAME, {
+      Product.COLUMN_TITLE: product.title,
+      Product.COLUMN_BARCODE: product.barcode,
+      Product.COLUMN_IMAGE_PATH: product.imagePath,
+      Product.COLUMN_TAGS: product.tags.join(";")
+    });
   }
 
   Future<int> update(Product product) async {
     return (await database).update(
         Product.TABLE_NAME,
         {
-          Product.COLUMN_TITLE : product.title,
-          Product.COLUMN_BARCODE : product.barcode,
-          Product.COLUMN_IMAGE_PATH : product.imagePath,
-          Product.COLUMN_TAGS : product.tags.join(";")
+          Product.COLUMN_TITLE: product.title,
+          Product.COLUMN_BARCODE: product.barcode,
+          Product.COLUMN_IMAGE_PATH: product.imagePath,
+          Product.COLUMN_TAGS: product.tags.join(";")
         },
-      where: "`${Product.COLUMN_ID}` = ?",
-      whereArgs: [product.id]
-    );
+        where: "`${Product.COLUMN_ID}` = ?",
+        whereArgs: [product.id]);
   }
 
-  Future<List<Product>> search(String titleRegex, List<String> includedTags, List<String> excludedTags) async {
-
-    List<String> includedTagsWhere = includedTags.map((String tag) => "tags LIKE ('%' || '$tag' || '%')").toList();
+  Future<List<Product>> search(String titleRegex, List<String> includedTags,
+      List<String> excludedTags) async {
+    List<String> includedTagsWhere = includedTags
+        .map((String tag) => "tags LIKE ('%' || '$tag' || '%')")
+        .toList();
     String includedTagsWhereSql = includedTagsWhere.join(" AND ");
 
-    List<String> excludedTagsWhere = excludedTags.map((String tag) => "tags NOT LIKE ('%' || '$tag' || '%')").toList();
+    List<String> excludedTagsWhere = excludedTags
+        .map((String tag) => "tags NOT LIKE ('%' || '$tag' || '%')")
+        .toList();
     String excludedTagsWhereSql = excludedTagsWhere.join(" AND ");
-
-
 
     String sql = "SELECT * FROM Product WHERE title LIKE ('%' || ? || '%')";
 
@@ -88,17 +70,20 @@ class ProductDatabase {
     sql += " ORDER BY title COLLATE NOCASE";
 
     return (await (await database).rawQuery(sql, [titleRegex]))
-        .map((Map<String, dynamic> map) => Product.fromMap(map)).toList();
-
+        .map((Map<String, dynamic> map) => Product.fromMap(map))
+        .toList();
   }
 
   Future<List<Product>> getProductsByBarcode(String barcode) async {
+    return (await (await database).query(Product.TABLE_NAME,
+            where: "barcode = ?", whereArgs: [barcode]))
+        .map((Map<String, dynamic> map) => Product.fromMap(map))
+        .toList();
+  }
 
-    return (await (await database).query(
-      Product.TABLE_NAME,
-      where: "barcode = ?",
-      whereArgs: [barcode]
-    ))
-        .map((Map<String, dynamic> map) => Product.fromMap(map)).toList();
+  Future<void> clearTrash() async {
+    return (await database).delete(Product.TABLE_NAME,
+        where: "${Product.COLUMN_TAGS} LIKE '%' || ? || '%'",
+        whereArgs: [deleteTag]);
   }
 }

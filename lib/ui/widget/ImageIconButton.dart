@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-class SVGIconButton extends StatelessWidget {
+class ImageIconButton extends StatelessWidget {
 
   final String assetPath;
   final Function onTap;
 
-  SVGIconButton(this.assetPath, this.onTap);
+  ImageIconButton(this.assetPath, this.onTap);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +13,7 @@ class SVGIconButton extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.all(3.0),
-        child: SvgPicture.asset(
+        child: Image.asset(
             assetPath,
             width: 28,
             height: 28,

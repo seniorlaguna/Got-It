@@ -6,9 +6,9 @@ import 'package:got_it/ui/screen/ProductListScreen.dart';
 import 'package:got_it/ui/widget/TagChooser.dart';
 
 class SearchScreen extends StatefulWidget {
-
   static Future<dynamic> start(BuildContext context) {
-    return Navigator.push(context, MaterialPageRoute(builder: (_) => SearchScreen()));
+    return Navigator.push(
+        context, MaterialPageRoute(builder: (_) => SearchScreen()));
   }
 
   @override
@@ -16,10 +16,10 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-
+  final GlobalKey<TagSelectorState> _tagSelectorKey =
+      GlobalKey(debugLabel: "tagSelectorKey");
   GlobalKey<FormState> _formKey = GlobalKey();
   TextEditingController _textEditingController = TextEditingController();
-  Set<String> _selectedTags = {};
 
   @override
   void dispose() {
@@ -28,7 +28,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   String validateInput(BuildContext context, String titleRegex) {
-    if (titleRegex.isEmpty && _selectedTags.isEmpty) {
+    if (titleRegex.isEmpty && _tagSelectorKey.currentState.tags.isEmpty) {
       return FlutterI18n.translate(context, "search.error");
     }
     return null;
@@ -49,12 +49,12 @@ class _SearchScreenState extends State<SearchScreen> {
               alignment: Alignment(-0.9, 0),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                child: Text(FlutterI18n.translate(context, "search.by_title"), style: TextStyle(
-                    color: Colors.black54,
-                    fontWeight: FontWeight.w700
-                ),),
-              )
-          ),
+                child: Text(
+                  FlutterI18n.translate(context, "search.by_title"),
+                  style: TextStyle(
+                      color: Colors.black54, fontWeight: FontWeight.w700),
+                ),
+              )),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Form(
@@ -62,12 +62,10 @@ class _SearchScreenState extends State<SearchScreen> {
               child: TextFormField(
                 controller: _textEditingController,
                 decoration: InputDecoration(
-                  suffixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8))
-                  ),
-                  hintText: FlutterI18n.translate(context, "search.hint")
-                ),
+                    suffixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                    hintText: FlutterI18n.translate(context, "search.hint")),
                 validator: (value) => validateInput(context, value),
               ),
             ),
@@ -76,45 +74,52 @@ class _SearchScreenState extends State<SearchScreen> {
               alignment: Alignment(-0.9, 0),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                child: Text(FlutterI18n.translate(context, "search.by_tags"), style: TextStyle(
-                  color: Colors.black54,
-                  fontWeight: FontWeight.w700
-                ),),
-              )
-          ),
+                child: Text(
+                  FlutterI18n.translate(context, "search.by_tags"),
+                  style: TextStyle(
+                      color: Colors.black54, fontWeight: FontWeight.w700),
+                ),
+              )),
           Flexible(
-            child: Wrap(
-              children: [
-                for (String tag in allTags) Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: SelectableTag(tag, _selectedTags.contains(tag), () {
-                    if (_selectedTags.contains(tag)) {
-                      setState(() {
-                        _selectedTags.remove(tag);
-                      });
-                    }
-                    else {
-                      setState(() {
-                        _selectedTags.add(tag);
-                      });
-                    }
-                  }),
-                )
-              ],
+            child: Align(
+                alignment: Alignment(-0.9, 0),
+                heightFactor: 1,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 2),
+                  child: TagSelector({}, key: _tagSelectorKey),
+                )),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
+            child: MaterialButton(
+              onPressed: () {
+                FocusScopeNode focus = FocusScope.of(context);
+                if (!focus.hasPrimaryFocus) focus.unfocus();
+
+                if (_formKey.currentState.validate()) {
+                  ProductListScreen.start(context, _textEditingController.text,
+                      _tagSelectorKey.currentState.tags, {},
+                      appBarTitle: "product_list.search_title",
+                      libraryView: LibraryView.Search);
+                }
+              },
+              child: Text("search",
+                  style: TextStyle(color: Colors.white, fontSize: 18)),
+              color: Theme.of(context).accentColor,
+              minWidth: MediaQuery.of(context).size.width * 0.5,
             ),
           ),
-          MaterialButton(onPressed: () {
-
-            FocusScopeNode focus = FocusScope.of(context);
-            if (!focus.hasPrimaryFocus) focus.unfocus();
-
-            if (_formKey.currentState.validate()) {
-              ProductListScreen.start(context, _textEditingController.text, _selectedTags, {}, appBarTitle: "product_list.search_title", libraryView: LibraryView.Search);
-            }
-          },
-            child: Text("Search", style: TextStyle(color: Colors.white, fontSize: 18)),
-          color: Colors.lightBlue,
-          minWidth: MediaQuery.of(context).size.width * 0.95,)
+          Text("or"),
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: MaterialButton(
+              onPressed: () {},
+              child: Text("search by barcode",
+                  style: TextStyle(color: Colors.white, fontSize: 18)),
+              color: Theme.of(context).accentColor,
+              minWidth: MediaQuery.of(context).size.width * 0.5,
+            ),
+          )
         ],
       ),
     );

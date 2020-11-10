@@ -1,42 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:got_it/ui/screen/MainScreen.dart';
 
-class WelcomePage extends StatelessWidget {
+RichText titleText = RichText(
+    text: TextSpan(children: [
+  TextSpan(
+      text: "Got It",
+      style: TextStyle(
+          fontFamily: "Satisfy", fontSize: 64, color: Color(0xff858585))),
+  TextSpan(
+      text: "!",
+      style: TextStyle(
+          fontFamily: "Satisfy", fontSize: 64, color: Color(0xffdc9a9b)))
+]));
 
-  final TextStyle nameStyle = TextStyle(
-    fontSize: 50,
-    fontFamily: "IndieFlower"
-  );
-
-  final int duration = 3;
-
+class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-    Future.delayed(Duration(seconds: duration), () async {
-      Navigator.pushReplacement(context, MaterialPageRoute(
-          builder: (context) => MainPage()
-      ));
+    Future.delayed(Duration(seconds: 1), () async {
+      Navigator.pushReplacement(
+          context, SlowMaterialPageRoute(builder: (context) => MainScreen()));
     });
 
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ClipOval(
-              child: Image.asset("assets/goat.png", scale: 2,),
-            ),
-
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: Text(FlutterI18n.translate(context, "title"), style: nameStyle),
+    /*
+    Material(
+              child: Text("Got It!",
+                  style: TextStyle(
+                      fontFamily: "Satisfy",
+                      fontSize: 64,
+                      color: Color(0xff858585))),
             )
-          ],
-        ),
-      ),
-    );
-  }
+    */
 
+    return Scaffold(
+        body: Center(
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Hero(
+          tag: "logo",
+          child: Image.asset("assets/empty.png",
+              height: MediaQuery.of(context).size.height / 3.8),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+          child: Hero(
+            tag: "title",
+            child: titleText,
+          ),
+        )
+      ]),
+    ));
+  }
+}
+
+class SlowMaterialPageRoute extends MaterialPageRoute {
+  SlowMaterialPageRoute({Function(BuildContext) builder})
+      : super(builder: builder);
+
+  @override
+  Duration get transitionDuration => Duration(seconds: 2);
 }

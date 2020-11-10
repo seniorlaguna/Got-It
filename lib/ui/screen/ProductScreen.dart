@@ -5,14 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:got_it/bloc/ProductBloc.dart';
 import 'package:got_it/data/Repository.dart';
 import 'package:got_it/model/Product.dart';
 import 'package:got_it/ui/screen/MainScreen.dart';
 import 'package:got_it/ui/widget/BarcodeScannerDialog.dart';
 import 'package:got_it/ui/widget/ImagePickerDialog.dart';
-import 'package:got_it/ui/widget/LikeAnimation.dart';
-import 'package:got_it/ui/widget/SVGIconButton.dart';
+import 'package:got_it/ui/widget/ZoomAnimation.dart';
+import 'package:got_it/ui/widget/ImageIconButton.dart';
 import 'package:got_it/ui/widget/TagChooser.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -28,7 +29,7 @@ class ProductScreen extends StatefulWidget {
       TextStyle(fontSize: 20, fontWeight: FontWeight.w500);
 
   static final TextStyle _tagTextStyle = TextStyle(
-      fontSize: 16, color: Colors.lightBlue, fontWeight: FontWeight.w700);
+      fontSize: 16, color: Color(0xffdc9a9b), fontWeight: FontWeight.w700);
 
   static Future<dynamic> start(
       BuildContext context, Product product, bool edit, bool closeOnBack) {
@@ -45,7 +46,8 @@ class ProductScreen extends StatefulWidget {
   _ProductScreenState createState() => _ProductScreenState();
 }
 
-class _ProductScreenState extends State<ProductScreen> with SingleTickerProviderStateMixin {
+class _ProductScreenState extends State<ProductScreen>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _textEditingController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey(debugLabel: "formKey");
@@ -53,26 +55,22 @@ class _ProductScreenState extends State<ProductScreen> with SingleTickerProvider
       GlobalKey(debugLabel: "tagSelectorKey");
 
   // like animation
-  AnimationController _likeAnimationController;
+  AnimationController _responseAnimationController;
+  IconData _iconDataForResponse;
 
   @override
   void initState() {
     super.initState();
-    _likeAnimationController = AnimationController(
-      duration: Duration(milliseconds: 700),
-      vsync: this
-    );
-
+    _responseAnimationController =
+        AnimationController(duration: Duration(milliseconds: 700), vsync: this);
   }
 
   @override
   void dispose() {
     _textEditingController.dispose();
-    _likeAnimationController.dispose();
+    _responseAnimationController.dispose();
     super.dispose();
   }
-
-
 
   ProductBloc createBloc(BuildContext context) {
     return ProductBloc(RepositoryProvider.of<Repository>(context))
@@ -145,50 +143,78 @@ class _ProductScreenState extends State<ProductScreen> with SingleTickerProvider
 
     return Flexible(
         child: GestureDetector(
-          onTap: () => onImageTapped(context),
-          onDoubleTap: () => onImageDoubleTapped(context),
-          child: Stack(
-            children: [
-              Hero(
-                tag: product.id ?? -1,
-                child: FadeInImage(
-                  placeholder: Image.asset("assets/transparent_image.png").image,
-                  image: (product.imagePath == null ||  !File(product.imagePath).existsSync())
-                    ? Image.asset("assets/default_product_image.png").image
-                    : Image.file(File(product.imagePath)).image,
-                  width: width,
-                  height: height,
-                  fit: BoxFit.fill,
-              ),
+      onTap: () => onImageTapped(context),
+      onDoubleTap: () => onImageDoubleTapped(context),
+      child: Stack(
+        children: [
+          Hero(
+            tag: product.id ?? -1,
+            child: FadeInImage(
+              placeholder: Image.asset("assets/transparent_image.png").image,
+              image: (product.imagePath == null ||
+                      !File(product.imagePath).existsSync())
+                  ? Image.asset("assets/default_product_image.png").image
+                  : Image.file(File(product.imagePath)).image,
+              width: width,
+              height: height,
+              fit: BoxFit.fill,
             ),
-
-              BlocListener<ProductBloc, ProductState>(
-                condition: (previous, now) {
-                  return !previous.product.like && now.product.like;
-                },
-                listener: (_, __) {
-                  print("Liked");
-                  if (!_likeAnimationController.isAnimating) {
-                    print("Started like animation");
-                    _likeAnimationController..forward(from: 0);
-                  }
-                },
-                child: SizedBox(
-                    height: height,
-                    width: width,
-                    child: Center(child: LikeAnimation(_likeAnimationController))
-                ),
-              ),
-
-            ],
           ),
-        ));
+          BlocListener<ProductBloc, ProductState>(
+            condition: (previous, now) {
+              if (!previous.product.like && now.product.like) {
+                setState(() {
+                  _iconDataForResponse = Icons.favorite;
+                });
+                return true;
+              }
+
+              if (previous.product.barcode != now.product.barcode) {
+                setState(() {
+                  _iconDataForResponse = Icons.done;
+                });
+                return true;
+              }
+
+              return false;
+            },
+            listener: (_, __) {
+              if (!_responseAnimationController.isAnimating) {
+                _responseAnimationController..forward(from: 0);
+              }
+            },
+            child: SizedBox(
+                height: height,
+                width: width,
+                child: Center(
+                    child: ZoomAnimation(
+                        _responseAnimationController,
+                        Icon(_iconDataForResponse,
+                            size: 48, color: Colors.white)))),
+          ),
+        ],
+      ),
+    ));
   }
 
   Widget getErrorBody(BuildContext context) {
     return Center(
-        // TODO: Add error image
-        child: Text("Error"));
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            "assets/empty.png",
+            width: MediaQuery.of(context).size.width / 2,
+            fit: BoxFit.fitWidth,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(FlutterI18n.translate(context, "product_list.error"),
+                style: TextStyle(fontSize: 24, fontFamily: "IndieFlower")),
+          )
+        ],
+      ),
+    );
   }
 
   Widget getLoadingBody(BuildContext context) {
@@ -197,8 +223,8 @@ class _ProductScreenState extends State<ProductScreen> with SingleTickerProvider
 
   Widget getEditingIconBar(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-      SVGIconButton("assets/icons/barcode.svg", () => onScanBarcode(context)),
-      SVGIconButton("assets/icons/camera.svg", () => onTakePicture(context)),
+      ImageIconButton("assets/icons/barcode.png", () => onScanBarcode(context)),
+      ImageIconButton("assets/icons/camera.png", () => onTakePicture(context)),
     ]);
   }
 
@@ -210,19 +236,22 @@ class _ProductScreenState extends State<ProductScreen> with SingleTickerProvider
       children: [
         Row(
           children: [
-            SVGIconButton(
+            ImageIconButton(
                 like
-                    ? "assets/icons/heart_full.svg"
-                    : "assets/icons/heart_empty.svg",
+                    ? "assets/icons/heart_full.png"
+                    : "assets/icons/heart_empty.png",
                 () => onToggleLike(context)),
-            SVGIconButton("assets/icons/share.svg", () => onShare(context)),
+            ImageIconButton("assets/icons/share.png", () => onShare(context)),
           ],
         ),
         Row(
           children: [
-            SVGIconButton("assets/icons/info.svg", () => onShowInfo(context)),
-            SVGIconButton("assets/icons/play.svg", () => onShowHowTo(context)),
-            SVGIconButton("assets/icons/shop.svg", () => onBuyProduct(context)),
+            // TODO: Hier können wir Unternehmen mit einbinden (Monetarisieren!!!)
+            /* ImageIconButton("assets/icons/info.png", () => onShowInfo(context)),
+            ImageIconButton(
+                "assets/icons/play.png", () => onShowHowTo(context)),
+            ImageIconButton(
+                "assets/icons/shop.png", () => onBuyProduct(context)), */
           ],
         )
       ],
@@ -268,7 +297,8 @@ class _ProductScreenState extends State<ProductScreen> with SingleTickerProvider
       return FlutterI18n.translate(context, "product.validator.no_tag");
     }
 
-    if (!_tagSelectorKey.currentState.tags.any((element) => mainTags.contains(element))) {
+    if (!_tagSelectorKey.currentState.tags
+        .any((element) => mainTags.contains(element))) {
       return FlutterI18n.translate(context, "product.validator.no_main_tag");
     }
 
@@ -334,9 +364,7 @@ class _ProductScreenState extends State<ProductScreen> with SingleTickerProvider
     if (bloc.state.product.delete) tags.add(deleteTag);
 
     bloc.add(ProductChangedEvent(
-        bloc.state.product.copyWith(title: title, tags: tags),
-        true
-    ));
+        bloc.state.product.copyWith(title: title, tags: tags), true));
   }
 
   Widget getFAB(BuildContext context) {
@@ -344,7 +372,8 @@ class _ProductScreenState extends State<ProductScreen> with SingleTickerProvider
       return null;
 
     return FloatingActionButton(
-        child: Icon(Icons.done), onPressed: () => onSubmitClicked(context));
+        child: Icon(Icons.done, color: Colors.white),
+        onPressed: () => onSubmitClicked(context));
   }
 
   @override
@@ -376,7 +405,8 @@ class _ProductScreenState extends State<ProductScreen> with SingleTickerProvider
       tags.add(favoriteTag);
     }
 
-    bloc.add(ProductChangedEvent(bloc.state.product.copyWith(tags: tags), false));
+    bloc.add(
+        ProductChangedEvent(bloc.state.product.copyWith(tags: tags), false));
   }
 
   void onShare(BuildContext context) {
@@ -433,12 +463,12 @@ class _ProductScreenState extends State<ProductScreen> with SingleTickerProvider
   }
 
   Future<void> onTakePicture(BuildContext context) async {
-
     CameraDescription camera = (await availableCameras()).first;
 
     // file paths
     String tmpDirPath = (await getTemporaryDirectory()).path;
-    String targetPath = join((await getApplicationDocumentsDirectory()).path, "${DateTime.now()}.jpg");
+    String targetPath = join((await getApplicationDocumentsDirectory()).path,
+        "${DateTime.now()}.jpg");
 
     // camera size
     double width = MediaQuery.of(context).size.width;
@@ -450,36 +480,61 @@ class _ProductScreenState extends State<ProductScreen> with SingleTickerProvider
 
     showDialog(
         context: context,
-        builder: (BuildContext context){
-          return ImagePickerDialog(camera, tmpDirPath, targetPath, width, height, appBarHeight, () {
-
+        builder: (BuildContext context) {
+          return ImagePickerDialog(
+              camera, tmpDirPath, targetPath, width, height, appBarHeight, () {
             // called if image is saved
-            bloc.add(
-                ProductChangedEvent(bloc.state.product.copyWith(imagePath: targetPath), false));
-
+            bloc.add(ProductChangedEvent(
+                bloc.state.product.copyWith(imagePath: targetPath), false));
           });
-      }
-    );
-
+        });
   }
 
-  Future<void> onScanBarcode(BuildContext context) async {
+  void onBarcodeScanned(BuildContext context, String barcode) async {
+    // get bloc and repository
+    ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
+    Repository repository = RepositoryProvider.of(context);
+
+    if ((await repository.getProductByBarcode(barcode)) != null) {
+      // already in collection
+      showDialog(
+          context: context,
+          builder: (_) => AssetGiffyDialog(
+              image: Image.asset(
+                "assets/dialog/error.gif",
+                fit: BoxFit.cover,
+              ),
+              title: Text(
+                FlutterI18n.translate(context, "Double"),
+                style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
+              ),
+              description: Text(FlutterI18n.translate(context, "Double")),
+              entryAnimation: EntryAnimation.TOP,
+              onlyOkButton: true,
+              buttonOkColor: Colors.lightGreen,
+              onOkButtonPressed: (bloc.state.product.id == null)
+                  ? () => Navigator.of(context)..pop()..pop()
+                  : () {
+                      Navigator.pop(context);
+                      onBackClicked(context);
+                    }));
+      return;
+    }
+
+    bloc.add(ProductChangedEvent(
+        bloc.state.product.copyWith(barcode: barcode), false));
+  }
+
+  Future<void> onScanBarcode(BuildContext context) {
     // camera size
     double width = MediaQuery.of(context).size.width;
     double height = width;
     double appBarHeight = AppBar().preferredSize.height;
 
-    // get bloc
-    ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
-
     showDialog(
         context: context,
-      child: BarcodeScannerDialog(width, height, appBarHeight, (String barcode) {
-        bloc.add(ProductChangedEvent(
-            bloc.state.product.copyWith(barcode: barcode), false));
-
-      })
-    );
+        child: EmbeddedBarcodeScannerDialog(width, height, appBarHeight,
+            (barcode) => onBarcodeScanned(context, barcode)));
   }
 
   void noBarcodeFound(BuildContext context) {

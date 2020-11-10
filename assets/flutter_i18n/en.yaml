@@ -3,9 +3,9 @@ title: "Got It"
 
 # main screen button text
 main_screen:
-  my_cosmetics: "My Cosmetics"
+  my_cosmetics: "my cosmetics"
   got_it: "Got It?"
-  add_new: "Add new one"
+  add_new: "add new one"
 
 # main tag names
 main_tag:
@@ -18,8 +18,8 @@ main_tag:
   tools: "tools"
 
 # special tag names
-delete: "Trash"
-favorite: "Favorites"
+delete: "trash"
+favorite: "favorites"
 
 # dialogs
 dialog:
@@ -38,33 +38,46 @@ dialog:
 # product page
 product:
   title:
-    new: "New Product"
-    hint: "Product Name"
+    new: "new product"
+    hint: "product name"
 
   validator:
-    no_name: "The product needs a name"
-    no_tag: "Select at least 1 tag"
-    no_main_tag: "Select at least one main tag"
+    no_name: "the product needs a name"
+    no_tag: "select at least 1 tag"
+    no_main_tag: "select at least one main tag"
 
   share:
-    text: "Look what I got."
+    text: "look what I got."
 
     # only interesting for email
     subject: "Got It"
 
-  take_picture: "Take a picture"
-  scan_barcode: "Scan the product's barcode"
+  take_picture: "take a picture"
+  scan_barcode: "scan the product's barcode"
 
 product_list:
-  empty: "It's still empty in here"
-  nothing_found: "We couldn't find anything"
-  error: "Oh that went wrong"
-  search_title: "Search Results"
+  empty: "fill me up"
+  nothing_found: "we couldn't find anything"
+  error: "oh that went wrong"
+  search_title: "search results"
+  empty_trash: "empty"
 
 search:
-  title: "Search"
-  hint: "Enter something"
-  error: "Please enter something or select some tags"
-  search: "Search"
-  by_title: "Search by title"
-  by_tags: "Search by tags"
+  title: "search"
+  hint: "enter something"
+  error: "please enter something or select some tags"
+  search: "search"
+  by_title: "search by title"
+  by_tags: "search by tags"
+
+
+right:
+  agb:
+    title: "AGB"
+    text: "Hier stehen die AGBs"
+  datenschutz:
+    title: "Datenschutzerklärung"
+    text: "Hier steht die Datenschutzerklärung"
+  impressum:
+    title: "Impressum"
+    text: "Hier steht das Impressum"

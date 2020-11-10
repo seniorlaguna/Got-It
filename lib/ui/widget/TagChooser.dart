@@ -6,7 +6,7 @@ class TagSelector extends StatefulWidget {
   final Set<String> tags;
 
   const TagSelector(this.tags, {Key key}) : super(key: key);
-  
+
   @override
   State<StatefulWidget> createState() => TagSelectorState(tags);
 }
@@ -16,52 +16,77 @@ class TagSelectorState extends State<TagSelector> {
 
   TagSelectorState(this.tags);
 
-  Set<String> getVisibleTags() {
-    if (tags.every((element) => !mainTags.contains(element))) {
-      return mainTags;
-    }
-
-    if (tags.every((element) => !colorTags.contains(element))) {
-      return colorTags;
-    }
-
-    if (tags.every((element) => !brandTags.contains(element))) {
-      return brandTags;
-    }
-
-    if (tags.every((element) => !toolTags.contains(element))) {
-      return toolTags;
-    }
-
-    return {};
+  Widget getDropDownMenu(String tag, Set<String> tagList) {
+    return PopupMenuButton(
+        child: SelectableTag(tag, tags.contains(tag), () {}),
+        itemBuilder: (_) => tagList
+            .map((String tag) => PopupMenuItem(
+                height: 24,
+                child: SelectableTag(tag, tags.contains(tag), null),
+                value: tag))
+            .toList(),
+        onSelected: (value) {
+          setState(() {
+            if (tags.contains(value)) {
+              tags.remove(value);
+            } else {
+              tags.removeAll(tagList);
+              tags.add(value);
+            }
+            if (mainTags.contains(value)) {
+              Set<String> allTools = {};
+              for (String key in toolTags.keys) {
+                allTools.addAll(toolTags[key]);
+              }
+              tags.removeAll(allTools);
+            }
+          });
+        });
   }
 
   @override
   Widget build(BuildContext context) {
+    String category = tags.firstWhere((element) => mainTags.contains(element),
+        orElse: () => "category");
 
-    Set<String> visibleTags = Set<String>.of(tags)..addAll(getVisibleTags());
+    Set<String> allTools = {};
+    for (String key in toolTags.keys) {
+      allTools.addAll(toolTags[key]);
+    }
+
+    String toolType = tags.firstWhere((element) => allTools.contains(element),
+        orElse: () => "tool type");
+
+    /* String brand = tags.firstWhere((element) => brandTags.contains(element),
+        orElse: () => "brand"); */
+
+    String color = tags.firstWhere((element) => colorTags.contains(element),
+        orElse: () => "color");
+
+    EdgeInsets pad = const EdgeInsets.all(2.0);
 
     return Wrap(
       direction: Axis.horizontal,
-      children: visibleTags
-          .map((String tag) => Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: SelectableTag(tag, tags.contains(tag), () {
-
-                setState(() {
-                  if (tags.contains(tag)) {
-                    tags.remove(tag);
-                  }
-                  else {
-                    tags.add(tag);
-                  }
-                });
-
-              })))
-          .toList(),
+      children: [
+        Padding(
+          padding: pad,
+          child: getDropDownMenu(category, mainTags),
+        ),
+        Padding(
+          padding: pad,
+          child: getDropDownMenu(toolType, toolTags[category]),
+        ),
+        /* Padding(
+          padding: pad,
+          child: getDropDownMenu(brand, brandTags),
+        ) */
+        Padding(
+          padding: pad,
+          child: getDropDownMenu(color, colorTags),
+        )
+      ],
     );
   }
-
 }
 
 class SelectableTag extends StatelessWidget {
@@ -80,17 +105,14 @@ class SelectableTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: _onClick,
-      child: Container(
-          decoration: BoxDecoration(
-              color: _selected ? Colors.lightBlue : Colors.black12,
-              borderRadius: BorderRadius.circular(8.0)),
-          child: Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: Text("#${FlutterI18n.translate(context, _tag)}",
-                style: _selected ? tagSelectedTextStyle : tagTextStyle),
-          )),
-    );
+    return Container(
+        decoration: BoxDecoration(
+            color: _selected ? Theme.of(context).accentColor : Colors.black12,
+            borderRadius: BorderRadius.circular(8.0)),
+        child: Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: Text("#${FlutterI18n.translate(context, _tag)}",
+              style: _selected ? tagSelectedTextStyle : tagTextStyle),
+        ));
   }
 }
