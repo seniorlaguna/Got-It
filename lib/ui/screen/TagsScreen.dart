@@ -69,9 +69,11 @@ class TagsScreen extends StatelessWidget {
                     child: FadeInAnimation(
                       child: TagCard(
                           tags[index],
-                          "assets/tags/${tags[index]}.jpg",
+                          [1, 8].contains(index)
+                              ? "assets/tags/empty.jpg"
+                              : "assets/tags/${tags[index]}.jpg",
                           () => getOnClickFunction(context, index, tags[index]),
-                          index == 1 || index == 8,
+                          [1, 8].contains(index),
                           [0, 4, 5].contains(index)
                               ? Theme.of(context).accentColor
                               : Colors.white),
@@ -84,27 +86,11 @@ class TagsScreen extends StatelessWidget {
 
   void getOnClickFunction(BuildContext context, int index, String tag) {
     if (index == 1) {
-      openFavorites(context);
+      ProductListScreen.openFavorites(context);
     } else if (index == 8) {
-      openTrash(context);
+      ProductListScreen.openTrash(context);
     } else {
-      openTag(context, tag);
+      ProductListScreen.openTag(context, tag);
     }
-  }
-
-  void openTag(BuildContext context, String tag) {
-    ProductListScreen.start(context, "", <String>{tag}, <String>{deleteTag},
-        appBarTitle: tag);
-  }
-
-  void openFavorites(BuildContext context) {
-    ProductListScreen.start(
-        context, "", <String>{favoriteTag}, <String>{deleteTag},
-        appBarTitle: favoriteTag, libraryView: LibraryView.Favorite);
-  }
-
-  void openTrash(BuildContext context) {
-    ProductListScreen.start(context, "", <String>{deleteTag}, <String>{},
-        appBarTitle: deleteTag, libraryView: LibraryView.Trash);
   }
 }

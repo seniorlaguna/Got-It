@@ -15,7 +15,10 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="heart_full.svg">
+   sodipodi:docname="heart_full.svg"
+   inkscape:export-filename="/home/seniorlaguna/AndroidStudioProjects/got-it/assets/icons/heart_full.png"
+   inkscape:export-xdpi="24"
+   inkscape:export-ydpi="24">
   <defs
      id="defs2">
     <inkscape:path-effect
@@ -46,9 +49,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2"
-     inkscape:cx="130.49629"
-     inkscape:cy="123.87721"
+     inkscape:zoom="1"
+     inkscape:cx="104.16163"
+     inkscape:cy="185.09818"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -94,7 +97,7 @@
            style="fill:#000000" /></flowRegion><flowPara
          id="flowPara1017" /></flowRoot>    <path
        id="path848"
-       style="fill:#ff5555;stroke:#000000;stroke-width:2.64583325;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       style="fill:#dc9a9b;stroke:#000000;stroke-width:2.64583325;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;fill-opacity:1"
        inkscape:path-effect="#path-effect850"
        inkscape:original-d="m 20.368638,282.67219 c -1.611472,-16.67334 -15.9478763,-57.57708 -9.924855,-49.68553 6.023031,7.89155 12.045804,-0.55612 23.412465,9.0034 11.366664,-9.55952 17.389435,-1.11185 23.412458,-9.0034 6.023023,-7.89155 -8.313372,33.01219 -9.924846,49.68553 -1.611472,16.67332 -9.161651,5.00155 -13.487609,13.00494 -4.325962,-8.00339 -11.876141,3.66838 -13.487613,-13.00494 z"
        d="M 20.368638,282.67219 C 13.306204,275.79674 6.0676733,268.5137 2.8783986,259.18748 1.2837612,254.52437 0.79197531,249.4135 1.9910139,244.63336 c 1.1990385,-4.78014 4.1825468,-9.18648 8.4527691,-11.6467 4.14865,-2.39017 9.383697,-2.79819 13.852575,-1.07965 4.468878,1.71853 8.08167,5.52903 9.55989,10.08305 1.47822,-4.55402 5.09101,-8.36452 9.559887,-10.08305 4.468877,-1.71853 9.703922,-1.31052 13.852571,1.07965 4.270223,2.46021 7.253732,6.86655 8.452772,11.6467 1.199039,4.78014 0.707254,9.89101 -0.887382,14.55412 -3.189273,9.32622 -10.427803,16.60926 -17.490236,23.48471 -4.475015,4.35654 -8.970954,8.69159 -13.487609,13.00494 -4.516656,-4.31335 -9.012596,-8.6484 -13.487613,-13.00494 z"

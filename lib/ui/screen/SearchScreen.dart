@@ -3,6 +3,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:got_it/bloc/LibraryBloc.dart';
 import 'package:got_it/model/Product.dart';
 import 'package:got_it/ui/screen/ProductListScreen.dart';
+import 'package:got_it/ui/screen/ScannerScreen.dart';
 import 'package:got_it/ui/widget/TagChooser.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -37,6 +38,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
@@ -113,7 +115,7 @@ class _SearchScreenState extends State<SearchScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 8),
             child: MaterialButton(
-              onPressed: () {},
+              onPressed: () => ScannerScreen.start(context),
               child: Text("search by barcode",
                   style: TextStyle(color: Colors.white, fontSize: 18)),
               color: Theme.of(context).accentColor,

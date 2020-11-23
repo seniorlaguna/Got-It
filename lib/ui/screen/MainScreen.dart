@@ -1,39 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:giffy_dialog/giffy_dialog.dart';
-import 'package:got_it/data/Repository.dart';
 import 'package:got_it/model/Product.dart';
 import 'package:got_it/ui/screen/ProductScreen.dart';
 import 'package:got_it/ui/screen/SearchScreen.dart';
 import 'package:got_it/ui/screen/TagsScreen.dart';
 import 'package:got_it/ui/screen/WelcomeScreen.dart';
-import 'package:got_it/ui/widget/BarcodeScannerDialog.dart';
 import 'package:got_it/ui/widget/MainMenuButton.dart';
 
 import 'InfoScreen.dart';
-
-void showGifDialog(
-    BuildContext context, String gifPath, String title, String text) {
-  showDialog(
-      context: context,
-      builder: (_) => AssetGiffyDialog(
-          image: Image.asset(gifPath, fit: BoxFit.cover),
-          title: Text(
-            FlutterI18n.translate(context, title),
-            style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w600),
-          ),
-          description: Text(
-            FlutterI18n.translate(context, text),
-            textAlign: TextAlign.center,
-          ),
-          entryAnimation: EntryAnimation.TOP,
-          onlyOkButton: true,
-          buttonOkColor: Colors.lightGreen,
-          onOkButtonPressed: () => Navigator.pop(context)));
-}
 
 class MainScreen extends StatelessWidget {
   @override
@@ -79,7 +54,7 @@ class MainScreen extends StatelessWidget {
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Hero(
               tag: "logo",
-              child: Image.asset("assets/empty.png",
+              child: Image.asset("assets/logo.png",
                   height: MediaQuery.of(context).size.height / 8),
             ),
             Padding(
@@ -94,15 +69,15 @@ class MainScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            MainMenuButton(
-                "assets/button_search.png", () => onClickSearch(context), 32),
+            MainMenuButton("assets/main/button_search.png",
+                () => onClickSearch(context), 32),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 78.0),
-              child: MainMenuButton("assets/button_collection.png",
+              child: MainMenuButton("assets/main/button_collection.png",
                   () => onClickLibrary(context), 46),
             ),
             MainMenuButton(
-                "assets/button_add.png", () => onClickAdd(context), 32)
+                "assets/main/button_add.png", () => onClickAdd(context), 32)
           ],
         ),
       ],
@@ -115,38 +90,6 @@ class MainScreen extends StatelessWidget {
 
   void onClickSearch(BuildContext context) {
     SearchScreen.start(context);
-  }
-
-  void onBarcodeDetected(BuildContext context, String barcode) async {
-    String dialogGif;
-    String dialogTitle;
-    String dialogText;
-
-    try {
-      Repository repository = RepositoryProvider.of<Repository>(context);
-
-      // on back pressed
-      if (barcode.isEmpty) return;
-
-      Product product = await repository.getProductByBarcode(barcode);
-
-      // found
-      if (product != null) {
-        dialogGif = "assets/dialog/found.gif";
-        dialogTitle = FlutterI18n.translate(context, "dialog.title.got_it");
-        dialogText = FlutterI18n.translate(context, "dialog.text.got_it");
-      } else {
-        dialogGif = "assets/dialog/not_found.gif";
-        dialogTitle = FlutterI18n.translate(context, "dialog.title.not_found");
-        dialogText = FlutterI18n.translate(context, "dialog.text.not_found");
-      }
-    } catch (_) {
-      dialogGif = "assets/dialog/error.gif";
-      dialogTitle = FlutterI18n.translate(context, "dialog.title.error");
-      dialogText = FlutterI18n.translate(context, "dialog.text.error");
-    }
-
-    showGifDialog(context, dialogGif, dialogTitle, dialogText);
   }
 
   void onClickAdd(BuildContext context) async {

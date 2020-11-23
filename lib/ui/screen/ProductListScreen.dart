@@ -19,6 +19,21 @@ class ProductListScreen extends StatelessWidget {
     }));
   }
 
+  static Future<dynamic> openTag(BuildContext context, String tag) {
+    return start(context, "", <String>{tag}, <String>{deleteTag},
+        appBarTitle: tag);
+  }
+
+  static Future<dynamic> openFavorites(BuildContext context) {
+    return start(context, "", <String>{favoriteTag}, <String>{deleteTag},
+        appBarTitle: favoriteTag, libraryView: LibraryView.Favorite);
+  }
+
+  static Future<dynamic> openTrash(BuildContext context) {
+    return start(context, "", <String>{deleteTag}, <String>{},
+        appBarTitle: deleteTag, libraryView: LibraryView.Trash);
+  }
+
   final String titleRegex;
   final Set<String> includedTags;
   final Set<String> excludedTags;
@@ -71,13 +86,13 @@ class ProductListScreen extends StatelessWidget {
         fallbackAsset = "assets/tags/${includedTags.first}.jpg";
         break;
       case LibraryView.Trash:
-        fallbackAsset = "assets/trash_circle.jpg";
+        fallbackAsset = "assets/tags/trash.jpg";
         break;
       case LibraryView.Favorite:
-        fallbackAsset = "assets/favorite_circle.jpg";
+        fallbackAsset = "assets/tags/favorites.jpg";
         break;
       case LibraryView.Search:
-        fallbackAsset = "assets/search_circle.jpg";
+        fallbackAsset = "assets/tags/search.jpg";
         break;
     }
 
@@ -86,22 +101,22 @@ class ProductListScreen extends StatelessWidget {
     final String heroTag =
         (libraryView == LibraryView.Search) ? "search" : includedTags.first;
 
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-              padding: const EdgeInsets.fromLTRB(0, 24, 0, 16),
-              child: Hero(
-                  tag: heroTag,
-                  child: ClipOval(
-                    child: Image.asset(fallbackAsset,
-                        width: width, fit: BoxFit.cover),
-                  ))),
-          Text(FlutterI18n.translate(context, appBarTitle),
-              style:
-                  TextStyle(fontSize: 28, color: Theme.of(context).accentColor))
-        ]);
+    return FlexibleSpaceBar(
+      background: Center(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 32),
+          child: Hero(
+              tag: heroTag,
+              child: ClipOval(
+                child:
+                    Image.asset(fallbackAsset, width: width, fit: BoxFit.cover),
+              )),
+        ),
+      ),
+      centerTitle: true,
+      title: Text(FlutterI18n.translate(context, appBarTitle),
+          style: TextStyle(fontSize: 24, color: Theme.of(context).accentColor)),
+    );
   }
 
   LibraryBloc createBloc(BuildContext context) {
@@ -111,9 +126,10 @@ class ProductListScreen extends StatelessWidget {
 
   Widget getAppBar(BuildContext context) {
     return SliverAppBar(
+      pinned: true,
       expandedHeight: MediaQuery.of(context).size.height / 2.5,
       flexibleSpace: getAppBarContent(context),
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white, //transparent,
       shadowColor: Colors.transparent,
       iconTheme: IconThemeData(color: Colors.black),
     );
@@ -266,6 +282,7 @@ class ProductListScreen extends StatelessWidget {
       child: SafeArea(
         child: Builder(builder: (BuildContext context) {
           return Scaffold(
+            backgroundColor: Colors.white,
             floatingActionButton: getFAB(context),
             body: CustomScrollView(
               slivers: <Widget>[getAppBar(context), getAppBody(context)],

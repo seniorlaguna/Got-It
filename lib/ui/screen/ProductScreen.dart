@@ -5,12 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:got_it/bloc/ProductBloc.dart';
 import 'package:got_it/data/Repository.dart';
 import 'package:got_it/model/Product.dart';
 import 'package:got_it/ui/screen/MainScreen.dart';
-import 'package:got_it/ui/widget/BarcodeScannerDialog.dart';
+import 'package:got_it/ui/widget/EmbeddedBarcodeScanner.dart';
 import 'package:got_it/ui/widget/ImagePickerDialog.dart';
 import 'package:got_it/ui/widget/ZoomAnimation.dart';
 import 'package:got_it/ui/widget/ImageIconButton.dart';
@@ -222,8 +221,13 @@ class _ProductScreenState extends State<ProductScreen>
   }
 
   Widget getEditingIconBar(BuildContext context) {
+    Product p = BlocProvider.of<ProductBloc>(context).state.product;
+    bool barcode_done = (p.barcode != null && p.barcode.isNotEmpty);
+
     return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-      ImageIconButton("assets/icons/barcode.png", () => onScanBarcode(context)),
+      ImageIconButton(
+          "assets/icons/${barcode_done ? "barcode_done.png" : "barcode.png"}",
+          () => onScanBarcode(context)),
       ImageIconButton("assets/icons/camera.png", () => onTakePicture(context)),
     ]);
   }
@@ -429,7 +433,7 @@ class _ProductScreenState extends State<ProductScreen>
 
     // no barcode
     if (state.product.barcode == null || state.product.barcode.isEmpty) {
-      return noBarcodeFound(context);
+      print("No Barcode found");
     }
 
     // TODO: add info domain
@@ -442,7 +446,7 @@ class _ProductScreenState extends State<ProductScreen>
 
     // no barcode
     if (state.product.barcode == null || state.product.barcode.isEmpty) {
-      return noBarcodeFound(context);
+      print("No Barcode found");
     }
 
     // TODO: add how to domain
@@ -455,7 +459,7 @@ class _ProductScreenState extends State<ProductScreen>
 
     // no barcode
     if (state.product.barcode == null || state.product.barcode.isEmpty) {
-      return noBarcodeFound(context);
+      print("No Barcode found");
     }
 
     // TODO: add buy domain
@@ -499,25 +503,17 @@ class _ProductScreenState extends State<ProductScreen>
       // already in collection
       showDialog(
           context: context,
-          builder: (_) => AssetGiffyDialog(
-              image: Image.asset(
-                "assets/dialog/error.gif",
-                fit: BoxFit.cover,
-              ),
-              title: Text(
-                FlutterI18n.translate(context, "Double"),
-                style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
-              ),
-              description: Text(FlutterI18n.translate(context, "Double")),
-              entryAnimation: EntryAnimation.TOP,
-              onlyOkButton: true,
-              buttonOkColor: Colors.lightGreen,
-              onOkButtonPressed: (bloc.state.product.id == null)
-                  ? () => Navigator.of(context)..pop()..pop()
-                  : () {
-                      Navigator.pop(context);
-                      onBackClicked(context);
-                    }));
+          child: AlertDialog(
+            title: Text("Sorry"),
+            content: Text("this product is already in your collection"),
+            actions: [
+              FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text("ok"))
+            ],
+          ));
       return;
     }
 
@@ -525,23 +521,15 @@ class _ProductScreenState extends State<ProductScreen>
         bloc.state.product.copyWith(barcode: barcode), false));
   }
 
-  Future<void> onScanBarcode(BuildContext context) {
+  Future<dynamic> onScanBarcode(BuildContext context) {
     // camera size
     double width = MediaQuery.of(context).size.width;
     double height = width;
     double appBarHeight = AppBar().preferredSize.height;
 
-    showDialog(
+    return showDialog(
         context: context,
         child: EmbeddedBarcodeScannerDialog(width, height, appBarHeight,
             (barcode) => onBarcodeScanned(context, barcode)));
-  }
-
-  void noBarcodeFound(BuildContext context) {
-    showGifDialog(
-        context,
-        "assets/dialog/scan_first.gif",
-        FlutterI18n.translate(context, "dialog.title.scan_first"),
-        FlutterI18n.translate(context, "dialog.text.scan_first"));
   }
 }

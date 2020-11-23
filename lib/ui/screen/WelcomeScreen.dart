@@ -21,22 +21,12 @@ class WelcomeScreen extends StatelessWidget {
           context, SlowMaterialPageRoute(builder: (context) => MainScreen()));
     });
 
-    /*
-    Material(
-              child: Text("Got It!",
-                  style: TextStyle(
-                      fontFamily: "Satisfy",
-                      fontSize: 64,
-                      color: Color(0xff858585))),
-            )
-    */
-
     return Scaffold(
         body: Center(
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Hero(
           tag: "logo",
-          child: Image.asset("assets/empty.png",
+          child: Image.asset("assets/logo.png",
               height: MediaQuery.of(context).size.height / 3.8),
         ),
         Padding(
