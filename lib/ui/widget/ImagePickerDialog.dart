@@ -29,7 +29,8 @@ class ImagePickerDialog extends StatefulWidget {
   _ImagePickerDialogState createState() => _ImagePickerDialogState();
 }
 
-class _ImagePickerDialogState extends State<ImagePickerDialog> {
+class _ImagePickerDialogState extends State<ImagePickerDialog>
+    with WidgetsBindingObserver {
   CameraController _cameraController;
   Future<void> _initializeControllerFuture;
   bool imageTaken = false;
@@ -38,6 +39,10 @@ class _ImagePickerDialogState extends State<ImagePickerDialog> {
   @override
   void initState() {
     super.initState();
+    initCamera();
+  }
+
+  void initCamera() {
     _cameraController = CameraController(
         widget._cameraDescription, ResolutionPreset.medium,
         enableAudio: false);
@@ -46,8 +51,23 @@ class _ImagePickerDialogState extends State<ImagePickerDialog> {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (_cameraController == null || !_cameraController.value.isInitialized) {
+      return;
+    }
+
+    if (state == AppLifecycleState.inactive) {
+      _cameraController?.dispose();
+    } else if (state == AppLifecycleState.resumed) {
+      if (_cameraController != null) {
+        initCamera();
+      }
+    }
+  }
+
+  @override
   void dispose() {
-    _cameraController.dispose();
+    _cameraController?.dispose();
     super.dispose();
   }
 

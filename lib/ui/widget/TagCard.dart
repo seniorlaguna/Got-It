@@ -25,7 +25,7 @@ class TagCard extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               Hero(
-                tag: text,
+                tag: specialTag ? "No Hero For: $text" : text,
                 child: Image.asset(
                   imagePath,
                   width: MediaQuery.of(context).size.width / 2,

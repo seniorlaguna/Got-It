@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
+import 'package:flutter_i18n/loaders/file_translation_loader.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:got_it/data/Repository.dart';
-import 'package:got_it/ui/screen/MainScreen.dart';
 import 'package:got_it/ui/screen/WelcomeScreen.dart';
 
 void main() async {
@@ -28,7 +28,7 @@ void main() async {
               ))),
 
       localizationsDelegates: [
-        FlutterI18nDelegate(fallbackFile: "en"),
+        FlutterI18nDelegate(translationLoader: FileTranslationLoader()),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],

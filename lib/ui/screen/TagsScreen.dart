@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:got_it/bloc/LibraryBloc.dart';
 import 'package:got_it/model/Product.dart';
 import 'package:got_it/ui/screen/ProductListScreen.dart';
 import 'package:got_it/ui/widget/TagCard.dart';
