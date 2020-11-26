@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 class InfoScreen extends StatelessWidget {
   final String _title;
@@ -18,23 +19,25 @@ class InfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Text(
-                _title,
-                style: _titleTextStyle,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Text(
+                  FlutterI18n.translate(context, _title),
+                  style: _titleTextStyle,
+                ),
               ),
             ),
-          ),
-          Text(_text, style: _textTextStyle)
-        ],
+            Text(FlutterI18n.translate(context, _text), style: _textTextStyle)
+          ],
+        ),
       ),
     );
   }

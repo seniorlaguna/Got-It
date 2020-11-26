@@ -43,9 +43,7 @@
 	<false/>
 
 	<key>NSCameraUsageDescription</key>
-	<string>Can I use the camera please?</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Can I use the mic please?</string>
+	<string>We need the camera to scan barcodes and take pictures of your products</string>
 	
 </dict>
 </plist>

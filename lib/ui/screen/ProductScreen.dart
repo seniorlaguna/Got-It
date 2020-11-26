@@ -8,7 +8,6 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:got_it/bloc/ProductBloc.dart';
 import 'package:got_it/data/Repository.dart';
 import 'package:got_it/model/Product.dart';
-import 'package:got_it/ui/screen/MainScreen.dart';
 import 'package:got_it/ui/widget/EmbeddedBarcodeScanner.dart';
 import 'package:got_it/ui/widget/ImagePickerDialog.dart';
 import 'package:got_it/ui/widget/ZoomAnimation.dart';
@@ -504,14 +503,17 @@ class _ProductScreenState extends State<ProductScreen>
       showDialog(
           context: context,
           child: AlertDialog(
-            title: Text("Sorry"),
-            content: Text("this product is already in your collection"),
+            title: Text(
+                FlutterI18n.translate(context, "already_in_collection.title")),
+            content: Text(
+                FlutterI18n.translate(context, "already_in_collection.text")),
             actions: [
               FlatButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text("ok"))
+                  child: Text(FlutterI18n.translate(
+                      context, "already_in_collection.ok")))
             ],
           ));
       return;

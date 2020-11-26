@@ -50,6 +50,7 @@ class ProductListScreen extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // TODO: I18n
             Text("delete", style: TextStyle(fontSize: 20, color: Colors.white)),
             Padding(
               padding: const EdgeInsets.only(left: 8),
@@ -66,6 +67,7 @@ class ProductListScreen extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // TODO: I18n
             Text("recover",
                 style: TextStyle(fontSize: 20, color: Colors.white)),
             Padding(
@@ -129,7 +131,7 @@ class ProductListScreen extends StatelessWidget {
       pinned: true,
       expandedHeight: MediaQuery.of(context).size.height / 2.5,
       flexibleSpace: getAppBarContent(context),
-      backgroundColor: Colors.white, //transparent,
+      backgroundColor: Colors.white,
       shadowColor: Colors.transparent,
       iconTheme: IconThemeData(color: Colors.black),
     );
@@ -243,16 +245,17 @@ class ProductListScreen extends StatelessWidget {
     showDialog(
         context: context,
         child: AlertDialog(
-          title: Text("clear trash?"),
-          content: Text("this will remove all products from your trash"),
+          title: Text(FlutterI18n.translate(context, "clear_trash.title")),
+          content: Text(FlutterI18n.translate(context, "clear_trash.text")),
           actions: [
             FlatButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text("Cancel",
+                child: Text(
+                    FlutterI18n.translate(context, "clear_trash.cancel"),
                     style: TextStyle(color: Theme.of(context).accentColor))),
             FlatButton(
                 onPressed: () => _clearTrash(context),
-                child: Text("OK",
+                child: Text(FlutterI18n.translate(context, "clear_trash.ok"),
                     style: TextStyle(color: Theme.of(context).accentColor)))
           ],
         ));

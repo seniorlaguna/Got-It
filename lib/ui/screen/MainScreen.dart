@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:got_it/model/Product.dart';
 import 'package:got_it/ui/screen/ProductScreen.dart';
 import 'package:got_it/ui/screen/SearchScreen.dart';
@@ -13,36 +14,48 @@ import 'InfoScreen.dart';
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          actions: [
-            PopupMenuButton(
-              icon: Icon(Icons.more_vert, color: Colors.black),
-              itemBuilder: (context) {
-                return ["Credits", "AGBs", "Datenschutz", "Impressum"]
-                    .map((e) => PopupMenuItem(child: Text(e), value: e))
-                    .toList();
-              },
-              onSelected: (i) {
-                switch (i) {
-                  case "Credits":
-                    showAboutDialog(
-                        context: context,
-                        applicationName: "Got It",
-                        applicationVersion: "Version 1.0",
-                        applicationLegalese: "Mady by Regina Fiedler");
-                    break;
-                  default:
-                    InfoScreen.start(context, i, "Text");
-                }
-              },
-            ),
-          ],
-        ),
-        body: Builder(builder: (context) => _getBody(context)));
+    return SafeArea(
+      child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            actions: [
+              PopupMenuButton(
+                icon: Icon(Icons.more_vert, color: Colors.black),
+                itemBuilder: (context) {
+                  return [
+                    "legal.credits",
+                    "legal.agb",
+                    "legal.datenschutz",
+                    "legal.impressum"
+                  ]
+                      .map((e) => PopupMenuItem(
+                          child:
+                              Text(FlutterI18n.translate(context, "$e.title")),
+                          value: e))
+                      .toList();
+                },
+                onSelected: (i) {
+                  switch (i) {
+                    case "legal.credits":
+                      showAboutDialog(
+                          context: context,
+                          applicationName: "Got It",
+                          applicationVersion: FlutterI18n.translate(
+                              context, "legal.credits.version"),
+                          applicationLegalese: FlutterI18n.translate(
+                              context, "legal.credits.made_by"));
+                      break;
+                    default:
+                      InfoScreen.start(context, "$i.title", "$i.text");
+                  }
+                },
+              ),
+            ],
+          ),
+          body: Builder(builder: (context) => _getBody(context))),
+    );
   }
 
   Widget _getBody(BuildContext context) {

@@ -38,6 +38,7 @@ dependencies:
   flutter_staggered_animations: ^0.1.2
   camera: ^0.5.8+11
   last_qr_scanner: ^0.0.7
+  permission_handler: ^5.0.1+1
 
 
 

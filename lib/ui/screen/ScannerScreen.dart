@@ -129,20 +129,22 @@ class _ScannerScreenState extends State<ScannerScreen> {
     final double width = MediaQuery.of(context).size.width;
     final double pad = MediaQuery.of(context).size.height / 10;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("scan barcode"),
-      ),
-      body: Padding(
-        padding: EdgeInsets.only(top: pad),
-        child: SizedBox(
-          height: width,
-          width: width,
-          child: LastQrScannerPreview(
-            onQRViewCreated: (controller) =>
-                _onQRViewCreated(context, controller),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(FlutterI18n.translate(context, "scan_barcode.title")),
+        ),
+        body: Padding(
+          padding: EdgeInsets.only(top: pad),
+          child: SizedBox(
+            height: width,
+            width: width,
+            child: LastQrScannerPreview(
+              onQRViewCreated: (controller) =>
+                  _onQRViewCreated(context, controller),
+            ),
           ),
         ),
       ),

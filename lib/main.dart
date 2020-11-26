@@ -26,14 +26,12 @@ void main() async {
                 headline6: TextStyle(
                     fontSize: 20, color: Colors.black, fontFamily: "Quest"),
               ))),
-
       localizationsDelegates: [
         FlutterI18nDelegate(translationLoader: FileTranslationLoader()),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
-
-      home: WelcomeScreen(), //ExampleScreen(),
+      home: WelcomeScreen(),
       builder: (context, child) {
         return MediaQuery(
           child: child,

@@ -44,7 +44,7 @@ product:
   validator:
     no_name: "the product needs a name"
     no_tag: "select at least 1 tag"
-    no_main_tag: "select at least one main tag"
+    no_main_tag: "select a category tag"
 
   share:
     text: "look what I got."
@@ -69,9 +69,15 @@ search:
   search: "search"
   by_title: "search by title"
   by_tags: "search by tags"
+  or: "or"
+  by_barcode: "search by barcode"
 
 
-right:
+legal:
+  credits:
+    title: "Credits"
+    version: "Version 0.9.0"
+    made_by: "Idea by Regina Fiedler"
   agb:
     title: "AGB"
     text: "Hier stehen die AGBs"
@@ -81,3 +87,17 @@ right:
   impressum:
     title: "Impressum"
     text: "Hier steht das Impressum"
+
+clear_trash:
+  title: "clear trash?"
+  text: "this will remove all products from your trash"
+  ok: "ok"
+  cancel: "cancel"
+
+already_in_collection:
+  title: "Sorry"
+  text: "this product is already in your collection"
+  ok: "ok"
+
+scan_barcode:
+  title: "scan barcode"

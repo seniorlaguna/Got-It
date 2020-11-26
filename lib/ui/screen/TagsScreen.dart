@@ -17,9 +17,11 @@ class TagsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _getAppBar(context),
-      body: _getBody(context),
+    return SafeArea(
+      child: Scaffold(
+        appBar: _getAppBar(context),
+        body: _getBody(context),
+      ),
     );
   }
 
@@ -53,7 +55,8 @@ class TagsScreen extends StatelessWidget {
     List<String> tags = List.of(mainTags);
     tags.insert(1, favoriteTag);
     tags.insert(8, deleteTag);
-    print(tags);
+
+    // TODO: PERFORMANCE IMPROVEMENTS
 
     return AnimationLimiter(
       child: StaggeredGridView.countBuilder(

@@ -21,6 +21,9 @@ class ProductCard extends StatelessWidget {
     return ListTile(
       leading: Hero(
           tag: _product.id,
+
+          // TODO: PERFORMANCE IMPROVEMENTS Clip
+
           child: ClipRRect(
               borderRadius: BorderRadius.circular(90),
               child: FadeInImage(

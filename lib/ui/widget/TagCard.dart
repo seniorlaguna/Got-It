@@ -18,6 +18,9 @@ class TagCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
+
+      // TODO: PERFORMANCE IMPROVEMENTS Clip
+
       child: ClipRRect(
         borderRadius: BorderRadius.circular(5.0),
         child: GestureDetector(

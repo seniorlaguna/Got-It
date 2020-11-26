@@ -21,23 +21,25 @@ class WelcomeScreen extends StatelessWidget {
           context, SlowMaterialPageRoute(builder: (context) => MainScreen()));
     });
 
-    return Scaffold(
-        body: Center(
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Hero(
-          tag: "logo",
-          child: Image.asset("assets/logo.png",
-              height: MediaQuery.of(context).size.height / 3.8),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-          child: Hero(
-            tag: "title",
-            child: titleText,
+    return SafeArea(
+      child: Scaffold(
+          body: Center(
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Hero(
+            tag: "logo",
+            child: Image.asset("assets/logo.png",
+                height: MediaQuery.of(context).size.height / 3.8),
           ),
-        )
-      ]),
-    ));
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+            child: Hero(
+              tag: "title",
+              child: titleText,
+            ),
+          )
+        ]),
+      )),
+    );
   }
 }
 
