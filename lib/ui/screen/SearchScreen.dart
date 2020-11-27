@@ -1,9 +1,15 @@
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:got_it/bloc/LibraryBloc.dart';
+import 'package:got_it/data/Repository.dart';
+import 'package:got_it/model/Product.dart';
 import 'package:got_it/ui/screen/ProductListScreen.dart';
-import 'package:got_it/ui/screen/ScannerScreen.dart';
 import 'package:got_it/ui/widget/TagChooser.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import 'ProductScreen.dart';
 
 class SearchScreen extends StatefulWidget {
   static Future<dynamic> start(BuildContext context) {
@@ -20,6 +26,14 @@ class _SearchScreenState extends State<SearchScreen> {
       GlobalKey(debugLabel: "tagSelectorKey");
   GlobalKey<FormState> _formKey = GlobalKey();
   TextEditingController _textEditingController = TextEditingController();
+
+  Repository _repository;
+
+  @override
+  void initState() {
+    super.initState();
+    _repository = RepositoryProvider.of(context);
+  }
 
   @override
   void dispose() {
@@ -118,7 +132,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 8),
               child: MaterialButton(
-                onPressed: () => ScannerScreen.start(context),
+                onPressed: () => searchByBarcode(context),
                 child: Text(FlutterI18n.translate(context, "search.by_barcode"),
                     style: TextStyle(color: Colors.white, fontSize: 18)),
                 color: Theme.of(context).accentColor,
@@ -129,5 +143,104 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> searchByBarcode(BuildContext context) async {
+    // ask for permission and return if denied
+    if (!(await Permission.camera.request()).isGranted) {
+      return;
+    }
+
+    ScanResult result = await BarcodeScanner.scan();
+
+    // skip empty or error returns
+    if (result.type == ResultType.Cancelled ||
+        result.type == ResultType.Error ||
+        result.rawContent.isEmpty) {
+      return;
+    }
+
+    // TODO: Error handling
+
+    onBarcodeDetected(context, result.rawContent);
+  }
+
+  void onBarcodeDetected(BuildContext context, String barcode) async {
+    print("Found $barcode");
+    Product p = await _repository.getProductByBarcode(barcode);
+
+    // product not in collection
+    if (p == null) {
+      await _showDialog(
+          context,
+          barcode,
+          "Sorry",
+          "the product is not in your collection yet",
+          "ok",
+          "add product", (context, barcode) {
+        return ProductScreen.start(
+            context, Product.empty().copyWith(barcode: barcode), true, true);
+      });
+    }
+
+    // in trash
+    else if (p.delete) {
+      await _showDialog(
+          context,
+          barcode,
+          "Got It, but...",
+          "the product is in your trash!",
+          "ok",
+          "show trash", (context, barcode) {
+        return ProductListScreen.openTrash(context);
+      });
+    }
+
+    // found
+    else {
+      await _showDialog(
+          context,
+          barcode,
+          "Got It!",
+          "the product is in your collection",
+          "ok",
+          "show product", (context, barcode) async {
+        return ProductScreen.start(context, p, false, true);
+      });
+    }
+  }
+
+  Future<dynamic> _showDialog(
+      BuildContext context,
+      String barcode,
+      String title,
+      String text,
+      String cancelButtonText,
+      String actionButtonText,
+      Function(BuildContext, String) actionButtonCallback) {
+    final TextStyle buttonTextStyle =
+        TextStyle(color: Theme.of(context).accentColor);
+
+    return showDialog(
+        context: context,
+        child: AlertDialog(
+          title: Text(FlutterI18n.translate(context, title)),
+          content: Text(FlutterI18n.translate(context, text)),
+          actions: [
+            FlatButton(
+                onPressed: () async {
+                  await actionButtonCallback(context, barcode);
+                  Navigator.pop(context);
+                },
+                child: Text(FlutterI18n.translate(context, actionButtonText),
+                    style: buttonTextStyle)),
+            FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(FlutterI18n.translate(context, cancelButtonText),
+                    style: buttonTextStyle))
+          ],
+        ));
   }
 }

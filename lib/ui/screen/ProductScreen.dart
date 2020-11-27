@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:camera/camera.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,15 +8,13 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:got_it/bloc/ProductBloc.dart';
 import 'package:got_it/data/Repository.dart';
 import 'package:got_it/model/Product.dart';
-import 'package:got_it/ui/widget/EmbeddedBarcodeScanner.dart';
-import 'package:got_it/ui/widget/ImagePickerDialog.dart';
 import 'package:got_it/ui/widget/ZoomAnimation.dart';
 import 'package:got_it/ui/widget/ImageIconButton.dart';
 import 'package:got_it/ui/widget/TagChooser.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:share/share.dart';
-import 'package:url_launcher/url_launcher.dart';
+//import 'package:url_launcher/url_launcher.dart';
 
 class ProductScreen extends StatefulWidget {
   final Product _product;
@@ -55,6 +53,9 @@ class _ProductScreenState extends State<ProductScreen>
   // like animation
   AnimationController _responseAnimationController;
   IconData _iconDataForResponse;
+
+  // image picker
+  final ImagePicker _imagePicker = ImagePicker();
 
   @override
   void initState() {
@@ -121,7 +122,7 @@ class _ProductScreenState extends State<ProductScreen>
     assert(state is ProductEditingState || state is ProductViewingState);
 
     if (state is ProductEditingState) {
-      onTakePicture(context);
+      selectImage(context);
     }
   }
 
@@ -155,7 +156,8 @@ class _ProductScreenState extends State<ProductScreen>
                   : Image.file(File(product.imagePath)).image,
               width: width,
               height: height,
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
+              alignment: Alignment.center,
             ),
           ),
           BlocListener<ProductBloc, ProductState>(
@@ -197,20 +199,12 @@ class _ProductScreenState extends State<ProductScreen>
 
   Widget getErrorBody(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            "assets/empty.png",
-            width: MediaQuery.of(context).size.width / 2,
-            fit: BoxFit.fitWidth,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(FlutterI18n.translate(context, "product_list.error"),
-                style: TextStyle(fontSize: 24, fontFamily: "IndieFlower")),
-          )
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Text(
+            FlutterI18n.translate(
+                context, FlutterI18n.translate(context, "product_list.error")),
+            style: TextStyle(fontSize: 24, color: Colors.grey)),
       ),
     );
   }
@@ -227,7 +221,7 @@ class _ProductScreenState extends State<ProductScreen>
       ImageIconButton(
           "assets/icons/${barcode_done ? "barcode_done.png" : "barcode.png"}",
           () => onScanBarcode(context)),
-      ImageIconButton("assets/icons/camera.png", () => onTakePicture(context)),
+      ImageIconButton("assets/icons/camera.png", () => selectImage(context)),
     ]);
   }
 
@@ -426,7 +420,7 @@ class _ProductScreenState extends State<ProductScreen>
     }
   }
 
-  void onShowInfo(BuildContext context) {
+/*   void onShowInfo(BuildContext context) {
     ProductState state = BlocProvider.of<ProductBloc>(context).state;
     assert(state is ProductViewingState);
 
@@ -463,34 +457,79 @@ class _ProductScreenState extends State<ProductScreen>
 
     // TODO: add buy domain
     launch("https://amazon.de");
+  } */
+
+  Future<void> selectImage(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        onTakePictureFromGallery(context);
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      onTakePictureFromCamera(context);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
-  Future<void> onTakePicture(BuildContext context) async {
-    CameraDescription camera = (await availableCameras()).first;
+  Future<void> onTakePictureFromGallery(BuildContext context) async {
+    // ask for permission and return if denied
+    if (!(await Permission.storage.request()).isGranted) {
+      return;
+    }
 
-    // file paths
-    String tmpDirPath = (await getTemporaryDirectory()).path;
-    String targetPath = join((await getApplicationDocumentsDirectory()).path,
-        "${DateTime.now()}.jpg");
+    // select image from gallery
+    PickedFile file = await _imagePicker.getImage(
+        source: ImageSource.gallery, imageQuality: 50);
 
-    // camera size
-    double width = MediaQuery.of(context).size.width;
-    double height = width;
-    double appBarHeight = AppBar().preferredSize.height;
+    // skip if no picture was taken
+    if (file == null || file.path == null || file.path.isEmpty) {
+      return;
+    }
 
+    onImageTaken(context, file.path);
+  }
+
+  Future<void> onTakePictureFromCamera(BuildContext context) async {
+    // ask for permission and return if denied
+    if (!(await Permission.camera.request()).isGranted) {
+      return;
+    }
+
+    // take image
+    PickedFile file = await _imagePicker.getImage(
+        source: ImageSource.camera, imageQuality: 50);
+
+    // skip if no picture was taken
+    if (file == null || file.path == null || file.path.isEmpty) {
+      return;
+    }
+
+    onImageTaken(context, file.path);
+  }
+
+  void onImageTaken(BuildContext context, String path) {
     // get bloc
     ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
-
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return ImagePickerDialog(
-              camera, tmpDirPath, targetPath, width, height, appBarHeight, () {
-            // called if image is saved
-            bloc.add(ProductChangedEvent(
-                bloc.state.product.copyWith(imagePath: targetPath), false));
-          });
-        });
+    bloc.add(ProductChangedEvent(
+        bloc.state.product.copyWith(imagePath: path), false));
   }
 
   void onBarcodeScanned(BuildContext context, String barcode) async {
@@ -523,15 +562,23 @@ class _ProductScreenState extends State<ProductScreen>
         bloc.state.product.copyWith(barcode: barcode), false));
   }
 
-  Future<dynamic> onScanBarcode(BuildContext context) {
-    // camera size
-    double width = MediaQuery.of(context).size.width;
-    double height = width;
-    double appBarHeight = AppBar().preferredSize.height;
+  Future<void> onScanBarcode(BuildContext context) async {
+    // ask for permission and return if denied
+    if (!(await Permission.camera.request()).isGranted) {
+      return;
+    }
 
-    return showDialog(
-        context: context,
-        child: EmbeddedBarcodeScannerDialog(width, height, appBarHeight,
-            (barcode) => onBarcodeScanned(context, barcode)));
+    ScanResult result = await BarcodeScanner.scan();
+
+    // skip empty or error returns
+    if (result.type == ResultType.Cancelled ||
+        result.type == ResultType.Error ||
+        result.rawContent.isEmpty) {
+      return;
+    }
+
+    // TODO: Error handling
+
+    onBarcodeScanned(context, result.rawContent);
   }
 }

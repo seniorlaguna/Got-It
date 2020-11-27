@@ -44,6 +44,9 @@
 
 	<key>NSCameraUsageDescription</key>
 	<string>We need the camera to scan barcodes and take pictures of your products</string>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>So you can take images from your galery</string>
 	
 </dict>
 </plist>

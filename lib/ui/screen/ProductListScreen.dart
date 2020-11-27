@@ -181,7 +181,7 @@ class ProductListScreen extends StatelessWidget {
     ));
   }
 
-  Widget getImageWithText(BuildContext context, String message) {
+  Widget getBodyWithText(BuildContext context, String message) {
     return SliverFillRemaining(
         hasScrollBody: false,
         child: Center(
@@ -206,11 +206,11 @@ class ProductListScreen extends StatelessWidget {
         text = "product_list.empty";
     }
 
-    return getImageWithText(context, text);
+    return getBodyWithText(context, text);
   }
 
   Widget getAppBodyError(BuildContext context) {
-    return getImageWithText(context, "product_list.error");
+    return getBodyWithText(context, "product_list.error");
   }
 
   void onDismissed(BuildContext context, DismissDirection dismissDirection,
