@@ -86,6 +86,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
             ),
+            Spacer(),
             Align(
                 alignment: Alignment(-0.9, 0),
                 child: Padding(
@@ -105,6 +106,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: TagSelector({}, key: _tagSelectorKey),
                   )),
             ),
+            Spacer(),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
               child: MaterialButton(
@@ -138,6 +140,9 @@ class _SearchScreenState extends State<SearchScreen> {
                 color: Theme.of(context).accentColor,
                 minWidth: MediaQuery.of(context).size.width * 0.5,
               ),
+            ),
+            Spacer(
+              flex: 4,
             )
           ],
         ),
