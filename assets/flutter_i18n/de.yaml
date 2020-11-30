@@ -9,7 +9,7 @@ main_screen:
 
 # main tag names
 main_tag:
-  eyes: "augen"
+  eyes: "eyes"
   lips: "lips"
   skincare: "skincare"
   body_haircare: "body&haircare"
@@ -51,9 +51,10 @@ product:
 
     # only interesting for email
     subject: "Got It"
-
-  take_picture: "take a picture"
-  scan_barcode: "scan the product's barcode"
+  
+  choose:
+    gallery: "Gallery"
+    camera: "Camera"
 
 product_list:
   empty: "fill me up"

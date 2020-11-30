@@ -465,18 +465,20 @@ class _ProductScreenState extends State<ProductScreen>
         builder: (BuildContext bc) {
           return SafeArea(
             child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Photo Library'),
+              child: Wrap(
+                children: [
+                  ListTile(
+                      leading: Icon(Icons.photo_library),
+                      title: Text(FlutterI18n.translate(
+                          context, "product.choose.gallery")),
                       onTap: () {
                         onTakePictureFromGallery(context);
                         Navigator.of(context).pop();
                       }),
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
+                  ListTile(
+                    leading: Icon(Icons.photo_camera),
+                    title: Text(FlutterI18n.translate(
+                        context, "product.choose.camera")),
                     onTap: () {
                       onTakePictureFromCamera(context);
                       Navigator.of(context).pop();

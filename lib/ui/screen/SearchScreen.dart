@@ -110,6 +110,9 @@ class _SearchScreenState extends State<SearchScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
               child: MaterialButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                ),
                 onPressed: () {
                   FocusScopeNode focus = FocusScope.of(context);
                   if (!focus.hasPrimaryFocus) focus.unfocus();
@@ -134,6 +137,9 @@ class _SearchScreenState extends State<SearchScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 8),
               child: MaterialButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                ),
                 onPressed: () => searchByBarcode(context),
                 child: Text(FlutterI18n.translate(context, "search.by_barcode"),
                     style: TextStyle(color: Colors.white, fontSize: 18)),
