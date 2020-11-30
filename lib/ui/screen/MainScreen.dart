@@ -40,12 +40,13 @@ class MainScreen extends StatelessWidget {
                   switch (i) {
                     case "legal.credits":
                       showAboutDialog(
-                          context: context,
-                          applicationName: "Got It",
-                          applicationVersion: FlutterI18n.translate(
-                              context, "legal.credits.version"),
-                          applicationLegalese: FlutterI18n.translate(
-                              context, "legal.credits.made_by"));
+                        context: context,
+                        applicationName: "Got It",
+                        applicationVersion: FlutterI18n.translate(
+                            context, "legal.credits.version"),
+                        applicationLegalese: FlutterI18n.translate(
+                            context, "legal.credits.others"),
+                      );
                       break;
                     default:
                       InfoScreen.start(context, "$i.title", "$i.text");
@@ -68,14 +69,11 @@ class MainScreen extends StatelessWidget {
             Hero(
               tag: "logo",
               child: Image.asset("assets/logo.png",
-                  height: MediaQuery.of(context).size.height / 8),
+                  height: MediaQuery.of(context).size.height / 4),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 28, 0, 0),
-              child: Hero(
-                tag: "title",
-                child: titleText,
-              ),
+            Hero(
+              tag: "title",
+              child: titleText,
             )
           ]),
         ),

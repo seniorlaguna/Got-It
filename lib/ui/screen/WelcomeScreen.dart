@@ -23,22 +23,21 @@ class WelcomeScreen extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
+          backgroundColor: Colors.white,
           body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Hero(
-            tag: "logo",
-            child: Image.asset("assets/logo.png",
-                height: MediaQuery.of(context).size.height / 3.8),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-            child: Hero(
-              tag: "title",
-              child: titleText,
-            ),
-          )
-        ]),
-      )),
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Hero(
+                tag: "logo",
+                child: Image.asset("assets/logo.png",
+                    height: MediaQuery.of(context).size.height / 2.8),
+              ),
+              Hero(
+                tag: "title",
+                child: titleText,
+              )
+            ]),
+          )),
     );
   }
 }
