@@ -41,6 +41,17 @@ product:
     new: "new product"
     hint: "product name"
 
+  menu:
+    edit: "edit"
+    delete: "delete"
+  
+  delete:
+    title: "delete product?"
+    text: "moves the product into trash"
+    cancel: "cancel"
+    ok: "ok"
+
+
   validator:
     no_name: "the product needs a name"
     no_tag: "select at least 1 tag"

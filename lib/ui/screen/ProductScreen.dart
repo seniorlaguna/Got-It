@@ -82,6 +82,33 @@ class _ProductScreenState extends State<ProductScreen>
     bloc.add(ProductOpenedEvent(product, true));
   }
 
+  void onDeleteClicked(BuildContext context) {
+    showDialog(
+        context: context,
+        child: AlertDialog(
+          title: Text(FlutterI18n.translate(context, "product.delete.title")),
+          content: Text(FlutterI18n.translate(context, "product.delete.text")),
+          actions: [
+            FlatButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(
+                    FlutterI18n.translate(context, "product.delete.cancel"),
+                    style: TextStyle(color: Theme.of(context).accentColor))),
+            FlatButton(
+                onPressed: () => onDeleteComfirmed(context),
+                child: Text(FlutterI18n.translate(context, "product.delete.ok"),
+                    style: TextStyle(color: Theme.of(context).accentColor)))
+          ],
+        ));
+  }
+
+  void onDeleteComfirmed(BuildContext context) {
+    ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
+    Repository repository = RepositoryProvider.of(context);
+    repository.delete(bloc.state.product);
+    Navigator.of(context)..pop()..pop();
+  }
+
   void onBackClicked(BuildContext context) {
     ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
 
@@ -109,9 +136,22 @@ class _ProductScreenState extends State<ProductScreen>
       centerTitle: true,
       actions: (state is ProductViewingState)
           ? [
-              IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () => onEditClicked(context))
+              PopupMenuButton(itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem(
+                      child: Text(
+                          FlutterI18n.translate(context, "product.menu.edit")),
+                      value: 0),
+                  PopupMenuItem(
+                      child: Text(FlutterI18n.translate(
+                          context, "product.menu.delete")),
+                      value: 1),
+                ];
+              }, onSelected: (int value) {
+                if (value == 0)
+                  onEditClicked(context);
+                else if (value == 1) onDeleteClicked(context);
+              })
             ]
           : [],
     );
