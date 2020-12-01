@@ -8,10 +8,13 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:got_it/bloc/ProductBloc.dart';
 import 'package:got_it/data/Repository.dart';
 import 'package:got_it/model/Product.dart';
+import 'package:got_it/ui/widget/ExportWidget.dart';
 import 'package:got_it/ui/widget/ZoomAnimation.dart';
 import 'package:got_it/ui/widget/ImageIconButton.dart';
 import 'package:got_it/ui/widget/TagChooser.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share/share.dart';
 //import 'package:url_launcher/url_launcher.dart';
@@ -46,6 +49,7 @@ class _ProductScreenState extends State<ProductScreen>
     with SingleTickerProviderStateMixin {
   final TextEditingController _textEditingController = TextEditingController();
 
+  final GlobalKey<ExportWidgetState> _exportKey = GlobalKey();
   final GlobalKey<FormState> _formKey = GlobalKey(debugLabel: "formKey");
   final GlobalKey<TagSelectorState> _tagSelectorKey =
       GlobalKey(debugLabel: "tagSelectorKey");
@@ -186,6 +190,7 @@ class _ProductScreenState extends State<ProductScreen>
       onDoubleTap: () => onImageDoubleTapped(context),
       child: Stack(
         children: [
+          ExportWidget(product.imagePath, width, height, key: _exportKey),
           Hero(
             tag: product.id ?? -1,
             child: FadeInImage(
@@ -446,18 +451,19 @@ class _ProductScreenState extends State<ProductScreen>
         ProductChangedEvent(bloc.state.product.copyWith(tags: tags), false));
   }
 
-  void onShare(BuildContext context) {
+  void onShare(BuildContext context) async {
     ProductState state = BlocProvider.of<ProductBloc>(context).state;
     assert(state is ProductViewingState);
 
-    if (state.product.imagePath == null || state.product.imagePath.isEmpty) {
-      Share.share(FlutterI18n.translate(context, "product.share.text"),
-          subject: FlutterI18n.translate(context, "product.share.subject"));
-    } else {
-      Share.shareFiles([state.product.imagePath],
-          subject: FlutterI18n.translate(context, "product.share.subject"),
-          text: FlutterI18n.translate(context, "product.share.text"));
-    }
+    String tmpPath = join(
+        (await getTemporaryDirectory()).path, "share-${DateTime.now()}.png");
+    await _exportKey.currentState.exportImage(tmpPath);
+
+    await Share.shareFiles([tmpPath],
+        subject: FlutterI18n.translate(context, "product.share.subject"),
+        text: FlutterI18n.translate(context, "product.share.text"));
+
+    File(tmpPath).delete();
   }
 
 /*   void onShowInfo(BuildContext context) {
