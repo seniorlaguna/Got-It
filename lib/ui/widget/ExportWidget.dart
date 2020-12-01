@@ -49,6 +49,8 @@ class ExportWidgetState extends State<ExportWidget> {
 
   @override
   Widget build(BuildContext context) {
+    bool imageExists = widget.imagePath != null && widget.imagePath.isNotEmpty;
+
     return Offstage(
       offstage: !_process,
       child: RepaintBoundary(
@@ -59,13 +61,17 @@ class ExportWidgetState extends State<ExportWidget> {
                 color: Colors.white,
                 width: widget.width,
                 height: widget.height),
-            widget.imagePath.isNotEmpty
+            imageExists
                 ? Image.file(
                     File(widget.imagePath),
                     width: widget.width,
                     height: widget.height,
                   )
-                : Container(),
+                : Image.asset(
+                    "assets/default_product_image.png",
+                    width: widget.width,
+                    height: widget.height,
+                  ),
             Image.asset(
               "assets/share_image_overlay.png",
               width: widget.width,
