@@ -7,16 +7,6 @@ main_screen:
   got_it: "Got It?"
   add_new: "add new one"
 
-# main tag names
-main_tag:
-  eyes: "eyes"
-  lips: "lips"
-  skincare: "skincare"
-  body_haircare: "body&haircare"
-  nails: "nails"
-  face: "face"
-  tools: "tools"
-
 # special tag names
 delete: "trash"
 favorite: "favorites"

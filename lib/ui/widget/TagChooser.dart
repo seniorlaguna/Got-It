@@ -94,8 +94,9 @@ class TagSelectorState extends State<TagSelector> {
 
   Future<List<String>> _getRecommendsForEditing() async {
     List<String> mostUsed = await _repository.getTagsRanking({});
-    mostUsed.addAll(["Marke A", "Marke B", "Marke C"]);
-    mostUsed.removeWhere((element) => mainTags.contains(element));
+    mostUsed.addAll(
+        tagRecommendations.where((element) => !mostUsed.contains(element)));
+    mostUsed.removeWhere((element) => categoryTags.contains(element));
     mostUsed.removeWhere((element) => tags.contains(element));
 
     return mostUsed;
@@ -109,7 +110,7 @@ class TagSelectorState extends State<TagSelector> {
     }
 
     // category already selected
-    if (tags.any((element) => mainTags.contains(element))) {
+    if (tags.any((element) => categoryTags.contains(element))) {
       return FutureBuilder(
           future: _getRecommendsForEditing(),
           builder: (context, snapshot) {
@@ -146,7 +147,7 @@ class TagSelectorState extends State<TagSelector> {
           runSpacing: spacing,
           spacing: spacing,
           direction: Axis.horizontal,
-          children: mainTags
+          children: categoryTags
               .map((e) => SelectableTag(
                     e,
                     selected: false,
@@ -273,8 +274,9 @@ class _AddTagDialogState extends State<AddTagDialog> {
     setState(() {
       tagRecommendations.clear();
       if (!widget.search && value.isNotEmpty) tagRecommendations.add(value);
-      tagRecommendations.addAll(
-          widget.recommendedTags.where((element) => element.startsWith(value)));
+      tagRecommendations.addAll(widget.recommendedTags
+          .where((element) => element.startsWith(value))
+          .take(6));
     });
   }
 

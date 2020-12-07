@@ -36,12 +36,13 @@ class ProductDatabase {
   Future<List<Map<String, dynamic>>> search(
       String titleRegex, Set<String> includedTags, Set<String> excludedTags,
       {bool tagsOnly = false}) async {
-    Iterable<String> includedTagsWhere =
-        includedTags.map((String tag) => "tags LIKE ('%' || '$tag' || '%')");
+    Iterable<String> includedTagsWhere = includedTags.map((String tag) =>
+        "tags LIKE ('%${Product.TAG_SEPERATOR}' || '$tag' || '${Product.TAG_SEPERATOR}%')");
     String includedTagsWhereSql = includedTagsWhere.join(" AND ");
 
     Iterable<String> excludedTagsWhere = excludedTags
-        .map((String tag) => "tags NOT LIKE ('%' || '$tag' || '%')")
+        .map((String tag) =>
+            "tags NOT LIKE ('%${Product.TAG_SEPERATOR}' || '$tag' || '${Product.TAG_SEPERATOR}%')")
         .toSet();
     String excludedTagsWhereSql = excludedTagsWhere.join(" AND ");
 
@@ -72,7 +73,8 @@ class ProductDatabase {
     // it's going to be deleted as well
 
     return (await database).delete(Product.TABLE_NAME,
-        where: "${Product.COLUMN_TAGS} LIKE '%' || ? || '%'",
+        where:
+            "${Product.COLUMN_TAGS} LIKE '%${Product.TAG_SEPERATOR}' || ? || '${Product.TAG_SEPERATOR}%'",
         whereArgs: [deleteTag]);
   }
 }

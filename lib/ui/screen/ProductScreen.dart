@@ -334,7 +334,7 @@ class _ProductScreenState extends State<ProductScreen>
     }
 
     if (!_tagSelectorKey.currentState.tags
-        .any((element) => mainTags.contains(element))) {
+        .any((element) => categoryTags.contains(element))) {
       return FlutterI18n.translate(context, "product.validator.no_main_tag");
     }
 
