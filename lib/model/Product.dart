@@ -5,7 +5,7 @@ final Set<String> categoryTags = {
   "lips",
   "face",
   "skincare",
-  "haircare",
+  "body_haircare",
   "nails",
   "tools"
 };
