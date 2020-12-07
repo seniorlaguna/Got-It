@@ -25,15 +25,19 @@ favorite: "favorites"
 dialog:
   title:
     got_it: "Got It!"
-    not_found: "We are so sorry!"
-    error: "Ooops!"
-    scan_first: "Scan your Product"
+    got_it_trash: "Got It, but..."
+    not_found: "Sorry"
 
   text:
-    got_it: "It's already in your collection"
-    not_found: "We could not find that product in your collection"
-    error: "That should not happen XD"
-    scan_first: "We need the product' s barcode to do that"
+    got_it: "the product is in your collection"
+    got_it_trash: "the product is in your trash!"
+    not_found: "the product is not in your collection yet"
+  
+  action:
+    ok: "ok"
+    add: "add product"
+    show_product: "show product"
+    show_trash: "show trash"
 
 # product page
 product:
@@ -68,6 +72,8 @@ product:
     camera: "Camera"
 
 product_list:
+  delete: "delete"
+  recover: "recover"
   empty: "fill me up"
   nothing_found: "we couldn't find anything"
   error: "oh that went wrong"

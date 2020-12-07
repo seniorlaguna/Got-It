@@ -133,6 +133,9 @@ class Product extends Equatable {
   static const COLUMN_IMAGE_PATH = "imagePath";
   static const COLUMN_TAGS = "tags";
 
+  /// Tag seperator
+  static const TAG_SEPERATOR = ";";
+
   // column types
   final int id;
   final String title;
@@ -147,27 +150,35 @@ class Product extends Equatable {
   }
 
   static Product fromMap(Map<String, dynamic> map) {
-    return Product(
-        map[COLUMN_ID],
-        map[COLUMN_TITLE],
-        map[COLUMN_BARCODE],
-        map[COLUMN_IMAGE_PATH],
-        (map[COLUMN_TAGS] as String).isEmpty
-            ? Set<String>()
-            : Set<String>.of((map[COLUMN_TAGS] as String).split(";")));
+    return Product(map[COLUMN_ID], map[COLUMN_TITLE], map[COLUMN_BARCODE],
+        map[COLUMN_IMAGE_PATH], parseTags(map));
   }
 
-  Product copyWith(
-      {int id,
-      String title,
-      String barcode,
-      String imagePath,
-      Set<String> tags,
-      bool favorite,
-      bool wish,
-      int toDelete}) {
+  static Set<String> parseTags(Map<String, dynamic> map) {
+    return (map[COLUMN_TAGS] as String).isEmpty
+        ? Set<String>()
+        : Set<String>.of((map[COLUMN_TAGS] as String).split(TAG_SEPERATOR));
+  }
+
+  Product copyWith({
+    int id,
+    String title,
+    String barcode,
+    String imagePath,
+    Set<String> tags,
+  }) {
     return Product(id ?? this.id, title ?? this.title, barcode ?? this.barcode,
         imagePath ?? this.imagePath, tags ?? this.tags);
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      Product.COLUMN_ID: id,
+      Product.COLUMN_TITLE: title,
+      Product.COLUMN_BARCODE: barcode,
+      Product.COLUMN_IMAGE_PATH: imagePath,
+      Product.COLUMN_TAGS: tags.join(TAG_SEPERATOR)
+    };
   }
 
   bool get like => tags.contains(favoriteTag);
@@ -177,7 +188,7 @@ class Product extends Equatable {
   bool get delete => tags.contains(deleteTag);
 
   Set<String> get productTags =>
-      tags.difference(Set<String>.from([favoriteTag, wishTag, deleteTag]));
+      tags.difference({favoriteTag, wishTag, deleteTag});
 
   @override
   List<Object> get props => [id, title, barcode, imagePath, tags];

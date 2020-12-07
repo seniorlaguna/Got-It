@@ -42,7 +42,7 @@ class WelcomeScreen extends StatelessWidget {
   }
 }
 
-class SlowMaterialPageRoute extends MaterialPageRoute {
+class SlowMaterialPageRoute<T> extends MaterialPageRoute<T> {
   SlowMaterialPageRoute({Function(BuildContext) builder})
       : super(builder: builder);
 

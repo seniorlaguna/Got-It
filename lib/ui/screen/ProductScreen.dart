@@ -17,7 +17,6 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share/share.dart';
-//import 'package:url_launcher/url_launcher.dart';
 
 class ProductScreen extends StatefulWidget {
   final Product _product;
@@ -26,9 +25,6 @@ class ProductScreen extends StatefulWidget {
 
   static final TextStyle _titleTextStyle =
       TextStyle(fontSize: 20, fontWeight: FontWeight.w500);
-
-  static final TextStyle _tagTextStyle = TextStyle(
-      fontSize: 16, color: Color(0xffdc9a9b), fontWeight: FontWeight.w700);
 
   static Future<dynamic> start(
       BuildContext context, Product product, bool edit, bool closeOnBack) {
@@ -319,10 +315,8 @@ class _ProductScreenState extends State<ProductScreen>
           child: Wrap(
             spacing: 8,
             direction: Axis.horizontal,
-            children: product.productTags
-                .map((tag) => Text("#${FlutterI18n.translate(context, tag)}",
-                    style: ProductScreen._tagTextStyle))
-                .toList(),
+            children:
+                product.productTags.map((tag) => SelectableTag(tag)).toList(),
           ),
         )
       ],
@@ -353,11 +347,11 @@ class _ProductScreenState extends State<ProductScreen>
       children: [
         getProductImage(context, product),
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+          padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
           child: getEditingIconBar(context),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Form(
             key: _formKey,
             child: TextFormField(
@@ -371,7 +365,7 @@ class _ProductScreenState extends State<ProductScreen>
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+          padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
           child: TagSelector(
             product.productTags,
             key: _tagSelectorKey,

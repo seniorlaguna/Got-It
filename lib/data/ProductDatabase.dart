@@ -23,41 +23,30 @@ class ProductDatabase {
     database.execute(SQL_CREATE_TABLE_PRODUCT);
   }
 
-  Future<int> insert(Product product) async {
-    return (await database).insert(Product.TABLE_NAME, {
-      Product.COLUMN_TITLE: product.title,
-      Product.COLUMN_BARCODE: product.barcode,
-      Product.COLUMN_IMAGE_PATH: product.imagePath,
-      Product.COLUMN_TAGS: product.tags.join(";")
-    });
+  Future<int> insert(Map<String, dynamic> product) async {
+    return (await database).insert(Product.TABLE_NAME, product);
   }
 
-  Future<int> update(Product product) async {
-    return (await database).update(
-        Product.TABLE_NAME,
-        {
-          Product.COLUMN_TITLE: product.title,
-          Product.COLUMN_BARCODE: product.barcode,
-          Product.COLUMN_IMAGE_PATH: product.imagePath,
-          Product.COLUMN_TAGS: product.tags.join(";")
-        },
+  Future<int> update(Map<String, dynamic> product) async {
+    return (await database).update(Product.TABLE_NAME, product,
         where: "`${Product.COLUMN_ID}` = ?",
-        whereArgs: [product.id]);
+        whereArgs: [product[Product.COLUMN_ID]]);
   }
 
-  Future<List<Product>> search(String titleRegex, List<String> includedTags,
-      List<String> excludedTags) async {
-    List<String> includedTagsWhere = includedTags
-        .map((String tag) => "tags LIKE ('%' || '$tag' || '%')")
-        .toList();
+  Future<List<Map<String, dynamic>>> search(
+      String titleRegex, Set<String> includedTags, Set<String> excludedTags,
+      {bool tagsOnly = false}) async {
+    Iterable<String> includedTagsWhere =
+        includedTags.map((String tag) => "tags LIKE ('%' || '$tag' || '%')");
     String includedTagsWhereSql = includedTagsWhere.join(" AND ");
 
-    List<String> excludedTagsWhere = excludedTags
+    Iterable<String> excludedTagsWhere = excludedTags
         .map((String tag) => "tags NOT LIKE ('%' || '$tag' || '%')")
-        .toList();
+        .toSet();
     String excludedTagsWhereSql = excludedTagsWhere.join(" AND ");
 
-    String sql = "SELECT * FROM Product WHERE title LIKE ('%' || ? || '%')";
+    String sql =
+        "SELECT ${tagsOnly ? Product.COLUMN_TAGS : "*"} FROM Product WHERE title LIKE ('%' || ? || '%')";
 
     if (includedTagsWhereSql.isNotEmpty) {
       sql += "AND $includedTagsWhereSql";
@@ -69,19 +58,19 @@ class ProductDatabase {
 
     sql += " ORDER BY title COLLATE NOCASE";
 
-    return (await (await database).rawQuery(sql, [titleRegex]))
-        .map((Map<String, dynamic> map) => Product.fromMap(map))
-        .toList();
+    return (await (await database).rawQuery(sql, [titleRegex]));
   }
 
-  Future<List<Product>> getProductsByBarcode(String barcode) async {
+  Future<Iterable<Product>> getProductsByBarcode(String barcode) async {
     return (await (await database).query(Product.TABLE_NAME,
             where: "barcode = ?", whereArgs: [barcode]))
-        .map((Map<String, dynamic> map) => Product.fromMap(map))
-        .toList();
+        .map((Map<String, dynamic> map) => Product.fromMap(map));
   }
 
   Future<void> clearTrash() async {
+    //TODO: Add special cases otherwise if a product has a tag like deleteAAA
+    // it's going to be deleted as well
+
     return (await database).delete(Product.TABLE_NAME,
         where: "${Product.COLUMN_TAGS} LIKE '%' || ? || '%'",
         whereArgs: [deleteTag]);
