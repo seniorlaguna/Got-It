@@ -8,13 +8,15 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:got_it/bloc/ProductBloc.dart';
 import 'package:got_it/data/Repository.dart';
 import 'package:got_it/model/Product.dart';
+import 'package:got_it/ui/widget/ExportWidget.dart';
 import 'package:got_it/ui/widget/ZoomAnimation.dart';
 import 'package:got_it/ui/widget/ImageIconButton.dart';
 import 'package:got_it/ui/widget/TagChooser.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share/share.dart';
-//import 'package:url_launcher/url_launcher.dart';
 
 class ProductScreen extends StatefulWidget {
   final Product _product;
@@ -23,9 +25,6 @@ class ProductScreen extends StatefulWidget {
 
   static final TextStyle _titleTextStyle =
       TextStyle(fontSize: 20, fontWeight: FontWeight.w500);
-
-  static final TextStyle _tagTextStyle = TextStyle(
-      fontSize: 16, color: Color(0xffdc9a9b), fontWeight: FontWeight.w700);
 
   static Future<dynamic> start(
       BuildContext context, Product product, bool edit, bool closeOnBack) {
@@ -46,6 +45,7 @@ class _ProductScreenState extends State<ProductScreen>
     with SingleTickerProviderStateMixin {
   final TextEditingController _textEditingController = TextEditingController();
 
+  final GlobalKey<ExportWidgetState> _exportKey = GlobalKey();
   final GlobalKey<FormState> _formKey = GlobalKey(debugLabel: "formKey");
   final GlobalKey<TagSelectorState> _tagSelectorKey =
       GlobalKey(debugLabel: "tagSelectorKey");
@@ -82,6 +82,33 @@ class _ProductScreenState extends State<ProductScreen>
     bloc.add(ProductOpenedEvent(product, true));
   }
 
+  void onDeleteClicked(BuildContext context) {
+    showDialog(
+        context: context,
+        child: AlertDialog(
+          title: Text(FlutterI18n.translate(context, "product.delete.title")),
+          content: Text(FlutterI18n.translate(context, "product.delete.text")),
+          actions: [
+            FlatButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(
+                    FlutterI18n.translate(context, "product.delete.cancel"),
+                    style: TextStyle(color: Theme.of(context).accentColor))),
+            FlatButton(
+                onPressed: () => onDeleteComfirmed(context),
+                child: Text(FlutterI18n.translate(context, "product.delete.ok"),
+                    style: TextStyle(color: Theme.of(context).accentColor)))
+          ],
+        ));
+  }
+
+  void onDeleteComfirmed(BuildContext context) {
+    ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
+    Repository repository = RepositoryProvider.of(context);
+    repository.delete(bloc.state.product);
+    Navigator.of(context)..pop()..pop();
+  }
+
   void onBackClicked(BuildContext context) {
     ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
 
@@ -109,9 +136,22 @@ class _ProductScreenState extends State<ProductScreen>
       centerTitle: true,
       actions: (state is ProductViewingState)
           ? [
-              IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () => onEditClicked(context))
+              PopupMenuButton(itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem(
+                      child: Text(
+                          FlutterI18n.translate(context, "product.menu.edit")),
+                      value: 0),
+                  PopupMenuItem(
+                      child: Text(FlutterI18n.translate(
+                          context, "product.menu.delete")),
+                      value: 1),
+                ];
+              }, onSelected: (int value) {
+                if (value == 0)
+                  onEditClicked(context);
+                else if (value == 1) onDeleteClicked(context);
+              })
             ]
           : [],
     );
@@ -146,6 +186,7 @@ class _ProductScreenState extends State<ProductScreen>
       onDoubleTap: () => onImageDoubleTapped(context),
       child: Stack(
         children: [
+          ExportWidget(product.imagePath, width, height, key: _exportKey),
           Hero(
             tag: product.id ?? -1,
             child: FadeInImage(
@@ -274,10 +315,8 @@ class _ProductScreenState extends State<ProductScreen>
           child: Wrap(
             spacing: 8,
             direction: Axis.horizontal,
-            children: product.productTags
-                .map((tag) => Text("#${FlutterI18n.translate(context, tag)}",
-                    style: ProductScreen._tagTextStyle))
-                .toList(),
+            children:
+                product.productTags.map((tag) => SelectableTag(tag)).toList(),
           ),
         )
       ],
@@ -295,7 +334,7 @@ class _ProductScreenState extends State<ProductScreen>
     }
 
     if (!_tagSelectorKey.currentState.tags
-        .any((element) => mainTags.contains(element))) {
+        .any((element) => categoryTags.contains(element))) {
       return FlutterI18n.translate(context, "product.validator.no_main_tag");
     }
 
@@ -308,11 +347,11 @@ class _ProductScreenState extends State<ProductScreen>
       children: [
         getProductImage(context, product),
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+          padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
           child: getEditingIconBar(context),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Form(
             key: _formKey,
             child: TextFormField(
@@ -326,7 +365,7 @@ class _ProductScreenState extends State<ProductScreen>
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+          padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
           child: TagSelector(
             product.productTags,
             key: _tagSelectorKey,
@@ -406,18 +445,19 @@ class _ProductScreenState extends State<ProductScreen>
         ProductChangedEvent(bloc.state.product.copyWith(tags: tags), false));
   }
 
-  void onShare(BuildContext context) {
+  void onShare(BuildContext context) async {
     ProductState state = BlocProvider.of<ProductBloc>(context).state;
     assert(state is ProductViewingState);
 
-    if (state.product.imagePath == null || state.product.imagePath.isEmpty) {
-      Share.share(FlutterI18n.translate(context, "product.share.text"),
-          subject: FlutterI18n.translate(context, "product.share.subject"));
-    } else {
-      Share.shareFiles([state.product.imagePath],
-          subject: FlutterI18n.translate(context, "product.share.subject"),
-          text: FlutterI18n.translate(context, "product.share.text"));
-    }
+    String tmpPath = join(
+        (await getTemporaryDirectory()).path, "share-${DateTime.now()}.png");
+    await _exportKey.currentState.exportImage(tmpPath);
+
+    await Share.shareFiles([tmpPath],
+        subject: FlutterI18n.translate(context, "product.share.subject"),
+        text: FlutterI18n.translate(context, "product.share.text"));
+
+    File(tmpPath).delete();
   }
 
 /*   void onShowInfo(BuildContext context) {
@@ -465,18 +505,20 @@ class _ProductScreenState extends State<ProductScreen>
         builder: (BuildContext bc) {
           return SafeArea(
             child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Photo Library'),
+              child: Wrap(
+                children: [
+                  ListTile(
+                      leading: Icon(Icons.photo_library),
+                      title: Text(FlutterI18n.translate(
+                          context, "product.choose.gallery")),
                       onTap: () {
                         onTakePictureFromGallery(context);
                         Navigator.of(context).pop();
                       }),
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
+                  ListTile(
+                    leading: Icon(Icons.photo_camera),
+                    title: Text(FlutterI18n.translate(
+                        context, "product.choose.camera")),
                     onTap: () {
                       onTakePictureFromCamera(context);
                       Navigator.of(context).pop();

@@ -7,16 +7,6 @@ main_screen:
   got_it: "Got It?"
   add_new: "add new one"
 
-# main tag names
-main_tag:
-  eyes: "eyes"
-  lips: "lips"
-  skincare: "skincare"
-  body_haircare: "body&haircare"
-  nails: "nails"
-  face: "face"
-  tools: "tools"
-
 # special tag names
 delete: "trash"
 favorite: "favorites"
@@ -25,21 +15,36 @@ favorite: "favorites"
 dialog:
   title:
     got_it: "Got It!"
-    not_found: "We are so sorry!"
-    error: "Ooops!"
-    scan_first: "Scan your Product"
+    got_it_trash: "Got It, but..."
+    not_found: "Sorry"
 
   text:
-    got_it: "It's already in your collection"
-    not_found: "We could not find that product in your collection"
-    error: "That should not happen XD"
-    scan_first: "We need the product' s barcode to do that"
+    got_it: "the product is in your collection"
+    got_it_trash: "the product is in your trash!"
+    not_found: "the product is not in your collection yet"
+  
+  action:
+    ok: "ok"
+    add: "add product"
+    show_product: "show product"
+    show_trash: "show trash"
 
 # product page
 product:
   title:
     new: "new product"
     hint: "product name"
+
+  menu:
+    edit: "edit"
+    delete: "delete"
+  
+  delete:
+    title: "delete product?"
+    text: "moves the product into trash"
+    cancel: "cancel"
+    ok: "ok"
+
 
   validator:
     no_name: "the product needs a name"
@@ -51,11 +56,14 @@ product:
 
     # only interesting for email
     subject: "Got It"
-
-  take_picture: "take a picture"
-  scan_barcode: "scan the product's barcode"
+  
+  choose:
+    gallery: "Gallery"
+    camera: "Camera"
 
 product_list:
+  delete: "delete"
+  recover: "recover"
   empty: "fill me up"
   nothing_found: "we couldn't find anything"
   error: "oh that went wrong"
@@ -77,7 +85,8 @@ legal:
   credits:
     title: "Credits"
     version: "Version 0.9.0"
-    made_by: "Idea by Regina Fiedler"
+    others: "Idea by Regina Fiedler\n\nWe used Photoshop Brushes by McBadshoes - http://mcbadshoes.deviantart.com/\n\nWe used Icons 
+"
   agb:
     title: "AGB"
     text: "Hier stehen die AGBs"

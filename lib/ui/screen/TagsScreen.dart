@@ -52,7 +52,7 @@ class TagsScreen extends StatelessWidget {
   }
 
   Widget _getBody(BuildContext context) {
-    List<String> tags = List.of(mainTags);
+    List<String> tags = List.of(categoryTags);
     tags.insert(1, favoriteTag);
     tags.insert(8, deleteTag);
 

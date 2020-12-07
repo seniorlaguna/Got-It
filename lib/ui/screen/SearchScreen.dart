@@ -60,6 +60,7 @@ class _SearchScreenState extends State<SearchScreen> {
           centerTitle: true,
         ),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Align(
                 alignment: Alignment(-0.9, 0),
@@ -86,6 +87,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
             ),
+            Spacer(),
             Align(
                 alignment: Alignment(-0.9, 0),
                 child: Padding(
@@ -96,48 +98,59 @@ class _SearchScreenState extends State<SearchScreen> {
                         color: Colors.black54, fontWeight: FontWeight.w700),
                   ),
                 )),
-            Flexible(
-              child: Align(
-                  alignment: Alignment(-0.9, 0),
-                  heightFactor: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 2),
-                    child: TagSelector({}, key: _tagSelectorKey),
-                  )),
-            ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
-              child: MaterialButton(
-                onPressed: () {
-                  FocusScopeNode focus = FocusScope.of(context);
-                  if (!focus.hasPrimaryFocus) focus.unfocus();
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child:
+                  TagSelector({}, key: _tagSelectorKey, searchSelector: true),
+            ),
+            Spacer(),
+            Align(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
+                child: MaterialButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                  onPressed: () {
+                    FocusScopeNode focus = FocusScope.of(context);
+                    if (!focus.hasPrimaryFocus) focus.unfocus();
 
-                  if (_formKey.currentState.validate()) {
-                    ProductListScreen.start(
-                        context,
-                        _textEditingController.text,
-                        _tagSelectorKey.currentState.tags,
-                        {},
-                        appBarTitle: "product_list.search_title",
-                        libraryView: LibraryView.Search);
-                  }
-                },
-                child: Text(FlutterI18n.translate(context, "search.title"),
-                    style: TextStyle(color: Colors.white, fontSize: 18)),
-                color: Theme.of(context).accentColor,
-                minWidth: MediaQuery.of(context).size.width * 0.5,
+                    if (_formKey.currentState.validate()) {
+                      ProductListScreen.start(
+                          context,
+                          _textEditingController.text,
+                          _tagSelectorKey.currentState.tags,
+                          {},
+                          appBarTitle: "product_list.search_title",
+                          libraryView: LibraryView.Search);
+                    }
+                  },
+                  child: Text(FlutterI18n.translate(context, "search.title"),
+                      style: TextStyle(color: Colors.white, fontSize: 18)),
+                  color: Theme.of(context).accentColor,
+                  minWidth: MediaQuery.of(context).size.width * 0.5,
+                ),
               ),
             ),
-            Text(FlutterI18n.translate(context, "search.or")),
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: MaterialButton(
-                onPressed: () => searchByBarcode(context),
-                child: Text(FlutterI18n.translate(context, "search.by_barcode"),
-                    style: TextStyle(color: Colors.white, fontSize: 18)),
-                color: Theme.of(context).accentColor,
-                minWidth: MediaQuery.of(context).size.width * 0.5,
+            Align(child: Text(FlutterI18n.translate(context, "search.or"))),
+            Align(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: MaterialButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                  onPressed: () => searchByBarcode(context),
+                  child: Text(
+                      FlutterI18n.translate(context, "search.by_barcode"),
+                      style: TextStyle(color: Colors.white, fontSize: 18)),
+                  color: Theme.of(context).accentColor,
+                  minWidth: MediaQuery.of(context).size.width * 0.5,
+                ),
               ),
+            ),
+            Spacer(
+              flex: 4,
             )
           ],
         ),
@@ -169,15 +182,17 @@ class _SearchScreenState extends State<SearchScreen> {
     print("Found $barcode");
     Product p = await _repository.getProductByBarcode(barcode);
 
+    // TODO: I18n
     // product not in collection
     if (p == null) {
       await _showDialog(
           context,
           barcode,
-          "Sorry",
-          "the product is not in your collection yet",
-          "ok",
-          "add product", (context, barcode) {
+          FlutterI18n.translate(context, "dialog.title.not_found"),
+          FlutterI18n.translate(context, "dialog.text.not_found"),
+          FlutterI18n.translate(context, "dialog.action.ok"),
+          FlutterI18n.translate(context, "dialog.action.add"),
+          (context, barcode) {
         return ProductScreen.start(
             context, Product.empty().copyWith(barcode: barcode), true, true);
       });
@@ -188,10 +203,11 @@ class _SearchScreenState extends State<SearchScreen> {
       await _showDialog(
           context,
           barcode,
-          "Got It, but...",
-          "the product is in your trash!",
-          "ok",
-          "show trash", (context, barcode) {
+          FlutterI18n.translate(context, "dialog.title.got_it_trash"),
+          FlutterI18n.translate(context, "dialog.text.got_it_trash"),
+          FlutterI18n.translate(context, "dialog.action.ok"),
+          FlutterI18n.translate(context, "dialog.action.show_trash"),
+          (context, barcode) {
         return ProductListScreen.openTrash(context);
       });
     }
@@ -201,10 +217,11 @@ class _SearchScreenState extends State<SearchScreen> {
       await _showDialog(
           context,
           barcode,
-          "Got It!",
-          "the product is in your collection",
-          "ok",
-          "show product", (context, barcode) async {
+          FlutterI18n.translate(context, "dialog.title.got_it"),
+          FlutterI18n.translate(context, "dialog.text.got_it"),
+          FlutterI18n.translate(context, "dialog.action.ok"),
+          FlutterI18n.translate(context, "dialog.action.show_product"),
+          (context, barcode) async {
         return ProductScreen.start(context, p, false, true);
       });
     }

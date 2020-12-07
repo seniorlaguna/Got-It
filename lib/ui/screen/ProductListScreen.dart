@@ -43,40 +43,39 @@ class ProductListScreen extends StatelessWidget {
   final LibraryView libraryView;
 
   final DismissDirection allowedDismissDirection = DismissDirection.endToStart;
-  final Widget dismissibleBackgroundDelete = Container(
-    color: Colors.black12,
-    child: Align(
-        alignment: Alignment(0.8, 0),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // TODO: I18n
-            Text("delete", style: TextStyle(fontSize: 20, color: Colors.white)),
-            Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Icon(Icons.delete, color: Colors.white),
-            )
-          ],
-        )),
-  );
+  Widget dismissibleBackgroundDelete(BuildContext context) => Container(
+        color: Colors.black12,
+        child: Align(
+            alignment: Alignment(0.8, 0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(FlutterI18n.translate(context, "product_list.delete"),
+                    style: TextStyle(fontSize: 20, color: Colors.white)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Icon(Icons.delete, color: Colors.white),
+                )
+              ],
+            )),
+      );
 
-  final Widget dismissibleBackgroundRestore = Container(
-    color: Color(0xffdc9a9b),
-    child: Align(
-        alignment: Alignment(0.8, 0),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // TODO: I18n
-            Text("recover",
-                style: TextStyle(fontSize: 20, color: Colors.white)),
-            Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Icon(Icons.undo, color: Colors.white),
-            )
-          ],
-        )),
-  );
+  Widget dismissibleBackgroundRestore(BuildContext context) => Container(
+        color: Color(0xffdc9a9b),
+        child: Align(
+            alignment: Alignment(0.8, 0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(FlutterI18n.translate(context, "product_list.recover"),
+                    style: TextStyle(fontSize: 20, color: Colors.white)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Icon(Icons.undo, color: Colors.white),
+                )
+              ],
+            )),
+      );
 
   ProductListScreen(this.titleRegex, this.includedTags, this.excludedTags,
       this.appBarTitle, this.libraryView);
@@ -170,8 +169,8 @@ class ProductListScreen extends StatelessWidget {
             onDismissed: (DismissDirection dismissDirection) =>
                 onDismissed(context, dismissDirection, products[i], i),
             background: (libraryView == LibraryView.Trash)
-                ? dismissibleBackgroundRestore
-                : dismissibleBackgroundDelete,
+                ? dismissibleBackgroundRestore(context)
+                : dismissibleBackgroundDelete(context),
             child: ProductCard(products[i], () async {
               await ProductScreen.start(context, products[i], false, false);
               BlocProvider.of<LibraryBloc>(context).add(LibraryRefreshed());

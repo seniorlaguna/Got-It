@@ -1,126 +1,106 @@
 import 'package:equatable/equatable.dart';
 
-final Set<String> mainTags = {
-  "main_tag.eyes",
-  "main_tag.lips",
-  "main_tag.face",
-  "main_tag.skincare",
-  "main_tag.body_haircare",
-  "main_tag.nails",
-  "main_tag.tools"
+final Set<String> categoryTags = {
+  "eyes",
+  "lips",
+  "face",
+  "skincare",
+  "body_haircare",
+  "nails",
+  "tools"
 };
 
-final Set<String> colorTags = {
-  "tag.white",
-  "tag.beige",
-  "tag.nude",
-  "tag.blush",
-  "tag.lila",
-  "tag.brown",
-  "tag.green",
-  "tag.red",
-  "tag.blue",
-  "tag.yellow",
-  "tag.black",
-  "tag.orange",
-  "tag.turquise",
-  "tag.pink",
+final Set<String> tagRecommendations = {
+  "white",
+  "beige",
+  "nude",
+  "blush",
+  "lila",
+  "brown",
+  "green",
+  "red",
+  "blue",
+  "yellow",
+  "black",
+  "orange",
+  "turquise",
+  "pink",
+  "eyeshadow powder",
+  "eyeshadow liquid",
+  "eyeshadow cream",
+  "eyeshadow stick",
+  "eyeshadow base",
+  "eyeliner",
+  "eyepencil",
+  "kholliner",
+  "lash primer",
+  "mascara",
+  "eyebrowpencil",
+  "eyebrowpowder",
+  "eyebrow gel color",
+  "eyebrow gel transparent",
+  "lipbalm",
+  "lipgloss",
+  "lip scrub",
+  "lipstick",
+  "liquid lipstick",
+  "lip stain",
+  "foundation liquid",
+  "foundation powder",
+  "foundation cream",
+  "color correction",
+  "concealer liquid",
+  "concealer cream",
+  "bronzer powder",
+  "bronzer liquid",
+  "bronzer cream",
+  "blush powder",
+  "blush liquid",
+  "blush cream",
+  "highlighter powder",
+  "highlighter liquid",
+  "highlighter cream",
+  "setting powder",
+  "setting spray",
+  "moisturizer",
+  "serum",
+  "facemask",
+  "peeling",
+  "day cream",
+  "night cream",
+  "eyepads",
+  "shampoo",
+  "conditioner",
+  "hairmask",
+  "hair oil",
+  "heat protection spray",
+  "hairspray",
+  "dry shampoo",
+  "hair serum",
+  "hair gel",
+  "body scrub",
+  "body lotion",
+  "body cream",
+  "body spray",
+  "self tan",
+  "body parfume",
+  "shaving cream",
+  "body wax",
+  "body oil",
+  "parfume",
+  "nail polish",
+  "shell lack",
+  "dip powder",
+  "nail polish remover",
+  "hand cream",
+  "lash curler",
+  "brush",
+  "sponge",
+  "makeup wipes",
+  "fake lashes",
 };
-
-final Map<String, Set<String>> toolTags = {
-  "main_tag.eyes": {
-    "tag.eyeshadow_powder",
-    "tag.eyeshadow_liquid",
-    "tag.eyeshadow_cream",
-    "tag.eyeshadow_stick",
-    "tag.eyeshadow_base",
-    "tag.eyeliner",
-    "tag.eyepencil",
-    "tag.kholliner",
-    "tag.lash_primer",
-    "tag.mascara",
-    "tag.eyebrowpencil",
-    "tag.eyebrowpowder",
-    "tag.eyebrow_gel_color",
-    "tag.eyebrow_gel_transparent",
-  },
-  "main_tag.lips": {
-    "tag.lipbalm",
-    "tag.lipgloss",
-    "tag.lip_scrub",
-    "tag.lipstick",
-    "tag.liquid_lipstick",
-    "tag.lip_stain"
-  },
-  "main_tag.face": {
-    "tag.foundation_liquid",
-    "tag.foundation_powder",
-    "tag.foundation_cream",
-    "tag.color_correction",
-    "tag.concealer_liquid",
-    "tag.concealer_cream",
-    "tag.bronzer_powder",
-    "tag.bronzer_liquid",
-    "tag.bronzer_cream",
-    "tag.blush_powder",
-    "tag.blush_liquid",
-    "tag.blush_cream",
-    "tag.highlighter_powder",
-    "tag.highlighter_liquid",
-    "tag.highlighter_cream",
-    "tag.setting_powder",
-    "tag.setting_spray",
-  },
-  "main_tag.skincare": {
-    "tag.moisturizer",
-    "tag.serum",
-    "tag.facemask",
-    "tag.peeling",
-    "tag.day_cream",
-    "tag.night_cream",
-    "tag.eyepads",
-  },
-  "main_tag.body_haircare": {
-    "tag.shampoo",
-    "tag.conditioner",
-    "tag.hairmask",
-    "tag.hair_oil",
-    "tag.heat_protection_spray",
-    "tag.hairspray",
-    "tag.dry_shampoo",
-    "tag.hair_serum",
-    "tag.hair_gel",
-    "tag.body_scrub",
-    "tag.body_lotion",
-    "tag.body_cream",
-    "tag.body_spray",
-    "tag.self_tan",
-    "tag.body_parfume",
-    "tag.shaving_cream",
-    "tag.body_wax",
-    "tag.body_oil",
-    "tag.parfume",
-  },
-  "main_tag.nails": {
-    "tag.nail_polish",
-    "tag.shell_lack",
-    "tag.dip_powder",
-    "tag.nail_polish_remover",
-    "tag.hand_cream",
-  },
-  "main_tag.tools": {
-    "tag.lash_curler",
-    "tag.brush",
-    "tag.sponge",
-    "tag.makeup_wipes",
-    "tag.fake_lashes",
-  }
-};
-
-//final Set<String> allTags = Set<String>.of(mainTags.followedBy(colorTags).followedBy(toolTags));
 
 final String favoriteTag = "favorite";
-final String wishTag = "wish";
 final String deleteTag = "delete";
 
 class Product extends Equatable {
@@ -132,6 +112,9 @@ class Product extends Equatable {
   static const COLUMN_BARCODE = "barcode";
   static const COLUMN_IMAGE_PATH = "imagePath";
   static const COLUMN_TAGS = "tags";
+
+  /// Tag seperator
+  static const TAG_SEPERATOR = ";";
 
   // column types
   final int id;
@@ -147,37 +130,49 @@ class Product extends Equatable {
   }
 
   static Product fromMap(Map<String, dynamic> map) {
-    return Product(
-        map[COLUMN_ID],
-        map[COLUMN_TITLE],
-        map[COLUMN_BARCODE],
-        map[COLUMN_IMAGE_PATH],
-        (map[COLUMN_TAGS] as String).isEmpty
-            ? Set<String>()
-            : Set<String>.of((map[COLUMN_TAGS] as String).split(";")));
+    return Product(map[COLUMN_ID], map[COLUMN_TITLE], map[COLUMN_BARCODE],
+        map[COLUMN_IMAGE_PATH], parseTags(map));
   }
 
-  Product copyWith(
-      {int id,
-      String title,
-      String barcode,
-      String imagePath,
-      Set<String> tags,
-      bool favorite,
-      bool wish,
-      int toDelete}) {
+  static Set<String> parseTags(Map<String, dynamic> map) {
+    return (map[COLUMN_TAGS] as String).isEmpty
+        ? Set<String>()
+        : Set<String>.of((map[COLUMN_TAGS] as String).split(TAG_SEPERATOR)
+          ..removeAt(0)
+          ..removeLast());
+  }
+
+  static String stringifyTags(Set<String> tags) {
+    // surrounds every tag with the tag seperator
+    return "${Product.TAG_SEPERATOR}${tags.join(Product.TAG_SEPERATOR)}${Product.TAG_SEPERATOR}";
+  }
+
+  Product copyWith({
+    int id,
+    String title,
+    String barcode,
+    String imagePath,
+    Set<String> tags,
+  }) {
     return Product(id ?? this.id, title ?? this.title, barcode ?? this.barcode,
         imagePath ?? this.imagePath, tags ?? this.tags);
   }
 
-  bool get like => tags.contains(favoriteTag);
+  Map<String, dynamic> toMap() {
+    return {
+      Product.COLUMN_ID: id,
+      Product.COLUMN_TITLE: title,
+      Product.COLUMN_BARCODE: barcode,
+      Product.COLUMN_IMAGE_PATH: imagePath,
+      Product.COLUMN_TAGS: stringifyTags(tags)
+    };
+  }
 
-  bool get wish => tags.contains(wishTag);
+  bool get like => tags.contains(favoriteTag);
 
   bool get delete => tags.contains(deleteTag);
 
-  Set<String> get productTags =>
-      tags.difference(Set<String>.from([favoriteTag, wishTag, deleteTag]));
+  Set<String> get productTags => tags.difference({favoriteTag, deleteTag});
 
   @override
   List<Object> get props => [id, title, barcode, imagePath, tags];
