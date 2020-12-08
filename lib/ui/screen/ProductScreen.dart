@@ -129,7 +129,7 @@ class _ProductScreenState extends State<ProductScreen>
   Widget getAppBar(BuildContext context, ProductState state) {
     return AppBar(
       leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back),
           onPressed: () => onBackClicked(context)),
       title: Text(state.product.title ??
           FlutterI18n.translate(context, "product.title.new")),
@@ -193,7 +193,7 @@ class _ProductScreenState extends State<ProductScreen>
               placeholder: Image.asset("assets/transparent_image.png").image,
               image: (product.imagePath == null ||
                       !File(product.imagePath).existsSync())
-                  ? Image.asset("assets/default_product_image.png").image
+                  ? Image.asset("assets/default_product_image.jpg").image
                   : Image.file(File(product.imagePath)).image,
               width: width,
               height: height,
@@ -240,13 +240,10 @@ class _ProductScreenState extends State<ProductScreen>
 
   Widget getErrorBody(BuildContext context) {
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text(
-            FlutterI18n.translate(
-                context, FlutterI18n.translate(context, "product_list.error")),
-            style: TextStyle(fontSize: 24, color: Colors.grey)),
-      ),
+      child: Text(
+          FlutterI18n.translate(
+              context, FlutterI18n.translate(context, "product_list.error")),
+          style: TextStyle(fontSize: 24, color: Colors.grey)),
     );
   }
 
@@ -260,9 +257,9 @@ class _ProductScreenState extends State<ProductScreen>
 
     return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
       ImageIconButton(
-          "assets/icons/${barcode_done ? "barcode_done.png" : "barcode.png"}",
+          "assets/icons/${barcode_done ? "barcode_done.jpg" : "barcode.jpg"}",
           () => onScanBarcode(context)),
-      ImageIconButton("assets/icons/camera.png", () => selectImage(context)),
+      ImageIconButton("assets/icons/camera.jpg", () => selectImage(context)),
     ]);
   }
 
@@ -270,28 +267,13 @@ class _ProductScreenState extends State<ProductScreen>
     bool like = BlocProvider.of<ProductBloc>(context).state.product.like;
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            ImageIconButton(
-                like
-                    ? "assets/icons/heart_full.png"
-                    : "assets/icons/heart_empty.png",
-                () => onToggleLike(context)),
-            ImageIconButton("assets/icons/share.png", () => onShare(context)),
-          ],
-        ),
-        Row(
-          children: [
-            // TODO: Hier können wir Unternehmen mit einbinden (Monetarisieren!!!)
-            /* ImageIconButton("assets/icons/info.png", () => onShowInfo(context)),
-            ImageIconButton(
-                "assets/icons/play.png", () => onShowHowTo(context)),
-            ImageIconButton(
-                "assets/icons/shop.png", () => onBuyProduct(context)), */
-          ],
-        )
+        ImageIconButton(
+            like
+                ? "assets/icons/heart_full.jpg"
+                : "assets/icons/heart_empty.jpg",
+            () => onToggleLike(context)),
+        ImageIconButton("assets/icons/share.jpg", () => onShare(context)),
       ],
     );
   }
@@ -302,16 +284,16 @@ class _ProductScreenState extends State<ProductScreen>
       children: [
         getProductImage(context, product),
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+          padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
           child: getViewingIconBar(context),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child:
               Text(product.title ?? "", style: ProductScreen._titleTextStyle),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+          padding: const EdgeInsets.fromLTRB(12, 4, 12, 0),
           child: Wrap(
             spacing: 8,
             direction: Axis.horizontal,
@@ -424,6 +406,7 @@ class _ProductScreenState extends State<ProductScreen>
                   appBar: getAppBar(context, state),
                   body: getAppBody(context),
                   floatingActionButton: getFAB(context),
+                  backgroundColor: Colors.white,
                 );
               },
             );
@@ -450,7 +433,7 @@ class _ProductScreenState extends State<ProductScreen>
     assert(state is ProductViewingState);
 
     String tmpPath = join(
-        (await getTemporaryDirectory()).path, "share-${DateTime.now()}.png");
+        (await getTemporaryDirectory()).path, "share-${DateTime.now()}.jpg");
     await _exportKey.currentState.exportImage(tmpPath);
 
     await Share.shareFiles([tmpPath],
@@ -459,45 +442,6 @@ class _ProductScreenState extends State<ProductScreen>
 
     File(tmpPath).delete();
   }
-
-/*   void onShowInfo(BuildContext context) {
-    ProductState state = BlocProvider.of<ProductBloc>(context).state;
-    assert(state is ProductViewingState);
-
-    // no barcode
-    if (state.product.barcode == null || state.product.barcode.isEmpty) {
-      print("No Barcode found");
-    }
-
-    // TODO: add info domain
-    launch("https://www.google.de");
-  }
-
-  void onShowHowTo(BuildContext context) {
-    ProductState state = BlocProvider.of<ProductBloc>(context).state;
-    assert(state is ProductViewingState);
-
-    // no barcode
-    if (state.product.barcode == null || state.product.barcode.isEmpty) {
-      print("No Barcode found");
-    }
-
-    // TODO: add how to domain
-    launch("https://youtube.de");
-  }
-
-  void onBuyProduct(BuildContext context) {
-    ProductState state = BlocProvider.of<ProductBloc>(context).state;
-    assert(state is ProductViewingState);
-
-    // no barcode
-    if (state.product.barcode == null || state.product.barcode.isEmpty) {
-      print("No Barcode found");
-    }
-
-    // TODO: add buy domain
-    launch("https://amazon.de");
-  } */
 
   Future<void> selectImage(BuildContext context) {
     showModalBottomSheet(

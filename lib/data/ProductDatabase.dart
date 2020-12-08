@@ -69,9 +69,6 @@ class ProductDatabase {
   }
 
   Future<void> clearTrash() async {
-    //TODO: Add special cases otherwise if a product has a tag like deleteAAA
-    // it's going to be deleted as well
-
     return (await database).delete(Product.TABLE_NAME,
         where:
             "${Product.COLUMN_TAGS} LIKE '%${Product.TAG_SEPERATOR}' || ? || '${Product.TAG_SEPERATOR}%'",

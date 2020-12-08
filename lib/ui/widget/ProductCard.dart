@@ -31,7 +31,7 @@ class ProductCard extends StatelessWidget {
                 image: (_product.imagePath != null &&
                         File(_product.imagePath).existsSync())
                     ? Image.file(File(_product.imagePath)).image
-                    : Image.asset("assets/default_product_image.png").image,
+                    : Image.asset("assets/default_product_image.jpg").image,
                 width: 50,
                 height: 50,
                 fit: BoxFit.cover,

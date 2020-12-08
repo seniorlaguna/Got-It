@@ -22,6 +22,8 @@ class WelcomeScreen extends StatelessWidget {
           context, SlowMaterialPageRoute(page: MainScreen()));
     });
 
+    print("HEIGHT: ${MediaQuery.of(context).size.height / 2.8}");
+
     return SafeArea(
       child: Scaffold(
           backgroundColor: Colors.white,
@@ -30,7 +32,7 @@ class WelcomeScreen extends StatelessWidget {
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Hero(
                 tag: "logo",
-                child: Image.asset("assets/logo.png",
+                child: Image.asset("assets/logo.jpg",
                     height: MediaQuery.of(context).size.height / 2.8),
               ),
               Hero(

@@ -68,7 +68,7 @@ class ExportWidgetState extends State<ExportWidget> {
                     height: widget.height,
                   )
                 : Image.asset(
-                    "assets/default_product_image.png",
+                    "assets/default_product_image.jpg",
                     width: widget.width,
                     height: widget.height,
                   ),

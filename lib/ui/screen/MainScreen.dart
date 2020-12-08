@@ -68,7 +68,7 @@ class MainScreen extends StatelessWidget {
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Hero(
               tag: "logo",
-              child: Image.asset("assets/logo.png",
+              child: Image.asset("assets/logo.jpg",
                   height: MediaQuery.of(context).size.height / 4),
             ),
             Hero(
@@ -80,15 +80,15 @@ class MainScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            MainMenuButton("assets/main/button_search.png",
+            MainMenuButton("assets/main/button_search.jpg",
                 () => onClickSearch(context), 32),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 78.0),
-              child: MainMenuButton("assets/main/button_collection.png",
+              child: MainMenuButton("assets/main/button_collection.jpg",
                   () => onClickLibrary(context), 46),
             ),
             MainMenuButton(
-                "assets/main/button_add.png", () => onClickAdd(context), 32)
+                "assets/main/button_add.jpg", () => onClickAdd(context), 32)
           ],
         ),
       ],

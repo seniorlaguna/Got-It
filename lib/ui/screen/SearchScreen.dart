@@ -182,7 +182,6 @@ class _SearchScreenState extends State<SearchScreen> {
     print("Found $barcode");
     Product p = await _repository.getProductByBarcode(barcode);
 
-    // TODO: I18n
     // product not in collection
     if (p == null) {
       await _showDialog(

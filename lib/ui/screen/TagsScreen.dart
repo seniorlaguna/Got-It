@@ -21,6 +21,7 @@ class TagsScreen extends StatelessWidget {
       child: Scaffold(
         appBar: _getAppBar(context),
         body: _getBody(context),
+        backgroundColor: Colors.white,
       ),
     );
   }
@@ -41,18 +42,12 @@ class TagsScreen extends StatelessWidget {
           onPressed: () => SearchScreen.start(context),
         )
       ],
-      leading: GestureDetector(
-        child: Icon(
-          Icons.arrow_back,
-          color: Colors.black,
-        ),
-        onTap: () => Navigator.pop(context),
-      ),
     );
   }
 
   Widget _getBody(BuildContext context) {
     List<String> tags = List.of(categoryTags);
+
     tags.insert(1, favoriteTag);
     tags.insert(8, deleteTag);
 
@@ -60,6 +55,9 @@ class TagsScreen extends StatelessWidget {
 
     return AnimationLimiter(
       child: StaggeredGridView.countBuilder(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          mainAxisSpacing: 4,
+          crossAxisSpacing: 4,
           crossAxisCount: 4,
           itemCount: tags.length,
           itemBuilder: (BuildContext context, int index) =>
@@ -72,7 +70,7 @@ class TagsScreen extends StatelessWidget {
                       child: TagCard(
                           tags[index],
                           [1, 8].contains(index)
-                              ? "assets/tags/empty.jpg"
+                              ? "assets/tags/empty2.jpg"
                               : "assets/tags/${tags[index]}.jpg",
                           () => getOnClickFunction(context, index, tags[index]),
                           [1, 8].contains(index),

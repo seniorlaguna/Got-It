@@ -132,7 +132,6 @@ class ProductListScreen extends StatelessWidget {
       flexibleSpace: getAppBarContent(context),
       backgroundColor: Colors.white,
       shadowColor: Colors.transparent,
-      iconTheme: IconThemeData(color: Colors.black),
     );
   }
 
@@ -184,11 +183,8 @@ class ProductListScreen extends StatelessWidget {
     return SliverFillRemaining(
         hasScrollBody: false,
         child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(FlutterI18n.translate(context, message),
-                style: TextStyle(fontSize: 24, color: Colors.grey)),
-          ),
+          child: Text(FlutterI18n.translate(context, message),
+              style: TextStyle(fontSize: 24, color: Colors.grey)),
         ));
   }
 
