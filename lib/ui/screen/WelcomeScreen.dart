@@ -19,7 +19,7 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 1), () async {
       Navigator.pushReplacement(
-          context, SlowMaterialPageRoute(builder: (_) => MainScreen()));
+          context, SlowMaterialPageRoute(page: MainScreen()));
     });
 
     return SafeArea(
@@ -43,38 +43,29 @@ class WelcomeScreen extends StatelessWidget {
   }
 }
 
-class SlowMaterialPageRoute extends MaterialPageRoute {
-  SlowMaterialPageRoute({Function(BuildContext) builder})
-      : super(builder: builder);
+class SlowMaterialPageRoute extends PageRouteBuilder {
+  final Widget page;
 
-  static final Tween<Offset> _bottomUpTween = Tween<Offset>(
-    begin: const Offset(0.0, 0.25),
-    end: Offset.zero,
-  );
-  static final Animatable<double> _fastOutSlowInTween =
-      CurveTween(curve: Curves.fastOutSlowIn);
-  static final Animatable<double> _easeInTween =
-      CurveTween(curve: Curves.easeIn);
+  SlowMaterialPageRoute({this.page})
+      : super(
+            pageBuilder: (_, __, ___) => page,
+            transitionDuration: Duration(seconds: 2),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              Animation<Offset> _positionAnimation =
+                  animation.drive(Tween<Offset>(
+                begin: const Offset(0.0, 0.25),
+                end: Offset.zero,
+              ).chain(CurveTween(curve: Curves.fastOutSlowIn)));
+              Animation<double> _opacityAnimation =
+                  animation.drive(CurveTween(curve: Curves.easeIn));
 
-  Animation<Offset> _positionAnimation;
-  Animation<double> _opacityAnimation;
-
-  @override
-  Duration get transitionDuration => Duration(seconds: 2);
-
-  @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
-    _positionAnimation =
-        animation.drive(_bottomUpTween.chain(_fastOutSlowInTween));
-    _opacityAnimation = animation.drive(_easeInTween);
-
-    return SlideTransition(
-      position: _positionAnimation,
-      child: FadeTransition(
-        opacity: _opacityAnimation,
-        child: child,
-      ),
-    );
-  }
+              return SlideTransition(
+                position: _positionAnimation,
+                child: FadeTransition(
+                  opacity: _opacityAnimation,
+                  child: child,
+                ),
+              );
+            });
 }
