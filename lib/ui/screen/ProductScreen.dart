@@ -294,6 +294,7 @@ class _ProductScreenState extends State<ProductScreen>
           padding: const EdgeInsets.fromLTRB(12, 4, 12, 0),
           child: Wrap(
             spacing: 8,
+            crossAxisAlignment: WrapCrossAlignment.center,
             direction: Axis.horizontal,
             children:
                 product.productTags.map((tag) => SelectableTag(tag)).toList(),
