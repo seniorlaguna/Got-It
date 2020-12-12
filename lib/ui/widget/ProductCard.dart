@@ -31,6 +31,8 @@ class ProductCard extends StatelessWidget {
                 image: (_product.imagePath != null &&
                         File(_product.imagePath).existsSync())
                     ? Image.file(File(_product.imagePath)).image
+                    // TODO: Add smaller image for default product image maybe already rounded
+                    // https://flutter.dev/docs/development/ui/assets-and-images
                     : Image.asset("assets/default_product_image.jpg").image,
                 width: 50,
                 height: 50,

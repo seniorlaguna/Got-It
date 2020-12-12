@@ -21,10 +21,8 @@ class InfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(),
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
               child: Padding(

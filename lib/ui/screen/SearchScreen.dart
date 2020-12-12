@@ -54,10 +54,7 @@ class _SearchScreenState extends State<SearchScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
           title: Text(FlutterI18n.translate(context, "search.title")),
-          centerTitle: true,
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

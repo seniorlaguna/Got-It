@@ -7,6 +7,9 @@ main_screen:
   got_it: "Got It?"
   add_new: "add new one"
 
+# tags that need translation
+body_haircare: "body&haircare"
+
 # special tag names
 delete: "trash"
 favorite: "favorites"
@@ -52,7 +55,7 @@ product:
     no_main_tag: "select a category tag"
 
   share:
-    text: "look what I got."
+    text: "Look what I got!\nDownload Got It! here\n\nAndroid: https://play.google.com/store/apps/details?id=org.seniorlaguna.gotit\nIOS: <link> "
 
     # only interesting for email
     subject: "Got It"

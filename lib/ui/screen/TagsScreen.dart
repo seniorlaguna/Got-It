@@ -21,7 +21,6 @@ class TagsScreen extends StatelessWidget {
       child: Scaffold(
         appBar: _getAppBar(context),
         body: _getBody(context),
-        backgroundColor: Colors.white,
       ),
     );
   }
@@ -50,8 +49,6 @@ class TagsScreen extends StatelessWidget {
 
     tags.insert(1, favoriteTag);
     tags.insert(8, deleteTag);
-
-    // TODO: PERFORMANCE IMPROVEMENTS
 
     return AnimationLimiter(
       child: StaggeredGridView.countBuilder(

@@ -16,10 +16,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
             actions: [
               PopupMenuButton(
                 icon: Icon(Icons.more_vert, color: Colors.black),
@@ -62,8 +59,7 @@ class MainScreen extends StatelessWidget {
   Widget _getBody(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
+      children: [
         Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Hero(

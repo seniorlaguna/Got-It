@@ -16,8 +16,11 @@ void main() async {
           fontFamily: "Quest",
           accentColor: Color(0xffdc9a9b),
           backgroundColor: Colors.white,
+          scaffoldBackgroundColor: Colors.white,
           appBarTheme: AppBarTheme(
               color: Colors.white,
+              elevation: 0,
+              centerTitle: true,
               shadowColor: Colors.transparent,
               iconTheme: IconThemeData(color: Colors.black),
               actionsIconTheme: IconThemeData(color: Colors.black),

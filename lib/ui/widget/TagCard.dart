@@ -41,7 +41,7 @@ class TagCard extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                   child: Text(
-                    "${FlutterI18n.translate(context, text.replaceAll("_", "&"))}",
+                    "${FlutterI18n.translate(context, text)}",
                     style: TextStyle(
                         color: fontColor,
                         fontSize: 20,

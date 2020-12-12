@@ -133,7 +133,6 @@ class _ProductScreenState extends State<ProductScreen>
           onPressed: () => onBackClicked(context)),
       title: Text(state.product.title ??
           FlutterI18n.translate(context, "product.title.new")),
-      centerTitle: true,
       actions: (state is ProductViewingState)
           ? [
               PopupMenuButton(itemBuilder: (BuildContext context) {
@@ -253,11 +252,11 @@ class _ProductScreenState extends State<ProductScreen>
 
   Widget getEditingIconBar(BuildContext context) {
     Product p = BlocProvider.of<ProductBloc>(context).state.product;
-    bool barcode_done = (p.barcode != null && p.barcode.isNotEmpty);
+    bool barcodeDone = (p.barcode != null && p.barcode.isNotEmpty);
 
     return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
       ImageIconButton(
-          "assets/icons/${barcode_done ? "barcode_done.jpg" : "barcode.jpg"}",
+          "assets/icons/${barcodeDone ? "barcode_done.jpg" : "barcode.jpg"}",
           () => onScanBarcode(context)),
       ImageIconButton("assets/icons/camera.jpg", () => selectImage(context)),
     ]);
@@ -406,7 +405,6 @@ class _ProductScreenState extends State<ProductScreen>
                   appBar: getAppBar(context, state),
                   body: getAppBody(context),
                   floatingActionButton: getFAB(context),
-                  backgroundColor: Colors.white,
                 );
               },
             );
@@ -432,18 +430,16 @@ class _ProductScreenState extends State<ProductScreen>
     ProductState state = BlocProvider.of<ProductBloc>(context).state;
     assert(state is ProductViewingState);
 
-    String tmpPath = join(
-        (await getTemporaryDirectory()).path, "share-${DateTime.now()}.jpg");
+    String tmpPath = join((await getTemporaryDirectory()).path, "share.png");
     await _exportKey.currentState.exportImage(tmpPath);
 
     await Share.shareFiles([tmpPath],
         subject: FlutterI18n.translate(context, "product.share.subject"),
-        text: FlutterI18n.translate(context, "product.share.text"));
-
-    File(tmpPath).delete();
+        text: FlutterI18n.translate(context, "product.share.text"),
+        mimeTypes: ["image/png"]);
   }
 
-  Future<void> selectImage(BuildContext context) {
+  void selectImage(BuildContext context) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
@@ -511,11 +507,19 @@ class _ProductScreenState extends State<ProductScreen>
     onImageTaken(context, file.path);
   }
 
-  void onImageTaken(BuildContext context, String path) {
+  Future<void> onImageTaken(BuildContext context, String path) async {
     // get bloc
     ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
+
+    // save image path for product
+    String fileExtension = path.split(".").last;
+    String newPath = join((await getApplicationDocumentsDirectory()).path,
+        "product-${bloc.state.product.id}.$fileExtension");
+    File(path).copySync(newPath);
+    File(path).delete();
+
     bloc.add(ProductChangedEvent(
-        bloc.state.product.copyWith(imagePath: path), false));
+        bloc.state.product.copyWith(imagePath: newPath), false));
   }
 
   void onBarcodeScanned(BuildContext context, String barcode) async {

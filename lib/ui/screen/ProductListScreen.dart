@@ -280,10 +280,9 @@ class ProductListScreen extends StatelessWidget {
       child: SafeArea(
         child: Builder(builder: (BuildContext context) {
           return Scaffold(
-            backgroundColor: Colors.white,
             floatingActionButton: getFAB(context),
             body: CustomScrollView(
-              slivers: <Widget>[getAppBar(context), getAppBody(context)],
+              slivers: [getAppBar(context), getAppBody(context)],
             ),
           );
         }),
