@@ -197,7 +197,6 @@ class _ProductScreenState extends State<ProductScreen>
               width: width,
               height: height,
               fit: BoxFit.cover,
-              alignment: Alignment.center,
             ),
           ),
           BlocListener<ProductBloc, ProductState>(
@@ -435,7 +434,8 @@ class _ProductScreenState extends State<ProductScreen>
 
     await Share.shareFiles([tmpPath],
         subject: FlutterI18n.translate(context, "product.share.subject"),
-        text: FlutterI18n.translate(context, "product.share.text"),
+        text:
+            "${state.product.title}\n${FlutterI18n.translate(context, "product.share.text")}",
         mimeTypes: ["image/png"]);
   }
 
@@ -511,12 +511,14 @@ class _ProductScreenState extends State<ProductScreen>
     // get bloc
     ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
 
-    // save image path for product
-    String fileExtension = path.split(".").last;
-    String newPath = join((await getApplicationDocumentsDirectory()).path,
-        "product-${bloc.state.product.id}.$fileExtension");
-    File(path).copySync(newPath);
-    File(path).delete();
+    // TODO: IMPROVE IMAGE STORAGE LOGIC; MAYBE MOVE TO BLOC
+    // save images to app storage
+    String filename = path.split("/").last;
+    String newPath =
+        join((await getApplicationDocumentsDirectory()).path, filename);
+    File(path)
+      ..copySync(newPath)
+      ..delete();
 
     bloc.add(ProductChangedEvent(
         bloc.state.product.copyWith(imagePath: newPath), false));

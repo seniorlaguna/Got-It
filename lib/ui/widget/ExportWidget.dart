@@ -12,6 +12,8 @@ class ExportWidget extends StatefulWidget {
   const ExportWidget(this.imagePath, this.width, this.height, {Key key})
       : super(key: key);
 
+  static TextStyle textStyle = TextStyle(fontSize: 34);
+
   @override
   ExportWidgetState createState() => ExportWidgetState();
 }
@@ -27,7 +29,7 @@ class ExportWidgetState extends State<ExportWidget> {
       });
 
       // wait a little to draw image first time
-      await Future.delayed(Duration(milliseconds: 300));
+      await Future.delayed(Duration(milliseconds: 50));
 
       RenderRepaintBoundary renderRepaintBoundary =
           _exportKey.currentContext.findRenderObject();
@@ -49,7 +51,9 @@ class ExportWidgetState extends State<ExportWidget> {
 
   @override
   Widget build(BuildContext context) {
-    bool imageExists = widget.imagePath != null && widget.imagePath.isNotEmpty;
+    bool imageExists = widget.imagePath != null &&
+        widget.imagePath.isNotEmpty &&
+        File(widget.imagePath).existsSync();
 
     return Offstage(
       offstage: !_process,
@@ -57,26 +61,17 @@ class ExportWidgetState extends State<ExportWidget> {
         key: _exportKey,
         child: Stack(
           children: [
-            Container(
-                color: Colors.white,
-                width: widget.width,
-                height: widget.height),
             imageExists
-                ? Image.file(
-                    File(widget.imagePath),
+                ? Image.file(File(widget.imagePath),
                     width: widget.width,
                     height: widget.height,
-                  )
-                : Image.asset(
-                    "assets/default_product_image.jpg",
+                    fit: BoxFit.cover)
+                : Image.asset("assets/default_product_image.jpg",
                     width: widget.width,
                     height: widget.height,
-                  ),
-            Image.asset(
-              "assets/share_image_overlay.png",
-              width: widget.width,
-              height: widget.height,
-            )
+                    fit: BoxFit.cover),
+            Image.asset("assets/share_image_overlay.png",
+                width: widget.width, height: widget.height, fit: BoxFit.fill)
           ],
         ),
       ),

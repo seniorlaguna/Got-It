@@ -17,7 +17,6 @@ class ProductChangedEvent extends ProductEvent {
 
   @override
   List<Object> get props => [product];
-
 }
 
 class ProductOpenedEvent extends ProductEvent {
@@ -27,7 +26,6 @@ class ProductOpenedEvent extends ProductEvent {
 
   @override
   List<Object> get props => [product, edit];
-
 }
 
 /// Library States
@@ -49,7 +47,6 @@ class ProductViewingState extends ProductState {
 
   @override
   List<Object> get props => [product];
-
 }
 
 class ProductEditingState extends ProductState {
@@ -64,12 +61,10 @@ class ProductErrorState extends ProductState {
 
   @override
   List<Object> get props => [product];
-
 }
 
 /// Library BLoC
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
-
   final Repository _repository;
 
   ProductBloc(this._repository);
@@ -81,13 +76,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   Stream<ProductState> mapEventToState(ProductEvent event) async* {
     try {
       if (event is ProductOpenedEvent) {
-        yield (event.edit ?
-        ProductEditingState(event.product) :
-        ProductViewingState(event.product)
-        );
-      }
-
-      else if (event is ProductChangedEvent) {
+        yield (event.edit
+            ? ProductEditingState(event.product)
+            : ProductViewingState(event.product));
+      } else if (event is ProductChangedEvent) {
         assert(state is ProductViewingState || state is ProductEditingState);
 
         // only write to disk if product already has an id or
@@ -99,25 +91,18 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
         if (state is ProductViewingState) {
           yield ProductViewingState(event.product.copyWith(id: id));
-        }
-
-        else if (state is ProductEditingState) {
+        } else if (state is ProductEditingState) {
           if (event.submit) {
             yield ProductViewingState(event.product.copyWith(id: id));
-          }
-          else {
+          } else {
             yield ProductEditingState(event.product.copyWith(id: id));
           }
         }
+      } else {
+        throw Exception(
+            "Unknown event ${event.runtimeType} in mapEventToState / ProductBloc");
       }
-
-      else {
-        throw Exception("Unknown event ${event
-            .runtimeType} in mapEventToState / ProductBloc");
-      }
-    }
-
-    catch (e) {
+    } catch (e) {
       print(e);
       yield ProductErrorState(event.product);
     }

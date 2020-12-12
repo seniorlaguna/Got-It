@@ -67,7 +67,7 @@ class TagsScreen extends StatelessWidget {
                       child: TagCard(
                           tags[index],
                           [1, 8].contains(index)
-                              ? "assets/tags/empty2.jpg"
+                              ? "assets/tags/empty.jpg"
                               : "assets/tags/${tags[index]}.jpg",
                           () => getOnClickFunction(context, index, tags[index]),
                           [1, 8].contains(index),
