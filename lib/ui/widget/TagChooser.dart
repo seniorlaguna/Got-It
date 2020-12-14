@@ -88,7 +88,9 @@ class TagSelectorState extends State<TagSelector> {
           }
 
           // No Data
-          return Align(child: Text("You used no tags so far..."));
+          return Align(
+              child: Text(
+                  FlutterI18n.translate(context, "selector.no_tags_so_far")));
         });
   }
 
@@ -283,17 +285,19 @@ class _AddTagDialogState extends State<AddTagDialog> {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      title: Text("more tags"),
+      title: Text(FlutterI18n.translate(context, "selector.more_tags")),
       contentPadding: EdgeInsets.all(8),
       children: [
         Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: TextField(
-            decoration: InputDecoration(hintText: "type your tag..."),
+            decoration: InputDecoration(
+                hintText:
+                    FlutterI18n.translate(context, "selector.type_your_tag")),
             onChanged: _updateRecommendations,
           ),
         ),
-        Text("recommendations"),
+        Text(FlutterI18n.translate(context, "selector.recommendations")),
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: Wrap(

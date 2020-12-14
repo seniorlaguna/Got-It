@@ -1,11 +1,11 @@
 # title on welcome screen
-title: "Got It"
+title: "Got It!"
 
 # main screen button text
 main_screen:
-  my_cosmetics: "my cosmetics"
+  my_cosmetics: "meine sammlung"
   got_it: "Got It?"
-  add_new: "add new one"
+  add_new: "neues produkt hinzufügen"
 
 # tags that need translation
 body_haircare: "body&haircare"
@@ -18,76 +18,76 @@ favorite: "favorites"
 dialog:
   title:
     got_it: "Got It!"
-    got_it_trash: "Got It, but..."
-    not_found: "Sorry"
+    got_it_trash: "Got It, aber..."
+    not_found: "sorry"
 
   text:
-    got_it: "the product is in your collection"
-    got_it_trash: "the product is in your trash!"
-    not_found: "the product is not in your collection yet"
+    got_it: "das produkt befindet sich bereits in deiner sammlung"
+    got_it_trash: "das produkt befindet sich im papierkorb"
+    not_found: "das produkt befindet sich noch nicht in deiner sammlung"
   
   action:
     ok: "ok"
-    add: "add product"
-    show_product: "show product"
-    show_trash: "show trash"
+    add: "produkt hinzufügen"
+    show_product: "produkt anzeigen"
+    show_trash: "papierkorb anzeigen"
 
 # product page
 product:
   title:
-    new: "new product"
-    hint: "product name"
+    new: "neues produkt"
+    hint: "produktname"
 
   menu:
-    edit: "edit"
-    delete: "delete"
+    edit: "bearbeiten"
+    delete: "löschen"
   
   delete:
-    title: "delete product?"
-    text: "moves the product into trash"
-    cancel: "cancel"
+    title: "bist du dir sicher?"
+    text: "dieses produkt wird in den papierkorb verschoben"
+    cancel: "abbrechen"
     ok: "ok"
 
 
   validator:
-    no_name: "the product needs a name"
-    no_tag: "select at least 1 tag"
-    no_main_tag: "select a category tag"
+    no_name: "wie heißt dein produkt?"
+    no_tag: "wähle mindestens einen tag aus"
+    no_main_tag: "wähle eine kategorie"
 
   share:
     text: "Look what I got!\nDownload Got It! here\n\nAndroid: https://play.google.com/store/apps/details?id=org.seniorlaguna.gotit\nIOS: <link> "
 
     # only interesting for email
-    subject: "Got It"
+    subject: "Got It!"
   
   choose:
-    gallery: "Gallery"
-    camera: "Camera"
+    gallery: "galerie"
+    camera: "kamera"
 
 product_list:
-  delete: "delete"
-  recover: "recover"
-  empty: "fill me up"
-  nothing_found: "we couldn't find anything"
-  error: "oh that went wrong"
-  search_title: "search results"
-  empty_trash: "empty"
+  delete: "löschen"
+  recover: "wiederherstellen"
+  empty: "füge ein produkt hinzu"
+  nothing_found: "leider nichts gefunden"
+  error: "da ist etwas schief gelaufen"
+  search_title: "suchergebnisse"
+  empty_trash: "leer"
 
 search:
-  title: "search"
-  hint: "enter something"
-  error: "please enter something or select some tags"
-  search: "search"
-  by_title: "search by title"
-  by_tags: "search by tags"
-  or: "or"
-  by_barcode: "search by barcode"
+  title: "suche"
+  hint: "suchbegriff"
+  error: "wähle einen suchbegriff oder einen tag"
+  search: "suchen"
+  by_title: "produktnamen suchen"
+  by_tags: "produkttags suchen"
+  or: "oder"
+  by_barcode: "barcode suchen"
 
 
 legal:
   credits:
     title: "Credits"
-    version: "Version 0.9.0"
+    version: "Version 1.0"
     others: "Idea by Regina Fiedler\n\nWe used Photoshop Brushes by McBadshoes - http://mcbadshoes.deviantart.com/\n\nWe used Icons 
 "
   agb:
@@ -101,15 +101,21 @@ legal:
     text: "Hier steht das Impressum"
 
 clear_trash:
-  title: "clear trash?"
-  text: "this will remove all products from your trash"
+  title: "papierkorb leeren?"
+  text: "alle produkte werden dauerhaft entfernt"
   ok: "ok"
-  cancel: "cancel"
+  cancel: "abbrechen"
 
 already_in_collection:
-  title: "Sorry"
-  text: "this product is already in your collection"
+  title: "sorry"
+  text: "dieses produkt befindet sich bereits in deiner sammlung"
   ok: "ok"
 
 scan_barcode:
-  title: "scan barcode"
+  title: "barcode scannen"
+
+selector:
+  no_tags_so_far: "du hast noch keine tags benutzt"
+  more_tags: "mehr tags"
+  type_your_tag: "erstelle einen tag"
+  recommendations: "empfehlungen"

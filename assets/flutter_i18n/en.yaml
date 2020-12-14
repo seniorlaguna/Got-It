@@ -1,5 +1,5 @@
 # title on welcome screen
-title: "Got It"
+title: "Got It!"
 
 # main screen button text
 main_screen:
@@ -19,7 +19,7 @@ dialog:
   title:
     got_it: "Got It!"
     got_it_trash: "Got It, but..."
-    not_found: "Sorry"
+    not_found: "sorry"
 
   text:
     got_it: "the product is in your collection"
@@ -58,11 +58,11 @@ product:
     text: "Look what I got!\nDownload Got It! here\n\nAndroid: https://play.google.com/store/apps/details?id=org.seniorlaguna.gotit\nIOS: <link> "
 
     # only interesting for email
-    subject: "Got It"
+    subject: "Got It!"
   
   choose:
-    gallery: "Gallery"
-    camera: "Camera"
+    gallery: "gallery"
+    camera: "camera"
 
 product_list:
   delete: "delete"
@@ -107,9 +107,16 @@ clear_trash:
   cancel: "cancel"
 
 already_in_collection:
-  title: "Sorry"
+  title: "sorry"
   text: "this product is already in your collection"
   ok: "ok"
 
 scan_barcode:
   title: "scan barcode"
+
+selector:
+  no_tags_so_far: "you used no tags so far..."
+  more_tags: "more tags"
+  type_your_tag: "type your tag..."
+  recommendations: "recommendations"
+
