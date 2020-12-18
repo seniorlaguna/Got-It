@@ -22,10 +22,10 @@ class MainScreen extends StatelessWidget {
                 icon: Icon(Icons.more_vert, color: Colors.black),
                 itemBuilder: (context) {
                   return [
-                    "legal.credits",
-                    "legal.agb",
-                    "legal.datenschutz",
-                    "legal.impressum"
+                    "credits",
+                    "nutzungsbedingungen",
+                    "datenschutz",
+                    "impressum"
                   ]
                       .map((e) => PopupMenuItem(
                           child:
@@ -35,18 +35,18 @@ class MainScreen extends StatelessWidget {
                 },
                 onSelected: (i) {
                   switch (i) {
-                    case "legal.credits":
+                    case "credits":
                       showAboutDialog(
                         context: context,
                         applicationName: "Got It",
-                        applicationVersion: FlutterI18n.translate(
-                            context, "legal.credits.version"),
-                        applicationLegalese: FlutterI18n.translate(
-                            context, "legal.credits.others"),
+                        applicationVersion:
+                            FlutterI18n.translate(context, "credits.version"),
+                        applicationLegalese:
+                            FlutterI18n.translate(context, "credits.others"),
                       );
                       break;
                     default:
-                      InfoScreen.start(context, "$i.title", "$i.text");
+                      InfoScreen.start(context, i);
                   }
                 },
               ),

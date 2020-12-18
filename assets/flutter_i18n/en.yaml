@@ -83,23 +83,6 @@ search:
   or: "or"
   by_barcode: "search by barcode"
 
-
-legal:
-  credits:
-    title: "Credits"
-    version: "Version 0.9.0"
-    others: "Idea by Regina Fiedler\n\nWe used Photoshop Brushes by McBadshoes - http://mcbadshoes.deviantart.com/\n\nWe used Icons 
-"
-  agb:
-    title: "AGB"
-    text: "Hier stehen die AGBs"
-  datenschutz:
-    title: "Datenschutzerklärung"
-    text: "Hier steht die Datenschutzerklärung"
-  impressum:
-    title: "Impressum"
-    text: "Hier steht das Impressum"
-
 clear_trash:
   title: "clear trash?"
   text: "this will remove all products from your trash"
@@ -120,3 +103,44 @@ selector:
   type_your_tag: "type your tag..."
   recommendations: "recommendations"
 
+
+credits:
+  title: "Credits"
+  version: "Version 1.0"
+  others: "Idea by Regina Fiedler\n\nWe used Photoshop Brushes by McBadshoes - http://mcbadshoes.deviantart.com/"
+nutzungsbedingungen:
+  title: "Conditions of Use"
+  header1: "1. Scope of Validity"
+  text1: "1.1 “Got It!” is a mobile software application of Florian Teich, Paul-Dessau Straße 1, 12679 Berlin, Germany, (hereinafter referred to as “us“ or “we“).\n1.2 These conditions of use regulate the relationship between us and the users of the application (in the following “Users“)."
+  header2: "\n2. Offer, Registration, Participation conditions"
+  text2: "2.1 ”Got It” is a mobile software application that enables users to manage cosmetic items. Purchased products can be listedwithin the app and these products can be shared with third parties via WhatsApp, Facebook,and other channels.\n2.2 Essential for the use of the App is a mobile device (smartphone, tablet, etc.) and Internet access.\n2.3 By purchasing and using the application, the user accepts the present terms of use. If users do not agree with the terms of these conditions, they may not use this service.\n2.4 We strive to continually develop and maintain the offer and to make it available. It is continuously developed and, after proper consideration, is adapted to various factors, such as the needs of the User, the requirements of the market and the technical and economic situation. As a result, the offer includes the applications in their current stage of development. Users have no right to demand that the offer remains unchanged in terms of its content and scopeor that it retains certain functions. Neither does any claim exist for the offer to always be available and retrievable or that it be free of errors.\n2.5 We can also not ensure that the application will work equally well on all end devices. The overall usability and the accuracy of the given user location depend on circumstances which we cannot influence (Users’ hardware, data speed, the services of third parties, etc.).\n2.6 We also reserves the right not to no longer make the software, or parts thereof, available.\n2.7The User is also aware that use of the app and its activation affects the charging state of the battery of their end device.\n2.8The User undertakes to refrain from any activity which affects or might affect the functional capabilities of our offer (e.g. by means of software or other scripts)."
+  header3: "\n3. Costs, Period of Agreement"
+  text3: "3.1 Got It! is subject to fees. The final price is displayed to the user in the app-store.\n3.2We would like to point out that use of the application can lead to the accruing of further service provider costs on the part of the user which lie outside of the sphere of our influence."
+  header4: "\n4. Granting of rights to users for the use of the Got It!app"
+  text4: "4.1 We hereby grant Users the right to use the Application for the purpose set forth in these Terms and Conditions under this Agreement.\n4.2 Any further use of the content and the app, in particular duplication, distribution and decomplication, is not permitted without explicit permission."
+  header5: "\n5. Product photos of the users"
+  text5: "5.1 The users undertake to only use photos within Got It! to upload products that show products. Photos on which people are recognizable may not be uploaded within the app.\n5.2. The users created and used within Got It! the photos used are not transmitted to us and remain on the users' end devices."
+  header6: "\n6. Alterations to the Terms of Use"
+  text6: "We reserve the right to alter these terms of use with effect for the future. In this case, the User will be informed of such alterations to the terms of use before the next use of the software. Further use of the App will only be possible if these alterations are agreed to."
+  header7: "\n7. Liability"
+  text7: "The legal liability law applies."
+  header8: "\n8.Rights of the Operators of this Application"
+  text8: "8.1 In the event of any violation of these terms of use, laws and/or other rules published in the respective App Store, we can temporarily or permanently exclude use of the application.\n8.2 The Users permit us to delete or restrict the User account and functions at any time."
+  header9: "\n9. Applicable Law, Contractual Language, Final Clause"
+  text9: "9.1 The law of the Federal Republic of Germany shall apply for the contractual relationship between the User and us insofar as no mandatory regulations contradict such. The contractual language is English.\n9.2 Should one or more of the provisions of this contract be or become ineffective, this shall not affect the validity of the remaining provisions. The contracting parties are obliged to replace the ineffective provision with a valid provision that best achieves the contractually agreed result."
+
+datenschutz:
+  title: "Privacy Policy"
+  prolog: ""
+  header1: "\n1. Responsible authority"
+  text1: "Responsible in regard for the processing data: Florian Teich, Paul-Dessau Straße 1, 12679 Berlin, Germany. More contact details: www.website.com/impressum.html"
+  header2: "\n2. Scope of data processing"
+  text2: "We process personal data transmitted by the user within the scope of this contract, earmarked and in accordance with the statutory provisions. For the purpose of the application, we store the folliwn g user data:\n\n• Username of the account in the App Store\n• Name\n• E-mail address\n• technical information (device ID, operating system version, browser)\n• as well as other data if these are provided voluntarily by the users\n\nThe data will be stored until the user deletes his account or asserts his data protection right to delete.This processing is carried out to fulfil the contract of use according to Art. 6 para. 1 lit. b GDPR."
+  header3: "\n3. Data transfer"
+  text3: "Personal data will be treated as strictly confidential and will not be disclosed to third parties unless expressly consented to by the users, or as part of the fulfilment of the contract."
+  header4: "\n4. Rights of the Persons Concerned"
+  text4: "Users have the right\n• to request information about your personal data processed by us pursuant to Art. 15 GDPR;\n• in accordance with Art. 16 GDPR, immediately demand the correction of incorrect or complete personal data stored with us;\n• to demand the deletion of your personal data stored by us pursuant to Art. 17 GDPR;\n• to demand the restriction of the processing of your personal data in accordance with Art. 18 GDPR;\n• to receive, in accordance with Art.20 GDPR, your personal data provided to us in a structured, standard and machine-readable format or to request transmission to another person responsible;\n• according to Art. 7 para. 3 GDPR, to revoke your once given consent to us at any time. As a result, we are no longer allowed to continue the data processing based on this consent for the future, and\n• to complain to a supervisory authority in accordance with Art. 77 GDPR. As a rule, you can contact the supervisory authority of your usual place of residenceor workplace or our law office.\n\nIf your personal data are processed based on legitimate interests according to Art. 6 para. 1 S. 1 letter f GDPR, you have the right to file an objection to the processing of your personal data according to Art. 21 GDPR, insofar as reasons for this exist which result from your specific situation or if the objection is directed against direct advertising. In the latter case, you have a general right to object which is implemented by us without indication of a specific situation."
+
+impressum:
+  title: "Contact"
+  text: "Florian Teich\nPaul-Dessau Straße 1\n12679 Berlin\ngot-it@lagunabrothers.de\n+49 1590 810 25 37"

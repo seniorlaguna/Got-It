@@ -1,4 +1,4 @@
-package seniorlaguna.de.got_it;
+package de.seniorlaguna.gotit;
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity;

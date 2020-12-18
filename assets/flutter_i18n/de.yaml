@@ -83,23 +83,6 @@ search:
   or: "oder"
   by_barcode: "barcode suchen"
 
-
-legal:
-  credits:
-    title: "Credits"
-    version: "Version 1.0"
-    others: "Idea by Regina Fiedler\n\nWe used Photoshop Brushes by McBadshoes - http://mcbadshoes.deviantart.com/\n\nWe used Icons 
-"
-  agb:
-    title: "AGB"
-    text: "Hier stehen die AGBs"
-  datenschutz:
-    title: "Datenschutzerklärung"
-    text: "Hier steht die Datenschutzerklärung"
-  impressum:
-    title: "Impressum"
-    text: "Hier steht das Impressum"
-
 clear_trash:
   title: "papierkorb leeren?"
   text: "alle produkte werden dauerhaft entfernt"
@@ -119,3 +102,47 @@ selector:
   more_tags: "mehr tags"
   type_your_tag: "erstelle einen tag"
   recommendations: "empfehlungen"
+
+
+
+
+credits:
+  title: "Credits"
+  version: "Version 1.0"
+  others: "Idea by Regina Fiedler\n\nWe used Photoshop Brushes by McBadshoes - http://mcbadshoes.deviantart.com/"
+nutzungsbedingungen:
+  title: "Nutzungsbedingungen"
+  header1: "1. Geltungsbereich"
+  text1: "1.1 „Got It!“ ist eine mobile Softwareapplikation von Florian Teich, Paul-Dessau Straße 1, 12679 Berlin (nachfolgend auch „uns“ bzw. „wir“ genannt).\n1.2 Geregelt wird in diesen Nutzungsbedingungen das Verhältnis zwischen uns und den Nutzern der Applikation (im Folgenden „Sie“ oder „Nutzer“)."
+  header2: "\n2. Vertragsgegenstand"
+  text2: "2.1 Got It! ist eine mobile Softwareapplikation, die Nutzern die Verwaltung von Kosmetikartikeln ermöglicht. Hierbei können erworbene Produkte innerhalb der App angelegt werden und diese Produkte können mit Dritten via bspw. WhatsApp oder Facebook geteilt werden.\n2.2 Voraussetzung für die technische Nutzung von Got It! ist ein Endgerät (Smartphone, Tablet etc.) und ein Internetzugang.\n2.3 Mit dem Bezug und der Nutzung der Applikation erkennt der Nutzer die vorliegenden Nutzungsbedingungen an. Falls Nutzer mit den Regelungen in diesen Bedingungen nicht einverstanden sind, dürfen sie diesen Dienst nicht nutzen.\n2.4 Wir bemühen uns, das Angebot ständig inhaltlich zu erweitern, zu warten und zur Verfügung zu stellen. Es wird fortlaufend entwickelt und unterschiedlichen Faktoren, wie den Anforderungen der Nutzer, den Anforderungen des Marktes sowie der technischen und wirtschaftlichen Situation nach sachgerechter Abwägung angepasst. Das Angebot umfasst daher die Applikationen in der aktuellen Entwicklungsstufe. Die Nutzer haben keinen Anspruch darauf, dass das Angebot in seinem Inhalt und Umfang unverändert bleibt oder bestimmte Funktionen aufweist. Ebenfalls besteht kein Anspruch, dass das Angebot immer erreichbar und verfügbar ist sowie fehlerfrei funktioniert. Dennoch bemühen wir uns um eine ständige Verfügbarkeit und Funktionsfähigkeit von Got It!.\n2.5 Ebenso können wir nicht sicherstellen, dass die Applikation auf allen Endgeräten gleichermaßen funktioniert. Die generelle Nutzbarkeit hängt von Umständen ab, die wir nicht beeinflussen können (bspw. Hard- und Software des Nutzers, Datengeschwindigkeit).\n2.6 Zudem behalten wir uns vor, das Angebot oder seine Teile nicht weiter zur Verfügung zu stellen.\n2.7 Der Nutzer ist sich auch bewusst, dass durch die Verwendung der App und deren Aktivierung der Ladestand des Akkus seines Endgerätes und sein Datenvolumen beeinflusst werden.\n2.8 Der Nutzer verpflichtet sich, Handlungen zu unterlassen, welche die Funktionsfähigkeiten von Got It! und unseres Angebots beeinträchtigt oder beeinträchtigen können (z.B. durch Software oder sonstige Scripts)."
+  header3: "\n3. Kosten"
+  text3: "3.1 Die Nutzung von Got It! ist kostenpflichtig. Der Endpreis wird dem Nutzer im App-Store angezeigt.\n3.2 Wir weisen darauf hin, dass durch die Nutzung der Applikation weitere Kosten des Serviceprodivers auf Seiten des Nutzers anfallen können, die außerhalb unseres Einflussbereiches liegen."
+  header4: "\n4. Rechteeinräumung für die Nutzung von Got It!"
+  text4: "4.1 Wir räumen den Nutzern im Rahmen dieses Vertrags nur das Recht ein, die Applikation für den in diesen Bedingungen dargestellten Vorgaben für private Zwecke zu nutzen.\n4.2 Eine weitergehende Nutzung der Inhalte und der App, insbesondere Vervielfältigung, Verbreitung, wirtschaftliche Verwertung und Dekompilieren ist ohne ausdrückliche Erlaubnis nicht gestattet."
+  header5: "\n5. Produktfotos der Nutzer"
+  text5: "5.1 Die Nutzer verpflichten sich dazu, ausschließlich Fotos innerhalb von Got It! hochzuladen, auf denen Produkte abgebildet sind. Fotos, auf denen Personen erkennbar abgebildet werden, dürfen nicht innerhalb der App hochgeladen werden.\n5.2. Die von den Nutzern erstellten und innerhalb von Got It! genutzten Fotos werden nicht an uns übertragen und verbleiben auf den Endgeräten der Nutzer."
+  header6: "\n6. Änderungen der Nutzungsbedingungen"
+  text6: "Wir behalten uns das Recht vor, diese Nutzungsbedingungen mit Wirkung für die Zukunft zu ändern. In diesem Fall werden wir die Nutzer vorher über die Änderungen an den Nutzungsbedingungen informieren und sie darauf hinweisen, dass die Änderungen als angenommen gelten, wenn sie die Applikation weiter nutzen oder nicht binnen 3 Wochen den Änderungen widersprechen."
+  header7: "\n7. Haftung"
+  text7: "Es gilt das gesetzliche Haftungsrecht."
+  header8: "\n8. Rechte der Betreiber der Applikation"
+  text8: "Bei Verstößen gegen diese Nutzungsbedingungen, Gesetze und/oder anderer im jeweiligen App-Store veröffentlichten Regeln können wir einzelne Nutzer zeitweise oder dauerhaft von der Nutzung der Applikation ausschließen."
+  header9: "\n9. Anwendbares Recht, Schlussbestimmung"
+  text9: "9.1 Auf die vertraglichen Beziehungen zwischen den Nutzern und uns ist das Recht der Bundesrepublik Deutschland anwendbar, soweit dem keine zwingenden Regelungen entgegenstehen. Die Vertragssprache ist deutsch.\n9.2 Sollten eine oder mehrere der Bestimmungen dieses Vertrages unwirksam sein oder werden, so wird die Wirksamkeit der übrigen Bestimmungen hierdurch nicht berührt. Die Vertragsparteien sind gehalten, die unwirksame Bestimmung durch eine solche wirksame Bestimmung zu ersetzen, mit der das vertraglich gewollte Ergebnis am besten erreicht wird."
+
+datenschutz:
+  title: "Datenschutzerklärung"
+  prolog: "Nachfolgend informieren wir über die Verarbeitung der Daten der Nutzer, wenn diese Got It! einsetzen."
+  header1: "\n1. Verantwortlicher"
+  text1: "Name und Kontaktdaten des für die Verarbeitung Verantwortlichen: Florian Teich, Paul-Dessau Straße 1, 12679 Berlin. Weitere Kontaktdaten unter: www.website.com/impressum.html"
+  header2: "\n2. Umfang der Datenverarbeitung"
+  text2: "Wir verarbeiten personenbezogene Daten, die der Nutzer im Rahmen dieses Vertrages übermittelt, zweckgebunden und gemäß den gesetzlichen Bestimmungen. Zum Zwecke der Nutzung der Applikation speichern wir Daten folgenden der Nutzer\n\n•Benutzername des Kontos im App-Store\n• Name\n• E-Mail-Adresse\n• technische Informationen (Geräte-ID, Betriebssystemversion, Browser)\n• sowie weitere Daten, wenn diese von den Nutzern freiwillig angegeben werden\n\nDiese Verarbeitung erfolgt zur Erfüllung des Nutzungsvertrages nach Art. 6 Abs. 1 lit. b DSGVO.\n\nDie Daten werden solange gespeichert, bis der Nutzer sein Konto löscht bzw. seinen datenschutzrechtlichen Löschungsanspruch geltend macht."
+  header3: "\n3. Weitergabe der Daten"
+  text3: "Personenbezogene Daten werden von uns streng vertraulich behandelt und nicht an Dritte weitergegeben, soweit keine ausdrückliche Einwilligung der Nutzer vorliegt. Eine Ausnahme gilt, wenn dies im Rahmen der Vertragserfüllung erforderlich ist oder ein berechtigtes Interesse vorliegt."
+  header4: "\n4. Datenschutzrechtliche Ansprüche"
+  text4: "Nutzer haben das Recht\n• gemäß Art. 15 DSGVO Auskunft über Ihre von uns verarbeiteten personenbezogenen Daten zu verlangen;\n• gemäß Art. 16 DSGVO unverzüglich die Berichtigung unrichtiger oder Vervollständigung Ihrer bei uns gespeicherten personenbezogenen Daten zu verlangen;\n• gemäß Art. 17 DSGVO die Löschung Ihrer bei uns gespeicherten personenbezogenen Daten zu verlangen, sobald der Lizenzvertrag beendet worden ist.\n• gemäß Art. 18 DSGVO die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen;\n• gemäß Art. 20 DSGVO Ihre personenbezogenen Daten, die Sie uns bereitgestellt haben, in einem strukturierten, gängigen und maschinenlesbaren Format zu erhalten oder die Übermittlung an einen anderen Verantwortlichen zu verlangen;\n• gemäß Art. 7 Abs. 3 DSGVO Ihre einmal erteilte Einwilligung jederzeit gegenüber uns zu widerrufen. Dies hat zur Folge, dass wir die Datenverarbeitung, die auf dieser Einwilligung beruhte, für die Zukunft nicht mehr fortführen dürfen und\n• gemäß Art. 77 DSGVO sich bei einer Aufsichtsbehörde zu beschweren. In der Regel können Sie sich hierfür an die Aufsichtsbehörde Ihres üblichen Aufenthaltsortes oder Arbeitsplatzes oder unseres Unternehmenssitzes wenden.\n\nSofern Ihre personenbezogenen Daten auf Grundlage von berechtigten Interessen gemäß Art. 6 Abs. 1 S. 1 lit. f DSGVO verarbeitet werden, haben Sie das Recht, gemäß Art. 21 DSGVO Widerspruch gegen die Verarbeitung Ihrer personenbezogenen Daten einzulegen, soweit dafür Gründe vorliegen, die sich aus Ihrer besonderen Situation ergeben oder sich der Widerspruch gegen Direktwerbung richtet. Im letzteren Fall haben Sie ein generelles Widerspruchsrecht, das ohne Angabe einer besonderen Situation von uns umgesetzt wird."
+
+impressum:
+  title: "Impressum"
+  text: "Florian Teich\nPaul-Dessau Straße 1\n12679 Berlin\ngot-it@lagunabrothers.de\n+49 1590 810 25 37"
