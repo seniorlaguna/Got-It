@@ -11,7 +11,7 @@ void main() async {
   runApp(RepositoryProvider(
     create: (context) => Repository(),
     child: MaterialApp(
-      title: "Got It",
+      title: "Got It!",
       theme: ThemeData(
           fontFamily: "Quest",
           accentColor: Color(0xffdc9a9b),

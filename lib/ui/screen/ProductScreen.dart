@@ -95,18 +95,28 @@ class _ProductScreenState extends State<ProductScreen>
                     FlutterI18n.translate(context, "product.delete.cancel"),
                     style: TextStyle(color: Theme.of(context).accentColor))),
             FlatButton(
-                onPressed: () => onDeleteComfirmed(context),
+                onPressed: () {
+                  onToggleTrash(context);
+                  Navigator.of(context)..pop()..pop();
+                },
                 child: Text(FlutterI18n.translate(context, "product.delete.ok"),
                     style: TextStyle(color: Theme.of(context).accentColor)))
           ],
         ));
   }
 
-  void onDeleteComfirmed(BuildContext context) {
+  void onToggleTrash(BuildContext context) {
     ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
-    Repository repository = RepositoryProvider.of(context);
-    repository.delete(bloc.state.product);
-    Navigator.of(context)..pop()..pop();
+    Set<String> newTags = Set<String>.from(bloc.state.product.tags);
+
+    if (newTags.contains(deleteTag)) {
+      newTags.remove(deleteTag);
+    } else {
+      newTags.add(deleteTag);
+    }
+
+    bloc.add(
+        ProductChangedEvent(bloc.state.product.copyWith(tags: newTags), false));
   }
 
   void onBackClicked(BuildContext context) {
@@ -141,15 +151,26 @@ class _ProductScreenState extends State<ProductScreen>
                       child: Text(
                           FlutterI18n.translate(context, "product.menu.edit")),
                       value: 0),
-                  PopupMenuItem(
-                      child: Text(FlutterI18n.translate(
-                          context, "product.menu.delete")),
-                      value: 1),
+                  (state.product.delete)
+                      ? PopupMenuItem(
+                          child: Text(FlutterI18n.translate(
+                              context, "product.menu.recover")),
+                          value: 2)
+                      : PopupMenuItem(
+                          child: Text(FlutterI18n.translate(
+                              context, "product.menu.delete")),
+                          value: 1),
                 ];
               }, onSelected: (int value) {
                 if (value == 0)
                   onEditClicked(context);
-                else if (value == 1) onDeleteClicked(context);
+                else if (value == 1)
+                  onDeleteClicked(context);
+                else if (value == 2) {
+                  onToggleTrash(context);
+                  Navigator.pop(context);
+                }
+                ;
               })
             ]
           : [],

@@ -41,6 +41,7 @@ product:
   menu:
     edit: "bearbeiten"
     delete: "löschen"
+    recover: "wiederherstellen"
   
   delete:
     title: "bist du dir sicher?"
@@ -55,7 +56,7 @@ product:
     no_main_tag: "wähle eine kategorie"
 
   share:
-    text: "Look what I got!\nDownload Got It! here\n\nAndroid: https://play.google.com/store/apps/details?id=org.seniorlaguna.gotit\nIOS: <link> "
+    text: "Look what I got!\nDownload Got It! here\n\nhttps://got-it.bitbucket.io/"
 
     # only interesting for email
     subject: "Got It!"
@@ -135,9 +136,9 @@ datenschutz:
   title: "Datenschutzerklärung"
   prolog: "Nachfolgend informieren wir über die Verarbeitung der Daten der Nutzer, wenn diese Got It! einsetzen."
   header1: "\n1. Verantwortlicher"
-  text1: "Name und Kontaktdaten des für die Verarbeitung Verantwortlichen: Florian Teich, Paul-Dessau Straße 1, 12679 Berlin. Weitere Kontaktdaten unter: www.website.com/impressum.html"
+  text1: "Name und Kontaktdaten des für die Verarbeitung Verantwortlichen: Florian Teich, Paul-Dessau Straße 1, 12679 Berlin. Weitere Kontaktdaten unter: https://got-it.bitbucket.io/de/impressum.html"
   header2: "\n2. Umfang der Datenverarbeitung"
-  text2: "Wir verarbeiten personenbezogene Daten, die der Nutzer im Rahmen dieses Vertrages übermittelt, zweckgebunden und gemäß den gesetzlichen Bestimmungen. Zum Zwecke der Nutzung der Applikation speichern wir Daten folgenden der Nutzer\n\n•Benutzername des Kontos im App-Store\n• Name\n• E-Mail-Adresse\n• technische Informationen (Geräte-ID, Betriebssystemversion, Browser)\n• sowie weitere Daten, wenn diese von den Nutzern freiwillig angegeben werden\n\nDiese Verarbeitung erfolgt zur Erfüllung des Nutzungsvertrages nach Art. 6 Abs. 1 lit. b DSGVO.\n\nDie Daten werden solange gespeichert, bis der Nutzer sein Konto löscht bzw. seinen datenschutzrechtlichen Löschungsanspruch geltend macht."
+  text2: "Wir verarbeiten personenbezogene Daten, die der Nutzer im Rahmen dieses Vertrages übermittelt, zweckgebunden und gemäß den gesetzlichen Bestimmungen. Zum Zwecke der Nutzung der Applikation speichern wir folgende Daten der Nutzer\n\n• Benutzername des Kontos im App-Store\n• Name\n• E-Mail-Adresse\n• technische Informationen (Geräte-ID, Betriebssystemversion, Browser)\n• sowie weitere Daten, wenn diese von den Nutzern freiwillig angegeben werden\n\nDiese Verarbeitung erfolgt zur Erfüllung des Nutzungsvertrages nach Art. 6 Abs. 1 lit. b DSGVO.\n\nDie Daten werden solange gespeichert, bis der Nutzer sein Konto löscht bzw. seinen datenschutzrechtlichen Löschungsanspruch geltend macht."
   header3: "\n3. Weitergabe der Daten"
   text3: "Personenbezogene Daten werden von uns streng vertraulich behandelt und nicht an Dritte weitergegeben, soweit keine ausdrückliche Einwilligung der Nutzer vorliegt. Eine Ausnahme gilt, wenn dies im Rahmen der Vertragserfüllung erforderlich ist oder ein berechtigtes Interesse vorliegt."
   header4: "\n4. Datenschutzrechtliche Ansprüche"

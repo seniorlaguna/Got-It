@@ -41,6 +41,7 @@ product:
   menu:
     edit: "edit"
     delete: "delete"
+    recover: "recover"
   
   delete:
     title: "delete product?"
@@ -55,7 +56,7 @@ product:
     no_main_tag: "select a category tag"
 
   share:
-    text: "Look what I got!\nDownload Got It! here\n\nAndroid: https://play.google.com/store/apps/details?id=org.seniorlaguna.gotit\nIOS: <link> "
+    text: "Look what I got!\nDownload Got It! here\n\nhttps://got-it.bitbucket.io/"
 
     # only interesting for email
     subject: "Got It!"
@@ -133,7 +134,7 @@ datenschutz:
   title: "Privacy Policy"
   prolog: ""
   header1: "\n1. Responsible authority"
-  text1: "Responsible in regard for the processing data: Florian Teich, Paul-Dessau Straße 1, 12679 Berlin, Germany. More contact details: www.website.com/impressum.html"
+  text1: "Responsible in regard for the processing data: Florian Teich, Paul-Dessau Straße 1, 12679 Berlin, Germany. More contact details: https://got-it.bitbucket.io/en/contact.html"
   header2: "\n2. Scope of data processing"
   text2: "We process personal data transmitted by the user within the scope of this contract, earmarked and in accordance with the statutory provisions. For the purpose of the application, we store the folliwn g user data:\n\n• Username of the account in the App Store\n• Name\n• E-mail address\n• technical information (device ID, operating system version, browser)\n• as well as other data if these are provided voluntarily by the users\n\nThe data will be stored until the user deletes his account or asserts his data protection right to delete.This processing is carried out to fulfil the contract of use according to Art. 6 para. 1 lit. b GDPR."
   header3: "\n3. Data transfer"
