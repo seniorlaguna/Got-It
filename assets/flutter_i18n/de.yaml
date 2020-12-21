@@ -56,7 +56,7 @@ product:
     no_main_tag: "wähle eine kategorie"
 
   share:
-    text: "Look what I got!\nDownload Got It! here\n\nhttps://got-it.bitbucket.io/"
+    text: "\n\nStay organized with Got It!\nhttps://got-it.bitbucket.io/"
 
     # only interesting for email
     subject: "Got It!"

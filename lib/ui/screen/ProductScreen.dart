@@ -457,7 +457,7 @@ class _ProductScreenState extends State<ProductScreen>
     await Share.shareFiles([tmpPath],
         subject: FlutterI18n.translate(context, "product.share.subject"),
         text:
-            "${state.product.title}\n${FlutterI18n.translate(context, "product.share.text")}",
+            "${state.product.title}${FlutterI18n.translate(context, "product.share.text")}",
         mimeTypes: ["image/png"]);
   }
 
