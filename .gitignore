@@ -5,3 +5,4 @@
 .packages
 .vscode/
 build/
+android/key.properties
