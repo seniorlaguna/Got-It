@@ -29,7 +29,7 @@ void main() async {
                     fontSize: 20, color: Colors.black, fontFamily: "Quest"),
               ))),
       localizationsDelegates: [
-        FlutterI18nDelegate(),
+        FlutterI18nDelegate(fallbackFile: "en"),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
