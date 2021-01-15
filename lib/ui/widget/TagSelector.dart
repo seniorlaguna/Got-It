@@ -3,50 +3,38 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:got_it/bloc/TagSelectorBloc.dart';
 import 'package:got_it/data/Repository.dart';
 import 'package:got_it/model/Product.dart';
 
-class TagSelector extends StatefulWidget {
-  final Set<String> tags;
+class TagSelector extends StatelessWidget {
   final bool searchSelector;
+  final double spacing = 3;
+  final Repository _repository;
+  final TagSelectorBloc _bloc;
 
-  const TagSelector(this.tags, {Key key, this.searchSelector = false})
+  const TagSelector(this._repository, this._bloc,
+      {Key key, this.searchSelector = false})
       : super(key: key);
 
-  @override
-  State<StatefulWidget> createState() => TagSelectorState(tags);
-}
-
-class TagSelectorState extends State<TagSelector> {
-  final Set<String> tags;
-  final double spacing = 3;
-  Repository _repository;
-
-  TagSelectorState(this.tags);
-
-  @override
-  void initState() {
-    super.initState();
-    _repository = RepositoryProvider.of<Repository>(context);
-  }
-
-  Future<void> _showDialog(Iterable<String> recommendations) async {
+  Future<void> _showDialog(BuildContext context, Set<String> selectedTags,
+      Iterable<String> recommendations) async {
     String newTag = await showDialog(
         context: context,
         builder: (context) {
-          return AddTagDialog(widget.searchSelector, recommendations);
+          return AddTagDialog(searchSelector, recommendations);
         });
 
     if (newTag != null && newTag.isNotEmpty) {
-      setState(() {
-        tags.add(newTag);
-      });
+      Set<String> tmp = Set.from(selectedTags);
+      tmp.add(newTag);
+      _bloc.add(tmp);
     }
   }
 
-  Widget getSearchTags(BuildContext context) {
+  Widget getSearchTags(BuildContext context, Set<String> selectedTags) {
     return FutureBuilder(
-        future: _repository.getTagsRanking(tags),
+        future: _repository.getTagsRanking(selectedTags),
         builder: (context, snapshot) {
           // Loading
           if (snapshot.connectionState != ConnectionState.done) {
@@ -59,23 +47,23 @@ class TagSelectorState extends State<TagSelector> {
           if (ranking.isNotEmpty) {
             List<Widget> children = ranking
                 .getRange(0, min(10, ranking.length))
-                .map((e) =>
-                    SelectableTag(e, selected: tags.contains(e), callback: () {
-                      if (tags.contains(e)) {
-                        setState(() {
-                          tags.remove(e);
-                        });
+                .map((e) => SelectableTag(e, selected: selectedTags.contains(e),
+                        callback: () {
+                      if (selectedTags.contains(e)) {
+                        Set<String> tmp = Set.from(selectedTags);
+                        tmp.remove(e);
+                        _bloc.add(tmp);
                       } else {
-                        setState(() {
-                          tags.add(e);
-                        });
+                        Set<String> tmp = Set.from(selectedTags);
+                        tmp.add(e);
+                        _bloc.add(tmp);
                       }
                     }))
                 .toList();
 
             if (ranking.length > 10) {
               children.add(AddTagButton(
-                  callback: () => _showDialog(
+                  callback: () => _showDialog(context, selectedTags,
                       ranking.getRange(10, ranking.length - 1).toSet())));
             }
 
@@ -94,73 +82,80 @@ class TagSelectorState extends State<TagSelector> {
         });
   }
 
-  Future<List<String>> _getRecommendsForEditing() async {
+  Future<List<String>> _getRecommendsForEditing(
+      Set<String> selectedTags) async {
     List<String> mostUsed = await _repository.getTagsRanking({});
     mostUsed.addAll(
         tagRecommendations.where((element) => !mostUsed.contains(element)));
     mostUsed.removeWhere((element) => categoryTags.contains(element));
-    mostUsed.removeWhere((element) => tags.contains(element));
+    mostUsed.removeWhere((element) => selectedTags.contains(element));
 
     return mostUsed;
   }
 
   @override
   Widget build(BuildContext context) {
-    // search selector
-    if (widget.searchSelector) {
-      return getSearchTags(context);
-    }
+    return BlocBuilder<TagSelectorBloc, Set<String>>(
+      builder: (BuildContext context, Set<String> selectedTags) {
+        // search selector
+        if (searchSelector) {
+          return getSearchTags(context, selectedTags);
+        }
 
-    // category already selected
-    if (tags.any((element) => categoryTags.contains(element))) {
-      return FutureBuilder(
-          future: _getRecommendsForEditing(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState != ConnectionState.done) {
-              return Text("");
-            }
+        // category already selected
+        if (selectedTags.any((element) => categoryTags.contains(element))) {
+          return FutureBuilder(
+              future: _getRecommendsForEditing(selectedTags),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return Text("");
+                }
 
-            List<String> ranking = snapshot.data as List<String>;
+                List<String> ranking = snapshot.data as List<String>;
 
-            List<Widget> children = tags
-                .map((e) => SelectableTag(
-                      e,
-                      selected: true,
-                      callback: () {
-                        setState(() {
-                          tags.remove(e);
-                        });
-                      },
-                    ))
-                .toList();
-            children.add(AddTagButton(callback: () => _showDialog(ranking)));
+                List<Widget> children = selectedTags
+                    .map((e) => SelectableTag(
+                          e,
+                          selected: true,
+                          callback: () {
+                            Set<String> tmp = Set.from(selectedTags);
+                            tmp.remove(e);
+                            _bloc.add(tmp);
+                          },
+                        ))
+                    .toList();
+                children.add(AddTagButton(
+                    callback: () =>
+                        _showDialog(context, selectedTags, ranking)));
 
-            return Wrap(
-                runSpacing: spacing,
-                spacing: spacing,
-                direction: Axis.horizontal,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: children);
-          });
-    }
-    // no category selected
-    else {
-      return Wrap(
-          runSpacing: spacing,
-          spacing: spacing,
-          direction: Axis.horizontal,
-          children: categoryTags
-              .map((e) => SelectableTag(
-                    e,
-                    selected: false,
-                    callback: () {
-                      setState(() {
-                        tags.add(e);
-                      });
-                    },
-                  ))
-              .toList());
-    }
+                return Wrap(
+                    runSpacing: spacing,
+                    spacing: spacing,
+                    direction: Axis.horizontal,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: children);
+              });
+        }
+        // no category selected
+        else {
+          return Wrap(
+              runSpacing: spacing,
+              spacing: spacing,
+              direction: Axis.horizontal,
+              children: categoryTags
+                  .map((e) => SelectableTag(
+                        e,
+                        selected: false,
+                        callback: () {
+                          Set<String> tmp = Set.from(selectedTags);
+                          tmp.add(e);
+                          _bloc.add(tmp);
+                        },
+                      ))
+                  .toList());
+        }
+      },
+    );
   }
 }
 

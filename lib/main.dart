@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +10,11 @@ import 'package:got_it/ui/screen/WelcomeScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIOverlays([]);
+
+  // change to fullscreen on iOS
+  if (Platform.isIOS) {
+    SystemChrome.setEnabledSystemUIOverlays([]);
+  }
 
   runApp(RepositoryProvider(
     create: (context) => Repository(),

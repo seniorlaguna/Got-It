@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:got_it/bloc/LibraryBloc.dart';
+import 'package:got_it/bloc/TagSelectorBloc.dart';
 import 'package:got_it/data/Repository.dart';
 import 'package:got_it/model/Product.dart';
 import 'package:got_it/ui/screen/ProductListScreen.dart';
-import 'package:got_it/ui/widget/TagChooser.dart';
+import 'package:got_it/ui/widget/TagSelector.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'ProductScreen.dart';
@@ -22,8 +23,6 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  final GlobalKey<TagSelectorState> _tagSelectorKey =
-      GlobalKey(debugLabel: "tagSelectorKey");
   GlobalKey<FormState> _formKey = GlobalKey();
   TextEditingController _textEditingController = TextEditingController();
 
@@ -42,115 +41,138 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   String validateInput(BuildContext context, String titleRegex) {
-    if (titleRegex.isEmpty && _tagSelectorKey.currentState.tags.isEmpty) {
+    TagSelectorBloc bloc = BlocProvider.of<TagSelectorBloc>(context);
+
+    if (titleRegex.isEmpty && bloc.state.isEmpty) {
       return FlutterI18n.translate(context, "search.error");
     }
     return null;
   }
 
+  TagSelectorBloc createBloc(BuildContext context) {
+    return TagSelectorBloc(RepositoryProvider.of<Repository>(context))..add({});
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: Text(FlutterI18n.translate(context, "search.title")),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Align(
-                alignment: Alignment(-0.9, 0),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                  child: Text(
-                    FlutterI18n.translate(context, "search.by_title"),
-                    style: TextStyle(
-                        color: Colors.black54, fontWeight: FontWeight.w700),
-                  ),
-                )),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Form(
-                key: _formKey,
-                child: TextFormField(
-                  controller: _textEditingController,
-                  decoration: InputDecoration(
-                      suffixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8))),
-                      hintText: FlutterI18n.translate(context, "search.hint")),
-                  validator: (value) => validateInput(context, value),
-                ),
+    return BlocProvider(
+      create: createBloc,
+      child: Builder(
+        builder: (BuildContext context) {
+          return SafeArea(
+            child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              appBar: AppBar(
+                title: Text(FlutterI18n.translate(context, "search.title")),
               ),
-            ),
-            Spacer(),
-            Align(
-                alignment: Alignment(-0.9, 0),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                  child: Text(
-                    FlutterI18n.translate(context, "search.by_tags"),
-                    style: TextStyle(
-                        color: Colors.black54, fontWeight: FontWeight.w700),
+              body: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Align(
+                      alignment: Alignment(-0.9, 0),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                        child: Text(
+                          FlutterI18n.translate(context, "search.by_title"),
+                          style: TextStyle(
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Form(
+                      key: _formKey,
+                      child: TextFormField(
+                        controller: _textEditingController,
+                        decoration: InputDecoration(
+                            suffixIcon: Icon(Icons.search),
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8))),
+                            hintText:
+                                FlutterI18n.translate(context, "search.hint")),
+                        validator: (value) => validateInput(context, value),
+                      ),
+                    ),
                   ),
-                )),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child:
-                  TagSelector({}, key: _tagSelectorKey, searchSelector: true),
-            ),
-            Spacer(),
-            Align(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
-                child: MaterialButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
+                  Spacer(),
+                  Align(
+                      alignment: Alignment(-0.9, 0),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                        child: Text(
+                          FlutterI18n.translate(context, "search.by_tags"),
+                          style: TextStyle(
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: TagSelector(
+                        RepositoryProvider.of<Repository>(context),
+                        BlocProvider.of<TagSelectorBloc>(context),
+                        searchSelector: true),
                   ),
-                  onPressed: () {
-                    FocusScopeNode focus = FocusScope.of(context);
-                    if (!focus.hasPrimaryFocus) focus.unfocus();
+                  Spacer(),
+                  Align(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
+                      child: MaterialButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        onPressed: () {
+                          FocusScopeNode focus = FocusScope.of(context);
+                          if (!focus.hasPrimaryFocus) focus.unfocus();
 
-                    if (_formKey.currentState.validate()) {
-                      ProductListScreen.start(
-                          context,
-                          _textEditingController.text,
-                          _tagSelectorKey.currentState.tags,
-                          {},
-                          appBarTitle: "product_list.search_title",
-                          libraryView: LibraryView.Search);
-                    }
-                  },
-                  child: Text(FlutterI18n.translate(context, "search.title"),
-                      style: TextStyle(color: Colors.white, fontSize: 18)),
-                  color: Theme.of(context).accentColor,
-                  minWidth: MediaQuery.of(context).size.width * 0.5,
-                ),
-              ),
-            ),
-            Align(child: Text(FlutterI18n.translate(context, "search.or"))),
-            Align(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: MaterialButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
+                          if (_formKey.currentState.validate()) {
+                            ProductListScreen.start(
+                                context,
+                                _textEditingController.text,
+                                BlocProvider.of<TagSelectorBloc>(context).state,
+                                {},
+                                appBarTitle: "product_list.search_title",
+                                libraryView: LibraryView.Search);
+                          }
+                        },
+                        child: Text(
+                            FlutterI18n.translate(context, "search.title"),
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 18)),
+                        color: Theme.of(context).accentColor,
+                        minWidth: MediaQuery.of(context).size.width * 0.5,
+                      ),
+                    ),
                   ),
-                  onPressed: () => searchByBarcode(context),
-                  child: Text(
-                      FlutterI18n.translate(context, "search.by_barcode"),
-                      style: TextStyle(color: Colors.white, fontSize: 18)),
-                  color: Theme.of(context).accentColor,
-                  minWidth: MediaQuery.of(context).size.width * 0.5,
-                ),
+                  Align(
+                      child: Text(FlutterI18n.translate(context, "search.or"))),
+                  Align(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: MaterialButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        onPressed: () => searchByBarcode(context),
+                        child: Text(
+                            FlutterI18n.translate(context, "search.by_barcode"),
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 18)),
+                        color: Theme.of(context).accentColor,
+                        minWidth: MediaQuery.of(context).size.width * 0.5,
+                      ),
+                    ),
+                  ),
+                  Spacer(
+                    flex: 4,
+                  )
+                ],
               ),
             ),
-            Spacer(
-              flex: 4,
-            )
-          ],
-        ),
+          );
+        },
       ),
     );
   }

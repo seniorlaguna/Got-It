@@ -7,12 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:got_it/bloc/ProductBloc.dart';
+import 'package:got_it/bloc/TagSelectorBloc.dart';
 import 'package:got_it/data/Repository.dart';
 import 'package:got_it/model/Product.dart';
 import 'package:got_it/ui/widget/ExportWidget.dart';
 import 'package:got_it/ui/widget/ZoomAnimation.dart';
 import 'package:got_it/ui/widget/ImageIconButton.dart';
-import 'package:got_it/ui/widget/TagChooser.dart';
+import 'package:got_it/ui/widget/TagSelector.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -49,8 +50,6 @@ class _ProductScreenState extends State<ProductScreen>
 
   final GlobalKey<ExportWidgetState> _exportKey = GlobalKey();
   final GlobalKey<FormState> _formKey = GlobalKey(debugLabel: "formKey");
-  final GlobalKey<TagSelectorState> _tagSelectorKey =
-      GlobalKey(debugLabel: "tagSelectorKey");
 
   // like animation
   AnimationController _responseAnimationController;
@@ -73,9 +72,14 @@ class _ProductScreenState extends State<ProductScreen>
     super.dispose();
   }
 
-  ProductBloc createBloc(BuildContext context) {
+  ProductBloc createProductBloc(BuildContext context) {
     return ProductBloc(RepositoryProvider.of<Repository>(context))
       ..add(ProductOpenedEvent(widget._product, widget._edit));
+  }
+
+  TagSelectorBloc createTagSelectorBloc(BuildContext context) {
+    return TagSelectorBloc(RepositoryProvider.of<Repository>(context))
+      ..add(widget._product.tags);
   }
 
   void onEditClicked(BuildContext context) {
@@ -333,12 +337,13 @@ class _ProductScreenState extends State<ProductScreen>
           context, FlutterI18n.translate(context, "product.validator.no_name"));
     }
 
-    if (_tagSelectorKey.currentState.tags.isEmpty) {
+    TagSelectorBloc bloc = BlocProvider.of<TagSelectorBloc>(context);
+
+    if (bloc.state.isEmpty) {
       return FlutterI18n.translate(context, "product.validator.no_tag");
     }
 
-    if (!_tagSelectorKey.currentState.tags
-        .any((element) => categoryTags.contains(element))) {
+    if (!bloc.state.any((element) => categoryTags.contains(element))) {
       return FlutterI18n.translate(context, "product.validator.no_main_tag");
     }
 
@@ -370,10 +375,8 @@ class _ProductScreenState extends State<ProductScreen>
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
-          child: TagSelector(
-            product.productTags,
-            key: _tagSelectorKey,
-          ),
+          child: TagSelector(RepositoryProvider.of<Repository>(context),
+              BlocProvider.of<TagSelectorBloc>(context)),
         )
       ],
     );
@@ -396,15 +399,16 @@ class _ProductScreenState extends State<ProductScreen>
   void onSubmitClicked(BuildContext context) {
     if (!_formKey.currentState.validate()) return;
 
-    ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
+    ProductBloc productBloc = BlocProvider.of<ProductBloc>(context);
+    TagSelectorBloc tagSelectorBloc = BlocProvider.of<TagSelectorBloc>(context);
 
     String title = _textEditingController.text;
-    Set<String> tags = _tagSelectorKey.currentState.tags;
-    if (bloc.state.product.like) tags.add(favoriteTag);
-    if (bloc.state.product.delete) tags.add(deleteTag);
+    Set<String> tags = Set.from(tagSelectorBloc.state);
+    if (productBloc.state.product.like) tags.add(favoriteTag);
+    if (productBloc.state.product.delete) tags.add(deleteTag);
 
-    bloc.add(ProductChangedEvent(
-        bloc.state.product.copyWith(title: title, tags: tags), true));
+    productBloc.add(ProductChangedEvent(
+        productBloc.state.product.copyWith(title: title, tags: tags), true));
   }
 
   Widget getFAB(BuildContext context) {
@@ -418,8 +422,11 @@ class _ProductScreenState extends State<ProductScreen>
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ProductBloc>(
-        create: createBloc,
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(create: createProductBloc),
+          BlocProvider(create: createTagSelectorBloc)
+        ],
         child: SafeArea(
           child: Builder(builder: (BuildContext context) {
             return BlocBuilder<ProductBloc, ProductState>(
@@ -550,7 +557,8 @@ class _ProductScreenState extends State<ProductScreen>
 
   void onBarcodeScanned(BuildContext context, String barcode) async {
     // get bloc and repository
-    ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
+    ProductBloc productBloc = BlocProvider.of<ProductBloc>(context);
+    TagSelectorBloc tagSelectorBloc = BlocProvider.of<TagSelectorBloc>(context);
     Repository repository = RepositoryProvider.of(context);
 
     if ((await repository.getProductByBarcode(barcode)) != null) {
@@ -590,16 +598,17 @@ class _ProductScreenState extends State<ProductScreen>
     if (response.statusCode == 200) {
       Map<String, dynamic> responseMap = jsonDecode(response.body);
       print(responseMap);
-      bloc.add(ProductChangedEvent(
-          bloc.state.product.copyWith(
+      productBloc.add(ProductChangedEvent(
+          productBloc.state.product.copyWith(
               title: responseMap["title"],
               tags: Set.from((responseMap["tags"] as String).split(",")),
               imagePath: newPath,
               barcode: barcode),
           false));
+      tagSelectorBloc.add(Set.from((responseMap["tags"] as String).split(",")));
     } else {
-      bloc.add(ProductChangedEvent(
-          bloc.state.product.copyWith(barcode: barcode), false));
+      productBloc.add(ProductChangedEvent(
+          productBloc.state.product.copyWith(barcode: barcode), false));
     }
   }
 
