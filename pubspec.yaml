@@ -39,6 +39,7 @@ dependencies:
   permission_handler: ^5.0.1+1
   image_picker: ^0.6.7+14
   barcode_scan: ^3.0.1
+  http:
 
 
 

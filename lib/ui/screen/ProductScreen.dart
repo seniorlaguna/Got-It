@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:barcode_scan/barcode_scan.dart';
@@ -17,6 +18,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share/share.dart';
+import 'package:http/http.dart' as http;
 
 class ProductScreen extends StatefulWidget {
   final Product _product;
@@ -572,8 +574,33 @@ class _ProductScreenState extends State<ProductScreen>
       return;
     }
 
-    bloc.add(ProductChangedEvent(
-        bloc.state.product.copyWith(barcode: barcode), false));
+    http.Response response =
+        await http.get("http://192.168.0.33:8080/product/info/$barcode");
+
+    http.Response imageResponse =
+        await http.get("http://192.168.0.33:8080/product/image/$barcode");
+    String newPath =
+        join((await getApplicationDocumentsDirectory()).path, "$barcode.png");
+    if (imageResponse.statusCode == 200) {
+      File file = File(newPath);
+      file.writeAsBytesSync(imageResponse.bodyBytes);
+    }
+
+    print("Requested - ${response.statusCode}");
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseMap = jsonDecode(response.body);
+      print(responseMap);
+      bloc.add(ProductChangedEvent(
+          bloc.state.product.copyWith(
+              title: responseMap["title"],
+              tags: Set.from((responseMap["tags"] as String).split(",")),
+              imagePath: newPath,
+              barcode: barcode),
+          false));
+    } else {
+      bloc.add(ProductChangedEvent(
+          bloc.state.product.copyWith(barcode: barcode), false));
+    }
   }
 
   Future<void> onScanBarcode(BuildContext context) async {
